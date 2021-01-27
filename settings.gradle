@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='EverApp'
+rootProject.name = "My Application"
