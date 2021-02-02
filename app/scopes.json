@@ -1,0 +1,38 @@
+{
+  "ui": {
+    "custom" : [
+      "TextView"
+    ]
+  },
+
+  "arch" : {
+
+    "tasks" : {
+
+    },
+
+    "scout" : [
+
+    ]
+  },
+
+  "acts" : {
+
+    "task" : {
+    },
+
+    "scout" : {
+      "form" : [
+        "c",
+        "i"
+      ]
+
+    }
+  },
+
+  "org" : [
+    "ignore",
+    "scopes",
+    "todo"
+  ]
+}
