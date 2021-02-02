@@ -2,6 +2,14 @@
   "ui": {
     "custom" : [
       "TextView"
+    ],
+
+    "frags" : [
+      "form"
+    ],
+
+    "tabs" : [
+      "form"
     ]
   },
 

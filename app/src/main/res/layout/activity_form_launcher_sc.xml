@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SC_FormLauncher">
+    tools:context=".activities.scouts.form.SC_FormLauncher">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

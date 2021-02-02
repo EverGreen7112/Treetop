@@ -1,8 +1,10 @@
-package com.evergreen.treetop;
+package com.evergreen.treetop.activities.scouts.form;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.evergreen.treetop.R;
 
 public class SC_FormLauncher extends AppCompatActivity {
 
