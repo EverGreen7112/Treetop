@@ -50,4 +50,8 @@ public class MatchID {
                 m_type == matchID.m_type;
     }
 
+    @Override
+    public String toString() {
+        return m_type.toString() + "-" + m_number;
+    }
 }
