@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class MatchID {
 
-    enum MatchType {
+    public enum MatchType {
         QUAL,
         PLAYOFF;
     }
