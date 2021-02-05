@@ -17,14 +17,16 @@ public class SC_ScoutingForm extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tab_auto_sc);
 
-        tabLayout = findViewById(R.id.sc_scouting_form_tab_layout);
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            switch (position) {
-                case 0: tab.setText(R.string.sc_scouting_form_auto_tab_text); break;
-                case 1: tab.setText(R.string.sc_scouting_form_teleop_tab_text); break;
-                case 2: tab.setText(R.string.sc_scouting_form_end_tab_text); break;
-            }
-        }).attach();
+//        tabLayout = findViewById(R.id.sc_scouting_form_tab_layout);
+//        viewPager = findViewById(R.id.sc_scouting_form_view_pager);
+//        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+//            switch (position) {
+//                case 0: tab.setText(R.string.sc_scouting_form_auto_tab_text); break;
+//                case 1: tab.setText(R.string.sc_scouting_form_teleop_tab_text); break;
+//                case 2: tab.setText(R.string.sc_scouting_form_end_tab_text); break;
+//            }
+//        }).attach();
     }
 }
