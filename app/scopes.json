@@ -20,13 +20,14 @@
     },
 
     "scout" : [
-
+      "form"
     ]
   },
 
   "acts" : {
 
     "task" : {
+
     },
 
     "scout" : {
