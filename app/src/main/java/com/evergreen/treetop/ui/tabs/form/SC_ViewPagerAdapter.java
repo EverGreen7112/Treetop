@@ -1,18 +1,28 @@
 package com.evergreen.treetop.ui.tabs.form;
 
-import android.os.Bundle;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class SC_ViewPagerAdapter extends RecyclerView.Adapter {
+import com.evergreen.treetop.R;
+
+public class SC_ViewPagerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    Context context;
+
+    public SC_ViewPagerAdapter(Context context) {
+        this.context = context;
+    }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_scouting_form_sc, parent, false);
         return null;
     }
 
@@ -23,6 +33,6 @@ public class SC_ViewPagerAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return 3;
     }
 }
