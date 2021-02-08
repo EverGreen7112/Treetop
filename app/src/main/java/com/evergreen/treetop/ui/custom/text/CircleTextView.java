@@ -1,30 +1,22 @@
 package com.evergreen.treetop.ui.custom.text;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.util.AttributeSet;
-import android.view.Gravity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
-import com.evergreen.treetop.R;
-
-public class CircleTextView extends androidx.appcompat.widget.AppCompatTextView {
+public class CircleTextView extends EllipseTextView {
     public CircleTextView(@NonNull Context context) {
         super(context);
-        initConfigure();
     }
 
     public CircleTextView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initConfigure();
     }
 
     public CircleTextView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initConfigure();
     }
 
     public void setRadius(int r) {
@@ -49,13 +41,6 @@ public class CircleTextView extends androidx.appcompat.widget.AppCompatTextView 
         setMeasuredDimension(r, r);
     }
 
-    private void initConfigure() {
-        setBackground(ContextCompat.getDrawable(getContext(), R.drawable.circle));
-        setGravity(Gravity.CENTER);
-    }
 
-    public void setBackgroundColor(int color) {
-        getBackground().setColorFilter(color, PorterDuff.Mode.SRC_IN);
-    }
 }
 
