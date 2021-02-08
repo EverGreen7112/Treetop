@@ -1,6 +1,5 @@
-package com.evergreen.treetop.architecture.scouts.form;
+package com.evergreen.treetop.architecture.scouts.utils;
 
-import java.util.Objects;
 
 public class MatchID {
 
@@ -48,6 +47,11 @@ public class MatchID {
         MatchID matchID = (MatchID) o;
         return m_number == matchID.m_number &&
                 m_type == matchID.m_type;
+    }
+
+    public MatchID next() {
+        //TODO implement usage of TheBlueAlliance to correctly change stage.
+        return new MatchID(m_type, m_number + 1);
     }
 
     @Override
