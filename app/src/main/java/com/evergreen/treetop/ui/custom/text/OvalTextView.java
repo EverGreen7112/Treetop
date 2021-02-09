@@ -8,17 +8,17 @@ import androidx.annotation.Nullable;
 
 import com.evergreen.treetop.ui.custom.utils.Shape;
 
-public class OvaTextView extends BaseText {
+public class OvalTextView extends BaseText {
 
-    public OvaTextView(@NonNull Context context) {
+    public OvalTextView(@NonNull Context context) {
         super(context, Shape.OVAL_RECT);
     }
 
-    public OvaTextView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public OvalTextView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs, Shape.OVAL_RECT);
     }
 
-    public OvaTextView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public OvalTextView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr, Shape.OVAL_RECT);
     }
 }
