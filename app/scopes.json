@@ -1,7 +1,9 @@
 {
   "ui": {
-    "custom" : [
-      "TextView"
+    "our" : [
+      "text",
+      "edit",
+      "spin"
     ],
 
     "frags" : [
@@ -20,7 +22,10 @@
     },
 
     "scout" : [
-      "form"
+      "data",
+      "form",
+      "hand",
+      "utils"
     ]
   },
 
@@ -39,9 +44,13 @@
     }
   },
 
+  "test" : {},
+
   "org" : [
     "ignore",
     "scopes",
     "todo"
-  ]
+  ],
+
+  "build" : {}
 }  
