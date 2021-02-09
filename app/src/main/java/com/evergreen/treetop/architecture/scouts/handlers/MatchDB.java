@@ -46,7 +46,7 @@ public class MatchDB {
     }
 
     public DatabaseReference getRef() {
-        return TeamDB.getTeamDB().child(String.valueOf(m_team));
+        return TeamDB.getInstance().getTeamDB().child(String.valueOf(m_team));
     }
 
 
