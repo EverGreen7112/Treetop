@@ -8,4 +8,51 @@
     tools:context=".test.TestActivity">
 
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="184dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="576dp"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.evergreen.treetop.ui.custom.spinner.OvalSpinner
+        android:id="@+id/spinner"
+        android:layout_width="363dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="24dp"
+        android:prompt="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <TextView
+        android:id="@+id/spinner_label"
+        android:layout_width="166dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="132dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.evergreen.treetop.ui.custom.text.OvaTextView
+        android:id="@+id/spinner_desc"
+        android:layout_width="350dp"
+        android:layout_height="342dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.393"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
