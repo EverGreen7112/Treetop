@@ -2,9 +2,11 @@ package com.evergreen.treetop.architecture.scouts.data;
 
 import android.util.Log;
 
+import com.evergreen.treetop.architecture.scouts.utils.Loggable;
+
 import java.util.Date;
 
-public class TimedAction {
+public class TimedAction implements Loggable {
     private int m_startTime;
     private int m_endTime;
     private String m_label;
@@ -26,6 +28,11 @@ public class TimedAction {
 
     public int getDuration() {
         return m_endTime - m_startTime;
+    }
+
+    @Override
+    public String getLabel() {
+        return m_label;
     }
 
     @Override
