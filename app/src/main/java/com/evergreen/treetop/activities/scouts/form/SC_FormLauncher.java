@@ -13,7 +13,7 @@ import com.google.firebase.FirebaseApp;
 
 public class SC_FormLauncher extends AppCompatActivity {
 
-    private static final boolean TEST = true;
+    private static final boolean TEST = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,8 @@ public class SC_FormLauncher extends AppCompatActivity {
             startActivity(new Intent(this, TestActivity.class));
             return;
         }
+
+        startActivity(new Intent(this, SC_ScoutingForm.class)); // For now.
 
     }
 
