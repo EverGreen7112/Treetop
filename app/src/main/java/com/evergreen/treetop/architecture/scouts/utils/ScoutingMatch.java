@@ -13,6 +13,13 @@ public class ScoutingMatch {
     private MatchID m_id;
     private int[][] m_teams = new int[2][3]; //TODO add scouters HashMap.
 
+    private static ScoutingMatch m_current = new ScoutingMatch(
+            new MatchID(MatchID.MatchType.QUAL, 10),
+            new int[][] {
+                    {1, 2, 3},
+                    {4, 5, 6}
+            }
+    );
 
     public ScoutingMatch(MatchID id, int[][] teams) {
         m_id = id;
@@ -35,6 +42,9 @@ public class ScoutingMatch {
             );
     }
 
+    public static ScoutingMatch getCurrent() {
+        return m_current;
+    }
 
     /**
      * method for testing, when we need to get the database of the current team.
@@ -58,4 +68,9 @@ public class ScoutingMatch {
         return new MatchDB(team).getRef().child(m_id.toString());
     }
 
+    public static void startNext() {
+        m_current.m_id = m_current.m_id.next();
+        m_current.start();
+        Log.i("FORM_EVENT", "Increment current match to " + m_current.m_id.toString() + " and started its clock.");
+    }
 }
