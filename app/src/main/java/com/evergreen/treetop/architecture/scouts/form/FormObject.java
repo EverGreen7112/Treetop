@@ -25,6 +25,16 @@ public abstract class FormObject implements Loggable {
 
     public String getLabel() {
         return m_label;
-
     }
+
+    public DatabaseReference getRef() {
+        return ScoutingMatch.getCurrent().getDBRef(ScoutingMatch.getCurrent().getTeam()).child(m_path);
+    }
+
+    public String getPath() {
+        return getRef().getKey();
+    }
+    
+
+
 }
