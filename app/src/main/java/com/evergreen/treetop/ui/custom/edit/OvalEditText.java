@@ -8,17 +8,17 @@ import androidx.annotation.Nullable;
 
 import com.evergreen.treetop.ui.custom.utils.Shape;
 
-public class EllipseEditText extends BaseEdit {
+public class OvalEditText extends BaseEdit {
 
-    public EllipseEditText(@NonNull Context context) {
-        super(context, Shape.ELLIPSE);
+    public OvalEditText(@NonNull Context context) {
+        super(context, Shape.OVAL_RECT);
     }
 
-    public EllipseEditText(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, Shape.ELLIPSE);
+    public OvalEditText(@NonNull Context context, @Nullable AttributeSet attrs) {
+        super(context, Shape.OVAL_RECT);
     }
 
-    public EllipseEditText(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr, Shape.ELLIPSE);
+    public OvalEditText(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr, Shape.OVAL_RECT);
     }
 }
