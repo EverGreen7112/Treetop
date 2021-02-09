@@ -1,6 +1,7 @@
 package com.evergreen.treetop.architecture.scouts.form;
 
 import android.util.Log;
+import android.widget.TextView;
 
 import com.evergreen.treetop.architecture.scouts.data.TimedAction;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
@@ -17,10 +18,10 @@ public class SequenceSwitch extends FormObject  {
      */
     private int m_onStart = -1;
 
-    public SequenceSwitch(String label, String path, SwitchMaterial switchView) {
+    public SequenceSwitch(String label, String path, SwitchMaterial switchView, TextView labelView) {
         super(label, path);
         m_switch = switchView;
-        m_switch.setText(label);
+        labelView.setText(label);
 
         Log.i("FORM OBJECT", "Initialized new SequenceSwitch \"" + getLabel()
                 + "\" for path " + getPath());

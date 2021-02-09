@@ -1,6 +1,7 @@
 package com.evergreen.treetop.architecture.scouts.form;
 
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -8,10 +9,10 @@ public class FormSwitch extends FormObject {
 
     private SwitchMaterial m_switch;
 
-    public FormSwitch(String label, String path, SwitchMaterial switchView) {
+    public FormSwitch(String label, String path, SwitchMaterial switchView, TextView labelView) {
         super(label, path);
         m_switch = switchView;
-        m_switch.setText(label);
+        labelView.setText(label);
         Log.i("FORM_OBJECT", "Initialized FormSwitch " + getLabel() + " to path " + getPath());
     }
 

@@ -121,7 +121,7 @@
         <!-- POWERCELL COUNTERS -->
 
         <fragment class="com.evergreen.treetop.ui.fragments.form.SC_FormCountersFragment"
-            android:id="@+id/sc_form_auto_counters"
+            android:id="@+id/sc_form_frag_auto_counters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
