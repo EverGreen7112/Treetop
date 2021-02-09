@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- BOTTOM COUNTERS-->
+
     <TextView
         android:id="@+id/sc_form_counters_bot_label"
         android:layout_width="wrap_content"
@@ -14,7 +16,7 @@
         android:textSize="42sp"
         android:textStyle="bold"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,6 +70,7 @@
         app:layout_constraintEnd_toEndOf="@id/sc_form_counters_bot_miss_value"
         app:layout_constraintStart_toStartOf="@id/sc_form_counters_bot_miss_value" />
 
+    <!-- OUTER COUNTERS -->
 
     <TextView
         android:id="@+id/sc_form_counters_out_label"
@@ -77,7 +80,7 @@
         android:textSize="42sp"
         android:textStyle="bold"
         android:layout_marginTop="48dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sc_form_counters_bot_label" />
 
@@ -131,6 +134,8 @@
         app:layout_constraintEnd_toEndOf="@id/sc_form_counters_out_miss_value"
         app:layout_constraintStart_toStartOf="@id/sc_form_counters_out_miss_value" />
 
+    <!-- INNER COUNTERS -->
+
     <TextView
         android:id="@+id/sc_form_counters_in_label"
         android:layout_width="wrap_content"
@@ -139,7 +144,7 @@
         android:textSize="42sp"
         android:textStyle="bold"
         android:layout_marginTop="48dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sc_form_counters_out_label" />
 
@@ -193,6 +198,8 @@
         app:layout_constraintEnd_toEndOf="@id/sc_form_counters_in_miss_value"
         app:layout_constraintStart_toStartOf="@id/sc_form_counters_in_miss_value" />
 
+    <!-- LOADING BAY COUNTERS -->
+
     <TextView
         android:id="@+id/sc_form_counters_load_label"
         android:layout_width="wrap_content"
@@ -201,7 +208,7 @@
         android:textSize="42sp"
         android:textStyle="bold"
         android:layout_marginTop="48dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sc_form_counters_in_label" />
 
@@ -255,6 +262,8 @@
         app:layout_constraintEnd_toEndOf="@id/sc_form_counters_load_miss_value"
         app:layout_constraintStart_toStartOf="@id/sc_form_counters_load_miss_value" />
 
+    <!-- COLLECTED COUNTERS -->
+
     <TextView
         android:id="@+id/sc_form_counters_coll_label"
         android:layout_width="wrap_content"
@@ -263,7 +272,7 @@
         android:textSize="42sp"
         android:textStyle="bold"
         android:layout_marginTop="48dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sc_form_counters_load_label" />
 
