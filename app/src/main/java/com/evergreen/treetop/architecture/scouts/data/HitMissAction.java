@@ -1,10 +1,16 @@
 package com.evergreen.treetop.architecture.scouts.data;
 
-public class HitMissAction {
+import android.util.Log;
+
+import com.evergreen.treetop.architecture.scouts.utils.Loggable;
+
+public class HitMissAction implements Loggable {
     private int m_hit;
     private int m_miss;
+    private String m_label;
 
-    public HitMissAction(int hit, int miss) {
+    public HitMissAction(String label, int hit, int miss) {
+        m_label = label;
         m_hit = hit;
         m_miss = miss;
     }
@@ -29,5 +35,15 @@ public class HitMissAction {
     public double getHitToAttempts() {
         if (getAttempts() == 0) return -1;
         return (double) m_hit / getAttempts();
+    }
+
+    @Override
+    public String getLabel() {
+        return m_label;
+    }
+
+    @Override
+    public String toString() {
+        return "Hit-Miss Action \"" + getLabel() + "\" at " + m_hit + " / " + m_miss;
     }
 }
