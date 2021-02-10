@@ -20,7 +20,12 @@ public class HitMissCounter extends FormObject {
 
     @Override
     public void submit() {
-        getRef().setValue(new HitMissAction(m_hitCounter.getCounter(), m_missCounter.getCounter()));
+        HitMissAction res = new HitMissAction(getLabel(), m_hitCounter.getCounter(), m_missCounter.getCounter());
+        Log.v("FORM_RESULT", "Submitting object \"" + getLabel() + "\"; Merging counter "
+        + m_hitCounter + " and " + m_missCounter.toString() + " into " + res);
+
+        getRef().setValue(res);
+
         Log.i("DB_EVENT", "Submitted HitMiss Counter \"" + getLabel() + "\"" + " to " +
                 "path " + getPath() + " under value " + m_missCounter.getCounter() + "-" + m_missCounter);
     }
