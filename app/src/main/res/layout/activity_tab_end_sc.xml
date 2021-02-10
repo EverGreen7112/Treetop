@@ -11,7 +11,7 @@
     <!-- TOP BAR -->
 
     <fragment
-        android:id="@+id/sc_form_frag_auto_header"
+        android:id="@+id/sc_form_frag_end_header"
         class="com.evergreen.treetop.ui.fragments.form.SC_FormHeaderFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
