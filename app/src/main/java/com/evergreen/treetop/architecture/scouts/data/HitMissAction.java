@@ -18,6 +18,7 @@ public class HitMissAction {
     }
 
     public double getHitToMiss() {
+        if (m_miss == 0) return -1;
         return (double) m_hit / m_miss;
     }
 
@@ -26,6 +27,7 @@ public class HitMissAction {
     }
 
     public double getHitToAttempts() {
+        if (getAttempts() == 0) return -1;
         return (double) m_hit / getAttempts();
     }
 }
