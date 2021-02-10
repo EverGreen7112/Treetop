@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -40,6 +39,7 @@ public class SC_ScoutingForm extends FragmentActivity {
                         break;
                     case 1:
                         setContent(new SC_FormTeleopFragment());
+                        break;
                     case 2:
                         setContent(new SC_FormEndgameFragment());
                         break;
