@@ -25,7 +25,6 @@ public class SC_FormAutoFragment extends Fragment {
         View res =  inflater.inflate(R.layout.activity_tab_auto_sc, container, false);
         initObjects(res);
         Log.i("FORM_EVENT", "Initialized Autonomous Tab");
-        res.findViewById(R.id.submit_form).setOnClickListener( v -> MatchDB.submitActiveForm());
         return res;
     }
 
