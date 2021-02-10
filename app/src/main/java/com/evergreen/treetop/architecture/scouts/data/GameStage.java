@@ -1,5 +1,7 @@
 package com.evergreen.treetop.architecture.scouts.data;
 
+import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
+
 public enum GameStage {
     AUTO("Autonomous", 0, 15_000),
     TELEOP("Teleop", 15_000, 2*60_000 + 30_000),
@@ -30,4 +32,16 @@ public enum GameStage {
     public boolean contains(int matchMillis) {
         return m_start <= matchMillis && matchMillis < m_end;
     }
+
+    public static GameStage stageIn(int matchMillis) {
+        if (AUTO.contains(matchMillis)) return AUTO;
+        if (TELEOP.contains(matchMillis)) return TELEOP;
+        return ENDGAME;
+    }
+
+    public static GameStage getCurrentStage() {
+        return stageIn(ScoutingMatch.getCurrent().getTimeSinceStart());
+    }
+
+
 }
