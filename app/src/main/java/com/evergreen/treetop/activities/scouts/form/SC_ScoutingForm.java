@@ -18,9 +18,9 @@ import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class SC_ScoutingForm extends FragmentActivity {
+public class SC_ScoutingForm extends AppCompatActivity {
     TabLayout m_tabLayout;
-    ViewPager2 viewPager;
+    // ViewPager2 viewPager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
