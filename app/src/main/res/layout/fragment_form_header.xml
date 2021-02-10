@@ -16,7 +16,6 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/round_rectangle_15"
         android:gravity="center"
-        android:text="mm:ss"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/sc_form_auto_team_num"
