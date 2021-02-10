@@ -24,7 +24,7 @@ public class SC_FormCountersFragment extends Fragment {
     }
 
     public void init(GameStage stage) {
-        String pathPrefix = stage.getName();
+        String pathPrefix = stage.getName().toLowerCase();
 
         new HitMissCounter(
                 "Bottom",
@@ -76,5 +76,11 @@ public class SC_FormCountersFragment extends Fragment {
                 getView().findViewById(R.id.sc_text_form_counters_coll_miss_decrement)
         );
 
+    }
+
+
+    @Override
+    public String toString() {
+        return "SC_FormCountersFragment";
     }
 }
