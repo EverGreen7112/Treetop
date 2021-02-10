@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.evergreen.treetop.R;
+import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
 import com.evergreen.treetop.ui.fragments.form.SC_FormAutoFragment;
 import com.evergreen.treetop.ui.fragments.form.SC_FormEndgameFragment;
 import com.evergreen.treetop.ui.fragments.form.SC_FormTeleopFragment;
@@ -57,6 +58,8 @@ public class SC_ScoutingForm extends AppCompatActivity {
 
             }
         });
+
+        ScoutingMatch.getCurrent().start();
     }
 
     private void setContent(Fragment fragment) {
