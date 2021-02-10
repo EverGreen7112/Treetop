@@ -44,8 +44,6 @@ public class SC_FormHeaderFragment extends Fragment {
 
         handler.postDelayed(counter, 1000);
         Log.v("UI_EVENT", "Posting autonomous Match Timer increment");
-        return thisView;
-
 
         new SequenceSwitch(
                 "Functions",
@@ -53,6 +51,8 @@ public class SC_FormHeaderFragment extends Fragment {
                 thisView.findViewById(R.id.sc_form_auto_function_switch),
                 thisView.findViewById(R.id.sc_form_auto_function_label)
         );
+
+        return thisView;
     }
 
     private String formatTimer(long seconds) {
