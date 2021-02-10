@@ -32,8 +32,8 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <fragment
-        android:id="@+id/sc_form_tab_view"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/sc_form_frag_tab_view_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

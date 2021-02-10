@@ -1,19 +1,26 @@
 package com.evergreen.treetop.activities.scouts.form;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.evergreen.treetop.R;
+import com.evergreen.treetop.ui.fragments.form.SC_FormAutoFragment;
+import com.evergreen.treetop.ui.fragments.form.SC_FormEndgameFragment;
+import com.evergreen.treetop.ui.fragments.form.SC_FormTeleopFragment;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class SC_ScoutingForm extends AppCompatActivity {
-    TabLayout tabLayout;
+public class SC_ScoutingForm extends FragmentActivity {
+    TabLayout m_tabLayout;
     ViewPager2 viewPager;
 
     @Override
@@ -21,6 +28,55 @@ public class SC_ScoutingForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scouting_form_sc);
 
+        m_tabLayout = findViewById(R.id.sc_form_tab_layout);
+        setContent(new SC_FormAutoFragment());
 
+        m_tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.i("UI_EVENT", "Please kill me");
+//                Log.d(
+//                        "TAB_LAYOUT",
+//                        "ID " + id +
+//                        "\nAUTO " + R.id.sc_tab_item_auto +
+//                        "\nTELEOP " + R.id.sc_tab_item_teleop +
+//                        "\nENDGAME " + R.id.sc_tab_item_endgame);
+
+
+                switch (tab.getPosition()) {
+                    case 0:
+                        setContent(new SC_FormAutoFragment());
+                        break;
+                    case 1:
+                        setContent(new SC_FormTeleopFragment());
+                    case 2:
+                        setContent(new SC_FormEndgameFragment());
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
+
+    private void setContent(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        for (Fragment frag : getSupportFragmentManager().getFragments()) {
+            fragmentTransaction.remove(frag);
+        }
+
+        fragmentTransaction.add(R.id.sc_form_frag_tab_view_content, fragment);
+        fragmentTransaction.commit();
+    }
+
 }
