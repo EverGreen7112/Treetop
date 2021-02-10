@@ -33,15 +33,6 @@ public class SC_ScoutingForm extends AppCompatActivity {
         m_tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.i("UI_EVENT", "Please kill me");
-//                Log.d(
-//                        "TAB_LAYOUT",
-//                        "ID " + id +
-//                        "\nAUTO " + R.id.sc_tab_item_auto +
-//                        "\nTELEOP " + R.id.sc_tab_item_teleop +
-//                        "\nENDGAME " + R.id.sc_tab_item_endgame);
-
-
                 switch (tab.getPosition()) {
                     case 0:
                         setContent(new SC_FormAutoFragment());
