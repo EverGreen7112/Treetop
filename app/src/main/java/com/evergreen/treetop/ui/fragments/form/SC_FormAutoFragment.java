@@ -18,8 +18,8 @@ import com.evergreen.treetop.architecture.scouts.handlers.MatchDB;
 public class SC_FormAutoFragment extends Fragment {
 
     GameStage GAME_STAGE = GameStage.AUTO;
+    
     @Nullable
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View res =  inflater.inflate(R.layout.activity_tab_auto_sc, container, false);
