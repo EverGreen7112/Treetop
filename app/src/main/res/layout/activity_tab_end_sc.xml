@@ -35,7 +35,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/sc_form_end_hanging_switch"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sc_form_frag_auto_header" />
+        app:layout_constraintTop_toBottomOf="@+id/sc_form_frag_end_header" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/sc_form_end_hanging_switch"
@@ -163,7 +163,7 @@
     <!-- POWERCELL COUNTERS -->
 
     <fragment class="com.evergreen.treetop.ui.fragments.form.SC_FormCountersFragment"
-        android:id="@+id/sc_form_end_counters"
+        android:id="@+id/sc_form_frag_end_counters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
