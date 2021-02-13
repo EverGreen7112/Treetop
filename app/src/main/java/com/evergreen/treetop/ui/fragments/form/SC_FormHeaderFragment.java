@@ -33,7 +33,7 @@ public class SC_FormHeaderFragment extends Fragment {
             @Override
             public void run() {
                 long matchSeconds = ScoutingMatch.getCurrent().getTimeSinceStart() / 1000;
-                if (matchSeconds <= 3 * 60) {
+                if (matchSeconds <= 2.5 * 60) {
                     matchTimer.setText(formatTimer(matchSeconds));
                     handler.postDelayed(this, 1000);
                     Log.v("UI_EVENT", "Set Match Timer (Auto) to  " + formatTimer(matchSeconds));
@@ -42,7 +42,11 @@ public class SC_FormHeaderFragment extends Fragment {
             }
         };
 
-        handler.postDelayed(counter, 1000);
+        if (ScoutingMatch.getCurrent().getTimeSinceStart() > 2.5 * 60_000) {
+            matchTimer.setText("02:30");
+        } else {
+            counter.run();
+        }
         Log.v("UI_EVENT", "Posting autonomous Match Timer increment");
 
         new SequenceSwitch(
