@@ -49,6 +49,14 @@ public class SC_FormHeaderFragment extends Fragment {
         }
         Log.v("UI_EVENT", "Posting autonomous Match Timer increment");
 
+
+        ((TextView)(thisView.findViewById(R.id.sc_form_auto_team_num)))
+                .setText(String.format(Locale.ENGLISH, "#%04d", ScoutingMatch.getCurrent().getTeam()));
+
+        ((TextView)(thisView.findViewById(R.id.sc_form_auto_match_num)))
+                .setText(ScoutingMatch.getCurrent().getID().toString());
+
+
         new SequenceSwitch(
                 "Malfunctions",
                 GameStage.getCurrentStage().getName().toLowerCase() + "/function",
