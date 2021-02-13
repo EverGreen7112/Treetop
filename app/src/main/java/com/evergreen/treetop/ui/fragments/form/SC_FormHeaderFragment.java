@@ -50,7 +50,7 @@ public class SC_FormHeaderFragment extends Fragment {
         Log.v("UI_EVENT", "Posting autonomous Match Timer increment");
 
         new SequenceSwitch(
-                "Functions",
+                "Malfunctions",
                 GameStage.getCurrentStage().getName().toLowerCase() + "/function",
                 thisView.findViewById(R.id.sc_form_auto_function_switch),
                 thisView.findViewById(R.id.sc_form_auto_function_label)
