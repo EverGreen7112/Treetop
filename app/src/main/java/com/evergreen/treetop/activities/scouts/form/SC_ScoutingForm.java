@@ -43,6 +43,8 @@ public class SC_ScoutingForm extends AppCompatActivity {
                         break;
                     case 2:
                         setContent(new SC_FormEndgameFragment());
+                    case 3:
+                        setContent(new SC_FormSubmissionFragment());
                         break;
                 }
 

@@ -29,6 +29,11 @@
             android:layout_height="match_parent"
             android:text="@string/sc_scouting_form_end_tab_text" />
 
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/sc_tab_item_submit_form"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/sc_scouting_form_submit_tab_text" />
 
     </com.google.android.material.tabs.TabLayout>
 
