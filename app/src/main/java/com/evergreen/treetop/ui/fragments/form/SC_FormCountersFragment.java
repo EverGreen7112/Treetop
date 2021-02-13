@@ -24,6 +24,9 @@ public class SC_FormCountersFragment extends Fragment {
     }
 
     public void init(GameStage stage) {
+
+        if (m_initialized) throw new RuntimeException("Cannot Initialize counters twice");
+
         String pathPrefix = stage.getName().toLowerCase();
 
         new HitMissCounter(
@@ -76,5 +79,10 @@ public class SC_FormCountersFragment extends Fragment {
                 getView().findViewById(R.id.sc_text_form_counters_coll_miss_decrement)
         );
 
+        m_initialized = true;
+    }
+
+    public boolean isInitialized() {
+        return m_initialized;
     }
 }
