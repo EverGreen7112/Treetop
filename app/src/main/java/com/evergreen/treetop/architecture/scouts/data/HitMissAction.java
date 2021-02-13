@@ -9,7 +9,6 @@ public class HitMissAction implements Loggable {
     private int m_miss;
     private String m_label;
 
-    private HitMissAction() {}
     public HitMissAction(String label, int hit, int miss) {
         m_label = label;
         m_hit = hit;

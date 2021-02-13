@@ -11,11 +11,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.evergreen.treetop.R;
-import com.evergreen.treetop.architecture.scouts.handlers.MatchDB;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
 import com.evergreen.treetop.ui.fragments.form.SC_FormAutoFragment;
 import com.evergreen.treetop.ui.fragments.form.SC_FormEndgameFragment;
-import com.evergreen.treetop.ui.fragments.form.SC_FormSubmissionFragment;
 import com.evergreen.treetop.ui.fragments.form.SC_FormTeleopFragment;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -24,10 +22,6 @@ import com.google.android.material.tabs.TabLayoutMediator;
 public class SC_ScoutingForm extends AppCompatActivity {
     TabLayout m_tabLayout;
     // ViewPager2 viewPager;
-
-    private final SC_FormAutoFragment AUTO_TAB = new SC_FormAutoFragment();
-    private final SC_FormTeleopFragment TELEOP_TAB = new SC_FormTeleopFragment();
-    private final SC_FormEndgameFragment END_TAB = new SC_FormEndgameFragment();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,14 +36,13 @@ public class SC_ScoutingForm extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
-                        setContent(AUTO_TAB);
+                        setContent(new SC_FormAutoFragment());
                         break;
                     case 1:
-                        setContent(TELEOP_TAB);
+                        setContent(new SC_FormTeleopFragment());
                         break;
                     case 2:
-                        setContent(END_TAB);
-                        break;
+                        setContent(new SC_FormEndgameFragment());
                     case 3:
                         setContent(new SC_FormSubmissionFragment());
                         break;
