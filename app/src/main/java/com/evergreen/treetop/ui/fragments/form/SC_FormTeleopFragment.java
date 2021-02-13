@@ -22,7 +22,7 @@ public class SC_FormTeleopFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View thisView =  inflater.inflate(R.layout.activity_tab_teleop_sc, container, false);
+        View thisView =  inflater.inflate(R.layout.fragment_tab_teleop_sc, container, false);
 
         // === FORM OBJECT INIT ===
         String pathPrefix = GAME_STAGE.getName().toLowerCase();

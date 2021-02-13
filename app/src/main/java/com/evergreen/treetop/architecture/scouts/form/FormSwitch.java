@@ -16,7 +16,6 @@ public class FormSwitch extends FormObject {
         Log.i("FORM_OBJECT", "Initialized FormSwitch " + getLabel() + " to path " + getPath());
     }
 
-
     @Override
     public void submit() {
         getRef().setValue(m_switch.isChecked());

@@ -42,6 +42,4 @@ public enum GameStage {
     public static GameStage getCurrentStage() {
         return stageIn(ScoutingMatch.getCurrent().getTimeSinceStart());
     }
-
-
 }

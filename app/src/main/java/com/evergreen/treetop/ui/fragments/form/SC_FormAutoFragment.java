@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.architecture.scouts.data.GameStage;
 import com.evergreen.treetop.architecture.scouts.form.FormSwitch;
-import com.evergreen.treetop.architecture.scouts.handlers.MatchDB;
 
 public class SC_FormAutoFragment extends Fragment {
 
@@ -21,11 +20,10 @@ public class SC_FormAutoFragment extends Fragment {
 
     private FormSwitch m_linePass;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View thisView =  inflater.inflate(R.layout.activity_tab_auto_sc, container, false);
+        View thisView =  inflater.inflate(R.layout.fragment_tab_auto_sc, container, false);
 
         // ===FORM OBJECT INIT===
 
@@ -34,9 +32,8 @@ public class SC_FormAutoFragment extends Fragment {
         SC_FormCountersFragment counters =
                 (SC_FormCountersFragment) getChildFragmentManager().findFragmentById(R.id.sc_form_frag_auto_counters);
 
-        if (!counters.isInitialized()) {
-            counters.init(GAME_STAGE);
-        }
+        counters.init(GAME_STAGE);
+
         // --- --- ---
         // --- Line Pass Init ---
         if (m_linePass == null)
@@ -52,6 +49,4 @@ public class SC_FormAutoFragment extends Fragment {
         // --- --- ---
         return thisView;
     }
-
-
 }

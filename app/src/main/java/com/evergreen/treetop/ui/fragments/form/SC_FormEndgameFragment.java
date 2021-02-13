@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.architecture.scouts.data.GameStage;
-import com.evergreen.treetop.architecture.scouts.form.ContinousStopwatch;
+import com.evergreen.treetop.architecture.scouts.form.ContinuousStopwatch;
 import com.evergreen.treetop.architecture.scouts.form.FormSwitch;
 import com.evergreen.treetop.architecture.scouts.form.SequenceStopwatch;
 
@@ -22,7 +22,7 @@ public class SC_FormEndgameFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View thisView =  inflater.inflate(R.layout.activity_tab_end_sc, container, false);
+        View thisView =  inflater.inflate(R.layout.fragment_tab_end_sc, container, false);
 
         String pathPrefix = GAME_STAGE.getName().toLowerCase();
 
@@ -37,7 +37,7 @@ public class SC_FormEndgameFragment extends Fragment {
                 thisView.findViewById(R.id.sc_form_end_hanging_label)
         );
 
-        new ContinousStopwatch(
+        new ContinuousStopwatch(
                 "Hang Attempt",
                 pathPrefix + "/hang-attempt",
                 thisView.findViewById(R.id.sc_form_end_hang_attempt_stopwatch),

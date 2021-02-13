@@ -34,7 +34,4 @@ public abstract class FormObject implements Loggable {
     public String getPath() {
         return getRef().getKey();
     }
-    
-
-
 }

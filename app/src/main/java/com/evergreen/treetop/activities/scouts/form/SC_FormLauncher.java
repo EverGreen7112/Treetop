@@ -26,9 +26,5 @@ public class SC_FormLauncher extends AppCompatActivity {
         }
 
         startActivity(new Intent(this, SC_ScoutingForm.class)); // For now.
-
     }
-
-
-
 }
