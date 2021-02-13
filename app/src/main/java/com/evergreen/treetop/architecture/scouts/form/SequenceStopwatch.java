@@ -15,15 +15,26 @@ public class SequenceStopwatch extends FormObject {
 
     private ArrayList<TimedAction> m_sequence = new ArrayList<>();
     private int m_lastStart;
-    private int m_counter = 1500;
+    private int m_counter = 0;
 
     @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     public SequenceStopwatch(String label, String path, TextView stopwatch, TextView labelView) {
         super(label, path);
         labelView.setText(label);
+        stopwatch.setText("0.00s");
+
+        if (stopwatch.getWidth() < 80 && stopwatch.getHeight() < 80) {
+            stopwatch.setWidth(80);
+            stopwatch.setHeight(80);
+        } else if (stopwatch.getWidth() > stopwatch.getHeight()) {
+            stopwatch.setHeight(stopwatch.getWidth());
+        } else if (stopwatch.getHeight() > stopwatch.getWidth()) {
+            stopwatch.setWidth(stopwatch.getHeight());
+        }
+
         stopwatch.setOnTouchListener(new RepeatListener(
                 getLabel() + " counter",
-                20,
+                0,
                 10,
                 v -> m_lastStart = ScoutingMatch.getCurrent().getTimeSinceStart(),
                 v -> {

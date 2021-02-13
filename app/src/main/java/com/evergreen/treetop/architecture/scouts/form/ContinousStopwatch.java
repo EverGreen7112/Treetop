@@ -25,6 +25,16 @@ public class ContinousStopwatch extends FormObject {
         m_view = view;
         m_view.setText("0.00s");
 
+
+        if (m_view.getWidth() < 80 && m_view.getHeight() < 80) {
+            m_view.setWidth(80);
+            m_view.setHeight(80);
+        } else if (m_view.getWidth() > m_view.getHeight()) {
+            m_view.setHeight(m_view.getWidth());
+        } else if (m_view.getHeight() > m_view.getWidth()) {
+            m_view.setWidth(m_view.getHeight());
+        }
+
         m_view.setOnTouchListener(new RepeatListener(
                 getLabel() + " counter",
                 20,
