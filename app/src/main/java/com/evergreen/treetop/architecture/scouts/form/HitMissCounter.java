@@ -3,7 +3,15 @@ package com.evergreen.treetop.architecture.scouts.form;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.evergreen.treetop.architecture.scouts.data.HitMissAction;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class HitMissCounter extends FormObject {
 
@@ -16,6 +24,7 @@ public class HitMissCounter extends FormObject {
         labelView.setText(label);
         m_hitCounter = new Counter("Hit", hitIncrement, hitDecrement);
         m_missCounter = new Counter("Miss", missIncrement, missDecrement);
+
     }
 
     @Override

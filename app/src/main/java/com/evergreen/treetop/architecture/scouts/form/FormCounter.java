@@ -4,6 +4,12 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 public class FormCounter extends  FormObject {
 
     Counter m_counter;
@@ -13,6 +19,7 @@ public class FormCounter extends  FormObject {
     public FormCounter(String label, String path, TextView counter, TextView decrementor) {
         super(label, path);
         m_counter = new Counter(label, counter, decrementor);
+
         Log.i("FORM_OBJECT", "Initialized Counter \"" + getLabel() + "\" at path "
         + getPath());
     }
