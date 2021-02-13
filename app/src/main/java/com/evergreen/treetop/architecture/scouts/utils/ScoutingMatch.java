@@ -50,9 +50,13 @@ public class ScoutingMatch {
      * method for testing, when we need to get the database of the current team.
      * Later, this should be achieved using the scouter-team hashmap and the current user object.
      */
-    @Deprecated
     public int getTeam() {
+        // TODO return user's team via hash-map
         return m_teams[0][0];
+    }
+
+    public MatchID getID() {
+        return m_id;
     }
 
     public void start() {
@@ -67,6 +71,7 @@ public class ScoutingMatch {
     public DatabaseReference getDBRef(int team) {
         return new MatchDB(team).getRef().child(m_id.toString());
     }
+
 
     public static void startNext() {
         m_current.m_id = m_current.m_id.next();
