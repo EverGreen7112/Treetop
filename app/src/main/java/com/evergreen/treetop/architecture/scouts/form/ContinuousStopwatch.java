@@ -10,7 +10,7 @@ import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
 
 import java.util.Locale;
 
-public class ContinousStopwatch extends FormObject {
+public class ContinuousStopwatch extends FormObject {
 
     private int m_counter = 0;
     private int m_start;
@@ -18,7 +18,7 @@ public class ContinousStopwatch extends FormObject {
     private TextView m_view;
 
     @SuppressLint("ClickableViewAccessibility")
-    public ContinousStopwatch(String label, String path, TextView view, TextView labelView) {
+    public ContinuousStopwatch(String label, String path, TextView view, TextView labelView) {
         super(label, path);
         labelView.setText(label);
         m_view = view;

@@ -52,5 +52,11 @@
     "todo"
   ],
 
-  "build" : {}
+  "build" : {},
+
+  "res" : {
+    "scout" : [
+      "form"
+    ]
+  }
 }  

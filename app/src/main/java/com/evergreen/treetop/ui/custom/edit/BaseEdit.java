@@ -16,7 +16,7 @@ import com.evergreen.treetop.architecture.scouts.utils.Loggable;
 import com.evergreen.treetop.ui.custom.utils.Shape;
 
 @SuppressLint("ViewConstructor")
- class BaseEdit extends AppCompatEditText implements Loggable {
+class BaseEdit extends AppCompatEditText implements Loggable {
 
     public BaseEdit(@NonNull Context context, Shape shape) {
         super(context);

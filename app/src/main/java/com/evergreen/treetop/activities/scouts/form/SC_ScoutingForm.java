@@ -49,7 +49,6 @@ public class SC_ScoutingForm extends AppCompatActivity {
                         setContent(new SC_FormSubmissionFragment());
                         break;
                 }
-
             }
 
             @Override
@@ -76,5 +75,4 @@ public class SC_ScoutingForm extends AppCompatActivity {
         fragmentTransaction.add(R.id.sc_form_frag_tab_view_content, fragment);
         fragmentTransaction.commit();
     }
-
 }

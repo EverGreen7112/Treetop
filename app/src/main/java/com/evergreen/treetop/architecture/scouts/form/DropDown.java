@@ -42,13 +42,11 @@ public class DropDown extends FormObject {
                     }
                 }
         );
-
     }
 
     public boolean itemSelected() {
         return !m_spinner.getSelectedItem().toString().equals("");
     }
-
 
     @Override
     public void submit() {
@@ -66,6 +64,5 @@ public class DropDown extends FormObject {
         public EmptyOptionException(String message) {
             super(message);
         }
-
     }
 }
