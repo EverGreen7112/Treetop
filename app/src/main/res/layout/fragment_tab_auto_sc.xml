@@ -9,7 +9,6 @@
         android:paddingBottom="15dp"
         >
 
-
         <!-- TOP BAR -->
 
         <fragment
@@ -23,7 +22,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             android:paddingBottom="10dp"
-            tools:layout="@layout/fragment_powercell_counters_sc" />
+            tools:layout="@layout/fragment_form_header_sc" />
 
         <!-- LINE PASS -->
 

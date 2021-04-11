@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:paddingBottom="10dp"
-        tools:layout="@layout/fragment_powercell_counters_sc" />
+        tools:layout="@layout/fragment_form_header_sc" />
 
     <!-- POWERCELL COUNTERS -->
 

@@ -25,7 +25,7 @@ public class SC_FormHeaderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View thisView =  inflater.inflate(R.layout.fragment_form_header, container, false);
+        View thisView =  inflater.inflate(R.layout.fragment_form_header_sc, container, false);
 
 
         TextView matchTimer = thisView.findViewById(R.id.sc_form_auto_match_timer);
