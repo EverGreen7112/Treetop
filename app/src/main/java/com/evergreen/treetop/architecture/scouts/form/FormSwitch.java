@@ -19,7 +19,8 @@ public class FormSwitch extends FormObject {
 
     @Override
     public void submit() {
-        getRef().setValue(m_switch.isChecked());
+        setValue(m_switch.isChecked());
+        setValue(m_switch.isChecked());
         Log.i("DB_EVENT", "Submitting switch \"" + getLabel() + "\" to path "
                 + getPath() + " under value " + m_switch.isChecked());
     }

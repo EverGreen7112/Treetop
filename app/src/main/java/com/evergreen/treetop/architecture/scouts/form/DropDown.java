@@ -58,7 +58,7 @@ public class DropDown extends FormObject {
                     "\", but no option was selected!");
         }
 
-        getRef().setValue(m_spinner.getSelectedItem().toString());
+        setValue(m_spinner.getSelectedItem().toString());
     }
 
     public static class EmptyOptionException extends RuntimeException {

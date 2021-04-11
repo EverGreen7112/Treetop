@@ -9,14 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Treetop">
-        <activity android:name=".test.TestActivity"/>
-        <activity android:name=".activities.scouts.form.SC_FormLauncher">
+        <activity android:name=".activities.scouts.schedule.SC_ScheduleActivity"></activity>
+        <activity android:name=".activities.users.SC_SignUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".test.TestActivity" />
+        <activity android:name=".activities.scouts.form.SC_FormLauncher" />
         <activity android:name=".activities.scouts.form.SC_ScoutingForm" />
     </application>
 

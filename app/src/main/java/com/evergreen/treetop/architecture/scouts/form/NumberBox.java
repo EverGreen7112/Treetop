@@ -20,7 +20,7 @@ public class NumberBox extends FormObject {
     @Override
     public void submit() {
         int val = Integer.parseInt(m_inputBox.getText().toString());
-        getRef().setValue(val);
+        setValue(val);
         Log.i("DB_EVENT", "Submitted NumberBox \"" + getLabel() + "\" with value "
                 + val + " under path " + getPath());
     }

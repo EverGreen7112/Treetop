@@ -53,7 +53,7 @@ public class SequenceStopwatch extends FormObject {
 
     @Override
     public void submit() {
-        getRef().setValue(m_sequence);
+        setValue(m_sequence);
         Log.i("DB_EVENT", "Submitted SequenceStopwatch \"" + getLabel() + "\" with value "
                 + m_sequence.toString() + " under path " + getPath());
     }

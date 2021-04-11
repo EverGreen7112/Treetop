@@ -19,7 +19,7 @@ public class FormCounter extends  FormObject {
 
     @Override
     public void submit() {
-        getRef().setValue(m_counter.getCounter());
+        setValue(m_counter.getCounter());
     }
 
 }

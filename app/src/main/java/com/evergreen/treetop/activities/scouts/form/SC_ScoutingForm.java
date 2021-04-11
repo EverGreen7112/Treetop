@@ -14,6 +14,7 @@ import com.evergreen.treetop.R;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
 import com.evergreen.treetop.ui.fragments.form.SC_FormAutoFragment;
 import com.evergreen.treetop.ui.fragments.form.SC_FormEndgameFragment;
+import com.evergreen.treetop.ui.fragments.form.SC_FormSubmissionFragment;
 import com.evergreen.treetop.ui.fragments.form.SC_FormTeleopFragment;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -43,6 +44,7 @@ public class SC_ScoutingForm extends AppCompatActivity {
                         break;
                     case 2:
                         setContent(new SC_FormEndgameFragment());
+                        break;
                     case 3:
                         setContent(new SC_FormSubmissionFragment());
                         break;
