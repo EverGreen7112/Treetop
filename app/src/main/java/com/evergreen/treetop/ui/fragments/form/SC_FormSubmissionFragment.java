@@ -14,8 +14,7 @@ import com.evergreen.treetop.architecture.scouts.handlers.MatchDB;
 public class SC_FormSubmissionFragment extends Fragment {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View thisView = inflater.inflate(R.layout.fragment_tab_form_submit_sc, container, false);
         thisView.findViewById(R.id.sc_form_button_submit).setOnClickListener(v -> MatchDB.submitActiveForm());
         return thisView;

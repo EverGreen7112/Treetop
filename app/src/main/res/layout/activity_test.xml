@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.evergreen.treetop.ui.custom.text.OvaTextView
+    <com.evergreen.treetop.ui.custom.text.OvalTextView
         android:id="@+id/spinner_desc"
         android:layout_width="350dp"
         android:layout_height="342dp"
