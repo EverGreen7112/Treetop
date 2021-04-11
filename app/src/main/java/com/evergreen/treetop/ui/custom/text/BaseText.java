@@ -47,6 +47,5 @@ class BaseText extends AppCompatTextView implements Loggable {
         if (getId() == View.NO_ID) return getClass().getName();
         return getResources().getResourceName(getId());
     }
-
 }
 
