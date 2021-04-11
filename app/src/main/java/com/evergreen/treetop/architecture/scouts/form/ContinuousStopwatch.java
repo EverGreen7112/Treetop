@@ -9,7 +9,6 @@ import com.evergreen.treetop.architecture.scouts.utils.RepeatListener;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
 
 import java.util.Locale;
-import java.util.logging.Handler;
 
 public class ContinuousStopwatch extends FormObject {
 
@@ -52,7 +51,7 @@ public class ContinuousStopwatch extends FormObject {
 
     @Override
     public void submit() {
-        getRef().setValue(new TimedAction(getLabel(), m_start, m_end));
+        setValue(new TimedAction(getLabel(), m_start, m_end));
         // TODO Log message
     }
 }

@@ -4,6 +4,7 @@ import com.evergreen.treetop.architecture.scouts.handlers.MatchDB;
 import com.evergreen.treetop.architecture.scouts.utils.Loggable;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.FieldPath;
 
 public abstract class FormObject implements Loggable {
 
@@ -27,11 +28,24 @@ public abstract class FormObject implements Loggable {
         return m_label;
     }
 
-    public DatabaseReference getRef() {
-        return ScoutingMatch.getCurrent().getDBRef(ScoutingMatch.getCurrent().getTeam()).child(m_path);
+    public DatabaseReference _getRef() {
+        return ScoutingMatch.getCurrent()._getDBRef(ScoutingMatch.getCurrent().getUserTeam()).child(m_path);
+    }
+
+    protected void setValue(Object data) {
+        ScoutingMatch
+        .getCurrent()
+        .getDBRef(ScoutingMatch.getCurrent().getUserTeam())
+        .update(m_path, data);
     }
 
     public String getPath() {
-        return getRef().getKey();
+        String matchDoc =
+            ScoutingMatch
+            .getCurrent()
+            .getDBRef(ScoutingMatch.getCurrent().getUserTeam())
+            .getPath();
+
+        return matchDoc + "/" + m_path;
     }
 }
