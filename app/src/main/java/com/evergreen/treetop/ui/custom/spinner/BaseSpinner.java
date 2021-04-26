@@ -50,9 +50,9 @@ public class BaseSpinner extends AppCompatSpinner implements Loggable {
         return getResources().getResourceName(getId());
     }
 
-    public void loadOptions(String[] options) {
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(
+    public <T> void loadOptions(T[] options) {
+        ArrayAdapter<T> adapter =
+                new ArrayAdapter<T>(
                     getContext(),
                     R.layout.support_simple_spinner_dropdown_item,
                     options);

@@ -7,12 +7,13 @@ import android.widget.TextView;
 import com.evergreen.treetop.ui.custom.spinner.BaseSpinner;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class DropDown extends FormObject {
     BaseSpinner m_spinner;
 
     public DropDown(String label, String path, BaseSpinner spinner, TextView labelView,
-                    TextView descriptionBox, HashMap<String, String> options) {
+                    TextView descriptionBox, Map<String, String> options) {
         super(label, path);
         labelView.setText(label);
         m_spinner = spinner;

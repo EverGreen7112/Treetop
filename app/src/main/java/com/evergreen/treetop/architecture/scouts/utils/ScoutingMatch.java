@@ -8,8 +8,6 @@ import com.evergreen.treetop.architecture.Utilities;
 import com.evergreen.treetop.architecture.scouts.data.MatchTeam;
 import com.evergreen.treetop.architecture.scouts.handlers.MatchDB;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Exclude;
 
@@ -105,10 +103,6 @@ public class ScoutingMatch {
 
     public int getTimeSinceStart() {
         return  (int)(System.currentTimeMillis() - m_timerStart);
-    }
-
-    public DatabaseReference _getDBRef(int team) {
-        return new MatchDB(team)._getRef().child(m_id.toString());
     }
 
     public DocumentReference getDBRef(int team) {

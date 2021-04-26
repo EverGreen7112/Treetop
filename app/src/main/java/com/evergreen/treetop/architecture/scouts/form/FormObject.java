@@ -3,7 +3,6 @@ package com.evergreen.treetop.architecture.scouts.form;
 import com.evergreen.treetop.architecture.scouts.handlers.MatchDB;
 import com.evergreen.treetop.architecture.scouts.utils.Loggable;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.FieldPath;
 
 public abstract class FormObject implements Loggable {
@@ -26,10 +25,6 @@ public abstract class FormObject implements Loggable {
 
     public String getLabel() {
         return m_label;
-    }
-
-    public DatabaseReference _getRef() {
-        return ScoutingMatch.getCurrent()._getDBRef(ScoutingMatch.getCurrent().getUserTeam()).child(m_path);
     }
 
     protected void setValue(Object data) {

@@ -3,8 +3,8 @@ package com.evergreen.treetop.architecture.scouts.data;
 import androidx.annotation.NonNull;
 
 import com.evergreen.treetop.architecture.scouts.utils.Loggable;
-import com.evergreen.treetop.architecture.users.UserDB;
-import com.evergreen.treetop.architecture.users._User;
+//import com.evergreen.treetop.architecture.users.UserDB;
+//import com.evergreen.treetop.architecture.users._User;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.function.Consumer;
@@ -32,16 +32,16 @@ public class MatchTeam implements Loggable {
         return m_blueAlliance;
     }
 
-    public void onUser(Consumer<_User> action, Consumer<Exception> onFailure) {
-        UserDB.getInstance().onUsers(
-                set -> action.accept(set.iterator().next()),
-                onFailure,
-                m_scouterId);
-    }
+//    public void onUser(Consumer<_User> action, Consumer<Exception> onFailure) {
+//        UserDB.getInstance().onUsers(
+//                set -> action.accept(set.iterator().next()),
+//                onFailure,
+//                m_scouterId);
+//    }
 
-    public void setUser(_User user) {
-        m_scouterId = user.getUid();
-    }
+//    public void setUser(_User user) {
+//        m_scouterId = user.getUid();
+//    }
 
     public MatchTeam(int teamNumber, String name, boolean blueAlliance, String scouterId) {
         m_teamNumber = teamNumber;

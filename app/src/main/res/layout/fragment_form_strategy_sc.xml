@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.form.SC_FormStrategyFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.evergreen.treetop.ui.custom.spinner.OvalSpinner
+        android:id="@+id/sc_form_strategy_spinner_picker"
+        android:layout_width="363dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="24dp"
+        android:prompt="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/sc_form_strategy_text_picker_label"
+            android:layout_width="166dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="120dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.evergreen.treetop.ui.custom.text.OvalTextView
+            android:id="@+id/sc_form_strategy_text_option_desc"
+            android:layout_width="350dp"
+            android:layout_height="342dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sc_form_strategy_spinner_picker" />
+
+        <Button
+            android:id="@+id/sc_form_strategy_button_submit"
+            android:layout_width="184dp"
+            android:layout_height="78dp"
+            android:layout_marginTop="36dp"
+            android:text="Submit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_desc" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

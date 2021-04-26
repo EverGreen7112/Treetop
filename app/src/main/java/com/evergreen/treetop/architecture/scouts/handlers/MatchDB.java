@@ -4,8 +4,6 @@ import android.util.Log;
 
 import com.evergreen.treetop.architecture.scouts.form.FormObject;
 import com.evergreen.treetop.architecture.scouts.utils.MatchID;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 
@@ -43,9 +41,6 @@ public class MatchDB {
         }
     }
 
-    public DatabaseReference _getRef() {
-        return TeamDB.getInstance().getTeamDB().child(String.valueOf(m_team));
-    }
 
     public CollectionReference getRef() {
         return TeamDB.getInstance().getRef().collection(String.valueOf(m_team));
