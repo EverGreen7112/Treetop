@@ -53,7 +53,7 @@ public class SC_FormHeaderFragment extends Fragment {
 
 
         ((TextView)(thisView.findViewById(R.id.sc_form_auto_team_num)))
-                .setText(String.format(Locale.ENGLISH, "#%04d", ScoutingMatch.getCurrent().getUserTeam()));
+                .setText(String.format(Locale.ENGLISH, "#%04d", ScoutingMatch.getCurrent().getUserTeam())); //TODO implement actual team recognition once users are in place
 
         ((TextView)(thisView.findViewById(R.id.sc_form_auto_match_num)))
                 .setText(ScoutingMatch.getCurrent().getID().toString());

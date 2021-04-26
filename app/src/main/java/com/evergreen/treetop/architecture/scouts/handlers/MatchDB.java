@@ -41,10 +41,7 @@ public class MatchDB {
         }
     }
 
-
     public CollectionReference getRef() {
         return TeamDB.getInstance().getRef().collection(String.valueOf(m_team));
     }
-
-
 }

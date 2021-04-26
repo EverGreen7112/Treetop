@@ -12,6 +12,7 @@ public class TeamDB {
     public static TeamDB getInstance()  {
         return m_instance;
     }
+
     private final DocumentReference m_ref =
             FirebaseFirestore.getInstance().document("scouting-forms");
 

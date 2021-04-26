@@ -10,17 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Treetop">
         <activity android:name=".activities.scouts.form.SC_StrategyForm"></activity>
-        <activity android:name=".activities.scouts.schedule.SC_ScheduleActivity" />
         <activity android:name=".activities.users.SC_SignUpActivity">
+
+        </activity>
+        <activity android:name=".test.TestActivity" />
+        <activity android:name=".activities.scouts.form.SC_FormLauncher" />
+        <activity android:name=".activities.scouts.form.SC_ScoutingForm">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".test.TestActivity" />
-        <activity android:name=".activities.scouts.form.SC_FormLauncher" />
-        <activity android:name=".activities.scouts.form.SC_ScoutingForm" />
     </application>
 
 </manifest>

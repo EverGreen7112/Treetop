@@ -83,13 +83,15 @@ public class ScoutingMatch {
      */
     public int getUserTeam() {
 
-        for (MatchTeam team : m_teams) {
-            if (team.getScouterId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                return team.getTeamNumber();
-            }
-        }
+//        for (MatchTeam team : m_teams) {
+//            if (team.getScouterId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+//                return team.getTeamNumber();
+//            }
+//        }
+//
+//        return -1;
 
-        return -1;
+        return 7112; //haha....
     }
 
     public MatchID getID() {
