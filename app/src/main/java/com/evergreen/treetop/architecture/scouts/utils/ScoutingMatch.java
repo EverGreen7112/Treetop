@@ -108,7 +108,7 @@ public class ScoutingMatch {
     }
 
     public DocumentReference getDBRef(int team) {
-        return new MatchDB(team).getRef().document(m_id.toString());
+        return new MatchDB(team).getRef().document(Integer.toString(team));
     }
 
     public long getMatchTimeEpoch() {
