@@ -9,25 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Treetop">
-        <activity android:name=".activities.scouts.form.SC_StrategyForm" />
-        <activity android:name=".activities.users.SC_SignUpActivity">
-
-        </activity>
-        <activity android:name=".test.TestActivity">
+        <activity android:name=".activities.scouts.form.SC_TeamStrategyForm" />
+        <activity android:name=".activities.scouts.form.SC_AllianceStrategyForm" />
+        <activity android:name=".activities.users.SC_SignUpActivity" />
+        <activity android:name=".test.TestActivity" />
+        <activity android:name=".activities.scouts.form.SC_FormLauncher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.scouts.form.SC_FormLauncher" />
-        <activity android:name=".activities.scouts.form.SC_ScoutingForm">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
+        <activity android:name=".activities.scouts.form.SC_ResultsForm" />
+        <activity android:name=".activities.scouts.form.SC_ScoutingForm" />
         <activity android:name=".activities.scouts.stats.GeneralStats" />
     </application>
 

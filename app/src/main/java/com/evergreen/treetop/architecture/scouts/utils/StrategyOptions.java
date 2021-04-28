@@ -1,5 +1,7 @@
 package com.evergreen.treetop.architecture.scouts.utils;
 
+import org.apache.commons.text.WordUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +16,11 @@ public class StrategyOptions {
         return m_options;
     }
 
-    public StrategyType getType() {
+    public String getType() {
         return m_type;
     }
 
-    private  StrategyType m_type;
+    private String m_type;
 
     public static StrategyOptions TEAM;
     public static StrategyOptions ALLIANCE;
@@ -28,17 +30,17 @@ public class StrategyOptions {
 
         options.put("Defence", "Tried to physically prevent other robots from preforming tasks");
         options.put("Bottom Shoots", "Tried to give a burst of shots to the bottom target, no aiming");
-        options.put("Quantity Shoots", "Tried to collect and throw as many power cells as they without a very good aim");
-        TEAM = new StrategyOptions(StrategyType.TEAM, options);
+        options.put("Quantity Shoots", "Tried to collect and throw as many power cells as they could without a very good aim");
+        TEAM = new StrategyOptions("Team", options);
 
         options.clear();
         options.put("Guarded Shooting", "Tried to hit target with one robot doing defense");
         options.put("Multi Climb", "Relied on multi robot climbing");
         options.put("Third Stage", "Tried to reach higher stages");
-        ALLIANCE = new StrategyOptions(StrategyType.ALLIANCE, options);
+        ALLIANCE = new StrategyOptions("Alliance", options);
     }
 
-    private StrategyOptions(StrategyType type, Map<String, String> options) {
+    private StrategyOptions(String type, Map<String, String> options) {
         m_options = options.entrySet().stream()
                 .map(entry -> new StrategyOption(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
@@ -62,10 +64,5 @@ public class StrategyOptions {
             m_description = description;
         }
 
-    }
-
-    public enum StrategyType {
-        TEAM,
-        ALLIANCE
     }
 }

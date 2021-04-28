@@ -38,7 +38,7 @@ public class MatchDB {
     public static void submitActiveForm() {
 
         while (!m_activeObjects.isEmpty()) {
-            Log.i("DB_EVENT", "submitting object " + m_activeObjects.peek().getLabel());
+            Log.v("DB_EVENT", "submitting object " + m_activeObjects.peek().getLabel());
             m_activeObjects.pop().submit();
             Log.v("FORM_STATE", "Active object stack: " + m_activeObjects);
         }

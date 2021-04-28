@@ -7,7 +7,7 @@
     tools:context=".activities.scouts.form.SC_TeamStrategyForm">
 
     <fragment
-        android:id="@+id/sc_form_strategy_frag"
+        android:id="@+id/sc_form_alliance_strategy_frag"
         class="com.evergreen.treetop.ui.fragments.form.SC_FormStrategyFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

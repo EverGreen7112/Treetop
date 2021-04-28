@@ -4,6 +4,7 @@ package com.evergreen.treetop.architecture.scouts.utils;
 public class MatchID {
 
     public enum MatchType {
+        TRAINING,
         QUAL,
         PLAYOFF;
     }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.architecture.scouts.data.GameStage;
+import com.evergreen.treetop.architecture.scouts.form.FormObject;
 import com.evergreen.treetop.architecture.scouts.form.SequenceSwitch;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
 
@@ -53,7 +54,8 @@ public class SC_FormHeaderFragment extends Fragment {
 
 
         ((TextView)(thisView.findViewById(R.id.sc_form_auto_team_num)))
-                .setText(String.format(Locale.ENGLISH, "#%04d", ScoutingMatch.getCurrent().getUserTeam())); //TODO implement actual team recognition once users are in place
+                .setText(String.format( // Get scouted team and format it to four digits
+                        Locale.ENGLISH, "#%04d", FormObject.getScoutedTeam()));
 
         ((TextView)(thisView.findViewById(R.id.sc_form_auto_match_num)))
                 .setText(ScoutingMatch.getCurrent().getID().toString());
