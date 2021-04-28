@@ -50,8 +50,12 @@ public class ContinuousStopwatch extends FormObject {
     }
 
     @Override
-    public void submit() {
-        setValue(new TimedAction(getLabel(), m_start, m_end));
-        // TODO Log message
+    protected Object getValue() {
+        return new TimedAction(getLabel(), m_start, m_end);
+    }
+
+    @Override
+    protected String getType() {
+        return "Continuous Stopwatch";
     }
 }

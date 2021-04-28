@@ -1,5 +1,6 @@
 package com.evergreen.treetop.architecture.scouts.form;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -43,10 +44,21 @@ public class DropDown extends FormObject {
                     }
                 }
         );
+
     }
 
     public boolean itemSelected() {
         return !m_spinner.getSelectedItem().toString().equals("");
+    }
+
+    @Override
+    protected Object getValue() {
+        return m_spinner.getSelectedItem().toString();
+    }
+
+    @Override
+    protected String getType() {
+        return "Dropdown";
     }
 
     @Override
@@ -57,7 +69,7 @@ public class DropDown extends FormObject {
                     "\", but no option was selected!");
         }
 
-        setValue(m_spinner.getSelectedItem().toString());
+        super.submit();
     }
 
     public static class EmptyOptionException extends RuntimeException {

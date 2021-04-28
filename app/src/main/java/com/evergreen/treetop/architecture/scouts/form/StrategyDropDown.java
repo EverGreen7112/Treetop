@@ -12,8 +12,8 @@ public class StrategyDropDown extends DropDown {
 
     public StrategyDropDown(StrategyOptions options,  BaseSpinner spinner, TextView labelView, TextView descriptionBox) {
         super(
-                options.getType().toString() + "STRATEGIES",
-                "strategies/" + options.getType().toString().toLowerCase(),
+                options.getType() + " Strategy",
+                options.getType().toLowerCase() + "-strategy",
                 spinner,
                 labelView,
                 descriptionBox,
@@ -24,5 +24,10 @@ public class StrategyDropDown extends DropDown {
                         )
                 )
         );
+    }
+
+    @Override
+    protected String getType() {
+        return "Strategy Dropdown";
     }
 }

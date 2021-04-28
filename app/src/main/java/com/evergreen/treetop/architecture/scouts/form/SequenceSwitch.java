@@ -46,9 +46,13 @@ public class SequenceSwitch extends FormObject  {
     }
 
     @Override
-    public void submit() {
-        setValue(m_sequence);
-        Log.i("DB_EVENT", "Submitting SequenceSwitch \"" + getLabel() + "\" to path " +
-                getPath()  +  " under value " + m_sequence.toString());
+    protected Object getValue() {
+        return m_sequence;
     }
+
+    @Override
+    protected String getType() {
+        return "Sequence Switch";
+    }
+
 }

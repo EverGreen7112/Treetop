@@ -13,13 +13,15 @@ public class FormCounter extends  FormObject {
     public FormCounter(String label, String path, TextView counter, TextView decrementor) {
         super(label, path);
         m_counter = new Counter(label, counter, decrementor);
-        Log.i("FORM_OBJECT", "Initialized Counter \"" + getLabel() + "\" at path "
-        + getPath());
     }
 
     @Override
-    public void submit() {
-        setValue(m_counter.getCounter());
+    protected Object getValue() {
+        return m_counter.getCounter();
     }
 
+    @Override
+    protected String getType() {
+        return "Counter";
+    }
 }
