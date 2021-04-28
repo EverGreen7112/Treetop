@@ -77,21 +77,7 @@ public class ScoutingMatch {
         return m_current;
     }
 
-    /**
-     * method for testing, when we need to get the database of the current team.
-     * Later, this should be achieved using the scouter-team hashmap and the current user object.
-     */
-    public int getUserTeam() {
-
-//        for (MatchTeam team : m_teams) {
-//            if (team.getScouterId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-//                return team.getTeamNumber();
-//            }
-//        }
-//
-//        return -1;
-
-        return 7112; //haha....
+        m_current = currentMatch;
     }
 
     public MatchID getID() {

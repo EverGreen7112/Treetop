@@ -10,6 +10,8 @@ public abstract class FormObject implements Loggable {
     private final String m_path;
     private final String m_label;
 
+    private static int s_scoutedTeam;
+
     public FormObject(String label, String path) {
         m_path = path;
         m_label = label;
@@ -42,5 +44,14 @@ public abstract class FormObject implements Loggable {
             .getPath();
 
         return matchDoc + "/" + ScoutingMatch.getCurrent().getMatchPath() + "." + m_path;
+    }
+
+
+    public static int getScoutedTeam() {
+        return s_scoutedTeam;
+    }
+
+    public static void setScoutedTeam(int scoutedTeam) {
+        s_scoutedTeam = scoutedTeam;
     }
 }
