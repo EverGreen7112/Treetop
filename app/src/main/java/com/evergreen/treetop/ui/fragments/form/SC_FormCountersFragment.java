@@ -28,7 +28,7 @@ public class SC_FormCountersFragment extends Fragment {
 
         new HitMissCounter(
                 "Bottom",
-                pathPrefix + "/bottom",
+                pathPrefix + ".bottom",
                 getView().findViewById(R.id.sc_text_form_counters_bot_label),
                 getView().findViewById(R.id.sc_text_form_counters_bot_hit_value),
                 getView().findViewById(R.id.sc_text_form_counters_bot_hit_decrement),
@@ -38,7 +38,7 @@ public class SC_FormCountersFragment extends Fragment {
 
         new HitMissCounter(
                 "Outer",
-                pathPrefix + "/outer",
+                pathPrefix + ".outer",
                 getView().findViewById(R.id.sc_text_form_counters_out_label),
                 getView().findViewById(R.id.sc_text_form_counters_out_hit_value),
                 getView().findViewById(R.id.sc_text_form_counters_out_hit_decrement),
@@ -48,7 +48,7 @@ public class SC_FormCountersFragment extends Fragment {
 
         new HitMissCounter(
                 "Inner",
-                pathPrefix + "/inner",
+                pathPrefix + ".inner",
                 getView().findViewById(R.id.sc_text_form_counters_in_label),
                 getView().findViewById(R.id.sc_text_form_counters_in_hit_value),
                 getView().findViewById(R.id.sc_text_form_counters_in_hit_decrement),
@@ -58,7 +58,7 @@ public class SC_FormCountersFragment extends Fragment {
 
         new HitMissCounter(
                 "Load",
-                pathPrefix + "/load",
+                pathPrefix + ".load",
                 getView().findViewById(R.id.sc_text_form_counters_load_label),
                 getView().findViewById(R.id.sc_text_form_counters_load_hit_value),
                 getView().findViewById(R.id.sc_text_form_counters_load_hit_decrement),
@@ -68,13 +68,12 @@ public class SC_FormCountersFragment extends Fragment {
 
         new HitMissCounter(
                 "Collect",
-                pathPrefix + "/collection",
+                pathPrefix + ".collection",
                 getView().findViewById(R.id.sc_text_form_counters_coll_label),
                 getView().findViewById(R.id.sc_text_form_counters_coll_hit_value),
                 getView().findViewById(R.id.sc_text_form_counters_coll_hit_decrement),
                 getView().findViewById(R.id.sc_text_form_counters_coll_miss_value),
                 getView().findViewById(R.id.sc_text_form_counters_coll_miss_decrement)
         );
-
     }
 }

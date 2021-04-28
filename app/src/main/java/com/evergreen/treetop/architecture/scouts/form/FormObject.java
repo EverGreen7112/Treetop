@@ -31,7 +31,7 @@ public abstract class FormObject implements Loggable {
         ScoutingMatch
         .getCurrent()
         .getDBRef(ScoutingMatch.getCurrent().getUserTeam())
-        .update(m_path, data);
+        .update(ScoutingMatch.getCurrent().getMatchPath() + "." + m_path, data);
     }
 
     public String getPath() {
@@ -41,6 +41,6 @@ public abstract class FormObject implements Loggable {
             .getDBRef(ScoutingMatch.getCurrent().getUserTeam())
             .getPath();
 
-        return matchDoc + "/" + m_path;
+        return matchDoc + "/" + ScoutingMatch.getCurrent().getMatchPath() + "." + m_path;
     }
 }

@@ -41,7 +41,7 @@ public class MatchDB {
         }
     }
 
-    public CollectionReference getRef() {
-        return TeamDB.getInstance().getRef().collection("Scouting");
+    public DocumentReference getRef() {
+        return TeamDB.getInstance().getRef().document(Integer.toString(m_team));
     }
 }

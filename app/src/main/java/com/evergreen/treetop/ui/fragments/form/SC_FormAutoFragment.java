@@ -38,7 +38,7 @@ public class SC_FormAutoFragment extends Fragment {
 
         new FormCounter(
                 "Loaded",
-                pathPrefix + "/loaded",
+                pathPrefix + ".loaded",
                 thisView.findViewById(R.id.sc_form_auto_loaded_counter_valuebox),
                 thisView.findViewById(R.id.sc_form_auto_loaded_counter_decrement)
         );
@@ -47,7 +47,7 @@ public class SC_FormAutoFragment extends Fragment {
         // --- Line Pass Init ---
         new FormSwitch(
                 "Passed the Line",
-                pathPrefix + "/line-pass",
+                pathPrefix + ".line-pass",
                 thisView.findViewById(R.id.sc_form_auto_line_passed_switch),
                 thisView.findViewById(R.id.sc_form_auto_line_passed_label)
         );

@@ -108,7 +108,11 @@ public class ScoutingMatch {
     }
 
     public DocumentReference getDBRef(int team) {
-        return new MatchDB(team).getRef().document(Integer.toString(team));
+        return new MatchDB(team).getRef();
+    }
+
+    public String getMatchPath() {
+        return m_id.toString();
     }
 
     public long getMatchTimeEpoch() {
@@ -132,6 +136,5 @@ public class ScoutingMatch {
         return "ScoutingMatch "
                 + m_id.toString()
                 + ", teams " + Utilities.stringify(m_teams, MatchTeam::getTeamNumber);
-
     }
 }

@@ -16,7 +16,7 @@ public class TeamDB {
     private final FirebaseFirestore m_ref =
             FirebaseFirestore.getInstance();
 
-    public FirebaseFirestore getRef() {
-        return m_ref;
+    public CollectionReference getRef() {
+        return m_ref.collection("Scouting");
     }
 }

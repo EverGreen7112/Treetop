@@ -32,42 +32,40 @@ public class SC_FormEndgameFragment extends Fragment {
 
         new FormSwitch(
                 "Hanging",
-                pathPrefix + "/hang",
+                pathPrefix + ".hang",
                 thisView.findViewById(R.id.sc_form_end_hanging_switch),
                 thisView.findViewById(R.id.sc_form_end_hanging_label)
         );
 
         new ContinuousStopwatch(
                 "Hang Attempt",
-                pathPrefix + "/hang-attempt",
+                pathPrefix + ".hang-attempt",
                 thisView.findViewById(R.id.sc_form_end_hang_attempt_stopwatch),
                 thisView.findViewById(R.id.sc_form_end_hang_attempt_stopwatch)
         );
 
         new FormSwitch(
                 "Scales are Level",
-                pathPrefix + "/level",
+                pathPrefix + ".level",
                 thisView.findViewById(R.id.sc_form_end_level_switch),
                 thisView.findViewById(R.id.sc_form_end_level_label)
         );
 
         new FormSwitch(
                 "Multiple Robots Hang",
-                pathPrefix + "/hang-many",
+                pathPrefix + ".hang-many",
                 thisView.findViewById(R.id.sc_form_end_multi_hang_switch),
                 thisView.findViewById(R.id.sc_form_end_multi_hang_label)
         );
 
         new SequenceStopwatch(
                 "Defense",
-                pathPrefix + "/defense",
+                pathPrefix + ".defense",
                 thisView.findViewById(R.id.sc_form_end_defence_stopwatch),
                 thisView.findViewById(R.id.sc_form_end_defence_label)
         );
 
         return  thisView;
-
-
     }
 
     @Override

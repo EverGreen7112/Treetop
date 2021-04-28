@@ -36,7 +36,7 @@ public class GeneralStats extends AppCompatActivity {
     private static final String TAG = "GeneralStats_sc";
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final DocumentReference scoutDataDoc = db.document("7112/Scouting");
+    private final DocumentReference scoutDataDoc = db.document("Scouting/7112");
 
     private final BarChart scoreOverTimeChart = findViewById(R.id.sc_stats_general_score_over_time_chart);
     private final BarChart rankingOverTimeChart = findViewById(R.id.sc_stats_general_ranking_over_time_chart);

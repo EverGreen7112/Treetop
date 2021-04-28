@@ -33,8 +33,8 @@ public class SC_FormTeleopFragment extends Fragment {
 
         // --- Initialize Defense Stopwatch ---
         new SequenceStopwatch(
-                "Defense",
-                pathPrefix + "/defense",
+                "Defence",
+                pathPrefix + ".defence",
                 thisView.findViewById(R.id.sc_form_teleop_defence_stopwatch),
                 thisView.findViewById(R.id.sc_form_teleop_defence_label)
         );
@@ -42,14 +42,14 @@ public class SC_FormTeleopFragment extends Fragment {
         // --- Initialize Rotation Control Switch-Miss ---
         new FormSwitch(
                 "Rotation Control",
-                pathPrefix + "/rotation-control/hit",
+                "rotation-control-hit",
                 thisView.findViewById(R.id.sc_form_teleop_rotation_switch),
                 thisView.findViewById(R.id.sc_form_teleop_rotation_label)
         );
 
         new FormCounter(
                 "Miss",
-                pathPrefix + "/rotation-control/miss",
+                "rotation-control-miss",
                 thisView.findViewById(R.id.sc_form_teleop_rotation_miss_value),
                 thisView.findViewById(R.id.sc_form_teleop_rotation_miss_decrement)
         );
@@ -57,14 +57,14 @@ public class SC_FormTeleopFragment extends Fragment {
         // --- Initialize Position Control Switch-Miss
         new FormSwitch(
                 "Position Control",
-                "position-control/hit",
+                "position-control-hit",
                 thisView.findViewById(R.id.sc_form_teleop_position_switch),
                 thisView.findViewById(R.id.sc_form_teleop_position_label)
         );
 
         new FormCounter(
                 "Miss",
-                "position-control/miss",
+                "position-control-miss",
                 thisView.findViewById(R.id.sc_form_teleop_position_miss_value),
                 thisView.findViewById(R.id.sc_form_teleop_position_miss_decrement)
         );
@@ -73,5 +73,4 @@ public class SC_FormTeleopFragment extends Fragment {
 
         return thisView;
     }
-
 }
