@@ -58,6 +58,6 @@ public class Utilities {
             ColorDrawable colorDrawable = (ColorDrawable) background;
             colorDrawable.setColor(ContextCompat.getColor(context, colorId));
         }
-
     }
+
 }
