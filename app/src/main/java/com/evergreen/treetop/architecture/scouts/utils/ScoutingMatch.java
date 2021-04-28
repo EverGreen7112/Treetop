@@ -23,60 +23,20 @@ public class ScoutingMatch {
     private long m_matchTime;
     private MatchID m_id;
 
-    public List<MatchTeam> getTeams() {
-        return m_teams;
-    }
 
-    private List<MatchTeam> m_teams = new ArrayList<>(); // TODO add scouters HashMap.
-    private static ScoutingMatch m_current = new ScoutingMatch(
-            new MatchID(MatchID.MatchType.QUAL, 1),
-            Arrays.asList(
-                    new MatchTeam(1, "First FIRST", true, "abc1"),
-                    new MatchTeam(2, "second FIRST", true, "abc2"),
-                    new MatchTeam(3, "third FIRST", true, "abc3"),
-                    new MatchTeam(4, "fourth FIRST", false, "abc4"),
-                    new MatchTeam(5, "fifth FIRST", false, "abc5"),
-                    new MatchTeam(6, "sixth FIRST", false, "abc6")
-            )
-    );
+    private static ScoutingMatch m_current;
 
 
-    public ScoutingMatch(MatchID id, List<MatchTeam> teams) {
+    public ScoutingMatch(MatchID id) {
         m_id = id;
 
-        if (teams.size() != 6) {
-            throw new IllegalArgumentException("Tried to initialize scouting match " + m_id.toString()
-                    + ", but was given a badly sized array. ");
-        }
-
-        if (teams.stream().filter(MatchTeam::isBlueAlliance).toArray().length != 3) {
-            throw new IllegalArgumentException("Tried to initialize scouting match " + m_id.toString()
-                    + ", but was given a team list with bad alliance distribution");
-        }
-
-        if  (teams.stream().map(MatchTeam::getTeamNumber).collect(Collectors.toSet()).size() != 6) {
-            throw new IllegalArgumentException("Tried to initialize scouting match " + m_id.toString()
-                    + ", but was given a team list with duplicate numbers");
-        }
-
-
-        if  (teams.stream().map(MatchTeam::getScouterId).collect(Collectors.toSet()).size() != 6) {
-            throw new IllegalArgumentException("Tried to initialize scouting match " + m_id.toString()
-                    + ", but was given a team list with duplicate scouters");
-        }
-
-        m_teams.addAll(teams);
-        teams.sort(MatchTeam::compare);
-
-        Log.i("DATA_OBJECT",
-              "Initialized new ScoutingMatch " + m_id.toString() +
-               ", with teams " + teams.toString());
+        Log.i("DATA_OBJECT", "Initialized new ScoutingMatch " + m_id.toString());
     }
 
     public static ScoutingMatch getCurrent() {
         return m_current;
     }
-
+    public static void setCurrent(ScoutingMatch currentMatch) {
         m_current = currentMatch;
     }
 
@@ -119,8 +79,7 @@ public class ScoutingMatch {
     @Override
     @NonNull
     public String toString() {
-        return "ScoutingMatch "
-                + m_id.toString()
-                + ", teams " + Utilities.stringify(m_teams, MatchTeam::getTeamNumber);
+        return "ScoutingMatch " + m_id.toString();
+
     }
 }
