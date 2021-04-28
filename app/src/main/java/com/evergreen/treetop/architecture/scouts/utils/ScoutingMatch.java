@@ -93,7 +93,7 @@ public class ScoutingMatch {
         return  (int)(System.currentTimeMillis() - m_timerStart);
     }
 
-    public DocumentReference getDBRef(int team) {
+    public DocumentReference getDocRef(int team) {
         return new MatchDB(team).getRef();
     }
 
