@@ -17,4 +17,9 @@ public class Utilities {
     public static <T> String stringify(T[] arr) {
         return stringify(Arrays.asList(arr));
     }
-}
+
+    public static final PlaceholderObject PLACEHOLDER_OBJECT = new PlaceholderObject();
+    private static class PlaceholderObject {
+        public final boolean exists = true;
+        private PlaceholderObject() {}
+    }
