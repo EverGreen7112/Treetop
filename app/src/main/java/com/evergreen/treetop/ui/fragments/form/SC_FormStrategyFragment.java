@@ -23,9 +23,8 @@ import java.util.Map;
 public class SC_FormStrategyFragment extends Fragment {
 
     public void loadOptions(StrategyOptions options) {
-
         StrategyDropDown dropdown =
-                new StrategyDropDown(StrategyOptions.TEAM, m_spinner, m_descriptionBox, m_spinnerLabel);
+                new StrategyDropDown(options, m_spinner, m_spinnerLabel,  m_descriptionBox);
 
         m_submitButton.setOnClickListener(v -> dropdown.submit());
     }
