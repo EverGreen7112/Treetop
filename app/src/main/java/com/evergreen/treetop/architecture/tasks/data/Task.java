@@ -30,6 +30,18 @@ public class Task extends Goal {
         setCompleted(completed);
     }
 
+    /**
+     * By default {@link ArrayAdapter} uses {@link #toString} to determine how to display the
+     * object as text. However, toString is conventionally used for debugging, where we might want
+     * to add other details. Thus, this method is used to provide a textual representation of the
+     * task to display on listViews, etc.
+     *
+     * @return a textual representation of the task to display in list views.
+     */
+    public String listDisplayString() {
+        return getTitle();
+    }
+
     public LocalDateTime getStartDeadline() {
         return m_startDeadline;
     }
