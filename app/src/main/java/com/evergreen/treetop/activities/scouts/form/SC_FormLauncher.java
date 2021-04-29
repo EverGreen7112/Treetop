@@ -21,7 +21,7 @@ import com.google.firebase.firestore.SetOptions;
 
 public class SC_FormLauncher extends AppCompatActivity {
 
-    private static final boolean TEST = false;
+    private static final boolean TEST = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
