@@ -1,14 +1,15 @@
 package com.evergreen.treetop.architecture.tasks.data;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Task extends Goal {
     private Goal m_parent;
     private LocalDateTime m_startDeadline;
     private LocalDateTime m_endDeadline;
     private User m_assigner;
-    private List<User> m_assignee;
+    private Set<User> m_assignees;
 
     public Task(int priority, String id, String title, String description, Unit unit, Goal parent,
                 LocalDateTime startDeadline, LocalDateTime endDeadline, User assigner) {
@@ -17,6 +18,7 @@ public class Task extends Goal {
         m_startDeadline = startDeadline;
         m_endDeadline = endDeadline;
         m_assigner = assigner;
+        m_assignees = new HashSet<>();
     }
 
 
