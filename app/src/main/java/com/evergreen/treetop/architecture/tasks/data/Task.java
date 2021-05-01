@@ -73,4 +73,21 @@ public class Task extends Goal {
 
         return iterationGoal;
     }
+
+    public User getAssigner() {
+        return m_assigner;
+    }
+
+    public Set<User> getAssignees() {
+        return m_assignees;
+    }
+
+    public void addAssignee(User assignee) {
+        m_assignees.add(assignee);
+    }
+
+    public void removeAssignee(User assignee) {
+        m_assignees.remove(assignee);
+    }
+
 }
