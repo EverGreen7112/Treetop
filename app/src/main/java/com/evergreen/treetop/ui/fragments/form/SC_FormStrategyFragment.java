@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.activities.scouts.form.SC_AllianceStrategyForm;
 import com.evergreen.treetop.activities.scouts.form.SC_TeamStrategyForm;
+import com.evergreen.treetop.activities.scouts.stats.GeneralStats;
 import com.evergreen.treetop.architecture.Utilities;
 import com.evergreen.treetop.architecture.scouts.form.StrategyDropDown;
 import com.evergreen.treetop.architecture.scouts.utils.StrategyOptions;
@@ -64,6 +65,5 @@ public class SC_FormStrategyFragment extends Fragment {
         m_submitButton = thisView.findViewById(R.id.sc_form_strategy_button_submit);
 
         return thisView;
-
     }
 }

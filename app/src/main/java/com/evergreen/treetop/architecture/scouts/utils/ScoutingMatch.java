@@ -23,9 +23,7 @@ public class ScoutingMatch {
     private long m_matchTime;
     private MatchID m_id;
 
-
     private static ScoutingMatch m_current;
-
 
     public ScoutingMatch(MatchID id) {
         m_id = id;
@@ -80,6 +78,5 @@ public class ScoutingMatch {
     @NonNull
     public String toString() {
         return "ScoutingMatch " + m_id.toString();
-
     }
 }

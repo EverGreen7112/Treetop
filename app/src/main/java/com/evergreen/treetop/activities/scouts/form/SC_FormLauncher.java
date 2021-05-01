@@ -21,13 +21,12 @@ import com.google.firebase.firestore.SetOptions;
 
 public class SC_FormLauncher extends AppCompatActivity {
 
-    private static final boolean TEST = true;
+    private static final boolean TEST = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_launcher_sc);
-
 
         if (TEST) {
             startActivity(new Intent(this, TestActivity.class));

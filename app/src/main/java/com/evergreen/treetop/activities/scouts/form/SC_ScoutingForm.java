@@ -22,7 +22,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 public class SC_ScoutingForm extends AppCompatActivity {
     TabLayout m_tabLayout;
-    // ViewPager2 viewPager;
+    ViewPager2 viewPager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +31,25 @@ public class SC_ScoutingForm extends AppCompatActivity {
 
         m_tabLayout = findViewById(R.id.sc_form_tab_layout);
         setContent(new SC_FormAutoFragment());
+
+        viewPager = findViewById(R.id.sc_form_pager);
+
+        new TabLayoutMediator(m_tabLayout, viewPager, ((tab, position) -> {
+            switch (position) {
+                case 1:
+                    tab.setText("auto");
+                    break;
+                case 2:
+                    tab.setText("teleop");
+                    break;
+                case 3:
+                    tab.setText("endgame");
+                    break;
+                case 4:
+                    tab.setText("submit");
+                    break;
+            }
+        })).attach();
 
         m_tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

@@ -7,6 +7,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <Button
+            android:id="@+id/sc_stats_general_update_charts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Charts"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <TextView
             android:id="@+id/sc_stats_general_score_over_time_label"
             android:layout_width="160dp"
@@ -15,15 +25,15 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="18dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/sc_stats_general_ranking_over_time_label"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sc_stats_general_update_charts" />
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/sc_stats_general_score_over_time_chart"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="320dp"
+            android:layout_height="256dp"
             android:layout_marginTop="18dp"
             app:layout_constraintTop_toBottomOf="@id/sc_stats_general_score_over_time_label"
             app:layout_constraintStart_toStartOf="@id/sc_stats_general_score_over_time_label"
@@ -37,31 +47,19 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"
-            app:layout_constraintStart_toEndOf="@id/sc_stats_general_score_over_time_label"
-            app:layout_constraintTop_toTopOf="@id/sc_stats_general_score_over_time_label"
-            app:layout_constraintBottom_toBottomOf="@id/sc_stats_general_score_over_time_label"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_marginTop="18dp"
+            app:layout_constraintStart_toStartOf="@id/sc_stats_general_score_over_time_chart"
+            app:layout_constraintTop_toBottomOf="@id/sc_stats_general_score_over_time_chart"
+            app:layout_constraintEnd_toEndOf="@id/sc_stats_general_score_over_time_chart" />
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/sc_stats_general_ranking_over_time_chart"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="320dp"
+            android:layout_height="256dp"
             android:layout_marginTop="18dp"
             app:layout_constraintTop_toBottomOf="@id/sc_stats_general_ranking_over_time_label"
             app:layout_constraintStart_toStartOf="@id/sc_stats_general_ranking_over_time_label"
             app:layout_constraintEnd_toEndOf="@id/sc_stats_general_ranking_over_time_label" />
-
-        <TextView
-            android:id="@+id/sc_stats_general_rank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rank: #"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/sc_stats_general_score_over_time_chart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/sc_stats_general_score_sources_label"
@@ -71,15 +69,15 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/sc_stats_general_rank"
-            app:layout_constraintEnd_toStartOf="@id/sc_stats_general_score_portion_label"
+            android:layout_marginTop="18dp"
+            app:layout_constraintTop_toBottomOf="@id/sc_stats_general_ranking_over_time_chart"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/sc_stats_general_score_sources_chart"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="320dp"
+            android:layout_height="256dp"
             android:layout_marginTop="18dp"
             app:layout_constraintTop_toBottomOf="@id/sc_stats_general_score_sources_label"
             app:layout_constraintStart_toStartOf="@id/sc_stats_general_score_sources_label"
@@ -93,15 +91,15 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"
-            app:layout_constraintStart_toEndOf="@id/sc_stats_general_score_sources_label"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/sc_stats_general_score_sources_label"
-            app:layout_constraintBottom_toBottomOf="@id/sc_stats_general_score_sources_label" />
+            android:layout_marginTop="18dp"
+            app:layout_constraintTop_toBottomOf="@id/sc_stats_general_score_sources_chart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/sc_stats_general_score_portion_chart"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="320dp"
+            android:layout_height="256dp"
             android:layout_marginTop="18dp"
             app:layout_constraintTop_toBottomOf="@id/sc_stats_general_score_portion_label"
             app:layout_constraintStart_toStartOf="@id/sc_stats_general_score_portion_label"
@@ -115,15 +113,15 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/sc_stats_general_score_sources_chart"
-            app:layout_constraintEnd_toStartOf="@id/sc_stats_general_operational_label"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_marginTop="18dp"
+            app:layout_constraintTop_toBottomOf="@id/sc_stats_general_score_portion_chart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/sc_stats_general_energized_chart"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="320dp"
+            android:layout_height="256dp"
             android:layout_marginTop="18dp"
             app:layout_constraintTop_toBottomOf="@id/sc_stats_general_energized_label"
             app:layout_constraintStart_toStartOf="@id/sc_stats_general_energized_label"
@@ -137,15 +135,15 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"
-            app:layout_constraintStart_toEndOf="@id/sc_stats_general_energized_label"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/sc_stats_general_energized_label"
-            app:layout_constraintBottom_toBottomOf="@id/sc_stats_general_energized_label" />
+            android:layout_marginTop="18dp"
+            app:layout_constraintTop_toBottomOf="@id/sc_stats_general_energized_chart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
         
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/sc_stats_general_operational_chart"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="320dp"
+            android:layout_height="256dp"
             android:layout_marginTop="18dp"
             app:layout_constraintTop_toBottomOf="@id/sc_stats_general_operational_label"
             app:layout_constraintStart_toStartOf="@id/sc_stats_general_operational_label"
@@ -159,16 +157,18 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/sc_stats_general_energized_chart"
+            android:layout_marginTop="18dp"
+            app:layout_constraintTop_toBottomOf="@id/sc_stats_general_operational_chart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/sc_stats_general_results_chart"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="320dp"
+            android:layout_height="256dp"
             android:layout_marginTop="18dp"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sc_stats_general_results_label"
             app:layout_constraintStart_toStartOf="@id/sc_stats_general_results_label"
             app:layout_constraintEnd_toEndOf="@id/sc_stats_general_results_label" />

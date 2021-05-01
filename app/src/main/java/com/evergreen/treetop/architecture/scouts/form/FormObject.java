@@ -83,7 +83,6 @@ public abstract class FormObject implements Loggable {
         return matchDoc + "/" + ScoutingMatch.getCurrent().getMatchPath() + "." + m_path;
     }
 
-
     public static int getScoutedTeam() {
         return s_scoutedTeam;
     }

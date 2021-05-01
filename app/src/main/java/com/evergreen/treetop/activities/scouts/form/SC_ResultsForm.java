@@ -3,6 +3,7 @@ package com.evergreen.treetop.activities.scouts.form;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import com.evergreen.treetop.architecture.scouts.form.FormRadio;
 import com.evergreen.treetop.architecture.scouts.form.FormSwitch;
 import com.evergreen.treetop.architecture.scouts.form.NumberBox;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
@@ -43,7 +45,7 @@ public class SC_ResultsForm extends AppCompatActivity {
 
         new FormRadio(
                 "Match Result",
-                "team-won",
+                "result",
                 findViewById(R.id.sc_form_results_radio),
                 radioValueMap
         );
@@ -67,8 +69,39 @@ public class SC_ResultsForm extends AppCompatActivity {
                 findViewById(R.id.sc_form_results_text_score_label)
         );
 
+        new FormObject(
+                "Ranking Points",
+                "ranking"
+        ) {
+            @Override
+            protected Object getValue() {
+                int addUp = 0;
+
+                if (
+                    ((RadioGroup)findViewById(R.id.sc_form_results_radio))
+                    .getCheckedRadioButtonId() == R.id.sc_form_results_radio_draw)
+                    addUp += 1;
+
+                if (
+                    ((RadioGroup)findViewById(R.id.sc_form_results_radio))
+                    .getCheckedRadioButtonId() == R.id.sc_form_results_radio_win)
+                    addUp += 2;
+
+                if (((SwitchMaterial)findViewById(R.id.sc_form_results_switch_operational)).isChecked()) addUp += 1;
+
+                if (((SwitchMaterial)findViewById(R.id.sc_from_results_switch_energized)).isChecked()) addUp += 1;
+
+                return addUp;
+            }
+
+            @Override
+            protected String getType() {
+                return "Custom-Object";
+            }
+        };
+
         ((TextView)findViewById(R.id.sc_form_results_text_next_button)).setOnClickListener(
-                v -> startActivity(new Intent(this,SC_TeamStrategyForm.class))
+                v -> startActivity(new Intent(this, SC_TeamStrategyForm.class))
         );
 
     }

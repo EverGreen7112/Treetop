@@ -1,11 +1,13 @@
 package com.evergreen.treetop.activities.scouts.form;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.evergreen.treetop.R;
+import com.evergreen.treetop.activities.scouts.stats.GeneralStats;
 import com.evergreen.treetop.architecture.scouts.handlers.MatchDB;
 import com.evergreen.treetop.architecture.scouts.utils.StrategyOptions;
 import com.evergreen.treetop.ui.fragments.form.SC_FormStrategyFragment;
@@ -21,6 +23,9 @@ public class SC_AllianceStrategyForm extends AppCompatActivity {
         SC_FormStrategyFragment frag =
                 (SC_FormStrategyFragment)getSupportFragmentManager().findFragmentById(R.id.sc_form_strategy_frag);
         frag.loadOptions(StrategyOptions.ALLIANCE);
-        frag.setOnClickListener(v -> MatchDB.submitActiveForm());
+        frag.setOnClickListener(v -> {
+            MatchDB.submitActiveForm();
+            startActivity(new Intent(this, GeneralStats.class));
+        });
     }
 }
