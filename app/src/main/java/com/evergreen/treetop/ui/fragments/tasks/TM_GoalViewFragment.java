@@ -46,13 +46,13 @@ public class TM_GoalViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View thisView = inflater.inflate(R.layout.fragment_task_view_tm, container, false);
+        View thisView = inflater.inflate(R.layout.fragment_goal_view_tm, container, false);
 
-        m_textTitle = thisView.findViewById(R.id.tm_goal_view_text_title);
-        m_textDescription = thisView.findViewById(R.id.tm_goal_view_text_description);
-        m_textPriority = thisView.findViewById(R.id.tm_goal_view_text_priority);
-        m_progressBar = thisView.findViewById(R.id.tm_goal_view_prog_subtask_progress);
-        m_listSubtasks = thisView.findViewById(R.id.tm_goal_view_list_subtasks);
+        m_textTitle = thisView.findViewById(R.id.tm_task_view_text_title);
+        m_textDescription = thisView.findViewById(R.id.tm_task_view_text_description);
+        m_textPriority = thisView.findViewById(R.id.tm_task_view_text_completed);
+        m_progressBar = thisView.findViewById(R.id.tm_task_view_prog_progress);
+        m_listSubtasks = thisView.findViewById(R.id.tm_task_view_list_subtasks);
 
         return thisView;
     }
