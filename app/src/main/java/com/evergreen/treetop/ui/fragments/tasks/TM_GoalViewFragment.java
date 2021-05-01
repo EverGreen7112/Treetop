@@ -7,27 +7,22 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.evergreen.treetop.R;
-import com.evergreen.treetop.architecture.Utilities;
 import com.evergreen.treetop.architecture.tasks.data.Goal;
-import com.evergreen.treetop.architecture.tasks.data.Task;
+import com.evergreen.treetop.ui.custom.recycler.TaskListRecycler;
 
 public class TM_GoalViewFragment extends Fragment {
 
     public void loadGoal(Goal goal) {
-        m_titleBox.setText(goal.getTitle());
-        m_descriptionBox.setText(goal.getDescription());
-        Utilities.setBackgroundColor(getContext(), m_priorityBox, priorityColor(goal.getPriority()));
-        m_subtasksList.setAdapter(new ArrayAdapter<String>(
-                getContext(),
-                R.layout.listrow_listview_goal,
-                goal.getSubtasks().stream().map(Task::getTitle).toArray(String[]::new)
-        ));
+        m_textTitle.setText(goal.getTitle());
+        m_textDescription.setText(goal.getDescription());
+//        Utilities.setBackgroundColor(getContext(), m_textPriority, priorityColor(goal.getPriority()));
+        m_textPriority.setText(goal.priorityChar());
+
+        m_listSubtasks.loadTasks(goal.getSubtasks());
 
         m_progressBar.setMax(goal.getTaskCount());
         m_progressBar.setProgress(goal.getCompletedCount());
@@ -40,24 +35,24 @@ public class TM_GoalViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    TextView m_titleBox;
-    TextView m_priorityBox;
-    TextView m_descriptionBox;
+    TextView m_textTitle;
+    TextView m_textPriority;
+    TextView m_textDescription;
     ProgressBar m_progressBar;
-    ListView m_subtasksList;
+    TaskListRecycler m_listSubtasks;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View thisView = inflater.inflate(R.layout.fragment_task_view_tm, container, false);
+        View thisView = inflater.inflate(R.layout.fragment_goal_view_tm, container, false);
 
-        m_titleBox = thisView.findViewById(R.id.tm_view_goal_text_title);
-        m_descriptionBox = thisView.findViewById(R.id.tm_view_goal_text_description);
-        m_priorityBox = thisView.findViewById(R.id.tm_view_goal_text_priority);
-        m_progressBar = thisView.findViewById(R.id.tm_view_goal_prog_subtask_progress);
-        m_subtasksList = thisView.findViewById(R.id.tm_view_goal_list_subtasks);
+        m_textTitle = thisView.findViewById(R.id.tm_task_view_text_title);
+        m_textDescription = thisView.findViewById(R.id.tm_task_view_text_description);
+        m_textPriority = thisView.findViewById(R.id.tm_task_view_text_completed);
+        m_progressBar = thisView.findViewById(R.id.tm_task_view_prog_progress);
+        m_listSubtasks = thisView.findViewById(R.id.tm_task_view_list_subtasks);
 
         return thisView;
     }

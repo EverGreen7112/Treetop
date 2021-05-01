@@ -19,11 +19,22 @@ public class TM_GoalViewActivity extends AppCompatActivity {
 
         @NonNull
         TM_GoalViewFragment frag =
-                (TM_GoalViewFragment)getSupportFragmentManager().findFragmentById(R.id.tm_view_frag_goal);
-        Goal goal = new Goal(0, "test-id", "Test Goal", "this is a test goal", new Unit());
+                (TM_GoalViewFragment)getSupportFragmentManager().findFragmentById(R.id.tm_goal_view_frag);
+        Goal goal = new Goal(0, "test-id", "Test Goal", "this is a test goal", new Unit("TestUnit"));
         goal.addTask("hello");
         goal.addTask("test");
         goal.addTask("Long one");
+        goal.addTask("and");
+        goal.addTask("see?");
+        goal.addTask("see?");
+        goal.addTask("see?");
+        goal.addTask("see?");
+        goal.addTask("see?");
+        goal.addTask("see?");
+        goal.addTask("see?");
+        goal.addTask("see?");
+        goal.addTask("see?");
+
         frag.loadGoal(goal);
     }
 }

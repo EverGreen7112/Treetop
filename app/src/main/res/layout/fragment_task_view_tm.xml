@@ -1,63 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.tasks.TM_GoalViewActivity">
+    android:layout_width="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".activities.tasks.TM_GoalViewActivity">
 
-    <TextView
-        android:id="@+id/tm_view_goal_text_title"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="36dp"
-        android:gravity="center"
-        android:text="TextView"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tm_task_view_text_title"
+                    android:layout_width="140dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="36dp"
+                    android:gravity="center"
+                    android:text="Title"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tm_view_goal_text_priority"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/circle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.809"
-        app:layout_constraintStart_toEndOf="@+id/tm_view_goal_text_title"
-        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tm_task_view_text_completed"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/circle"
+                    android:gravity="center"
+                    android:textSize="30sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.226"
+                    app:layout_constraintStart_toEndOf="@+id/tm_task_view_text_title"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Icon" />
 
-    <com.evergreen.treetop.ui.custom.text.OvalTextView
-        android:id="@+id/tm_view_goal_text_description"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tm_view_goal_text_title" />
+                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                    android:id="@+id/tm_task_view_text_description"
+                    android:layout_width="350dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="36dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.491"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tm_task_view_text_title"
+                    tools:text="Description" />
 
-    <ProgressBar
-        android:id="@+id/tm_view_goal_prog_subtask_progress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="344dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tm_view_goal_text_description" />
+                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                    android:id="@+id/tm_task_view_text_start_deadline"
+                    android:layout_width="166dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tm_task_view_prog_progress"
+                    tools:text="Start Deadline" />
 
-    <ListView
-        android:id="@+id/tm_view_goal_list_subtasks"
-        android:layout_width="350dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="44dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tm_view_goal_text_description" />
+                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                    android:id="@+id/tm_task_view_text_end_deadline"
+                    android:layout_width="166dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="96dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tm_task_view_prog_progress"
+                    tools:text="End Deadline" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                    android:id="@+id/tm_task_view_text_assigner"
+                    android:layout_width="197dp"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="160dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tm_task_view_prog_progress"
+                    tools:text="Assigner" />
+
+                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                    android:id="@+id/tm_task_view_text_assignees"
+                    android:layout_width="326dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="232dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tm_task_view_prog_progress"
+                    tools:text="Assignees" />
+
+                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                    android:id="@+id/tm_task_view_text_priority"
+                    android:layout_width="110dp"
+                    android:layout_height="51dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="40dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tm_task_view_prog_progress"
+                    tools:text="Priority" />
+
+                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                    android:id="@+id/tm_task_view_text_unit"
+                    android:layout_width="102dp"
+                    android:layout_height="91dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="40dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tm_task_view_text_priority"
+                    tools:text="Unit" />
+
+                <ProgressBar
+                    android:id="@+id/tm_task_view_prog_progress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="350dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.537"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tm_task_view_text_description" />
+
+                <com.evergreen.treetop.ui.custom.recycler.TaskListRecycler
+                    android:id="@+id/tm_task_view_list_subtasks"
+                    android:layout_width="350dp"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="340dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.59"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tm_task_view_text_description" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

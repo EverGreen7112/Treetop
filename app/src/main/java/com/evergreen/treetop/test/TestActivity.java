@@ -9,6 +9,7 @@ import android.util.Log;
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.activities.scouts.stats.GeneralStats;
 import com.evergreen.treetop.activities.tasks.TM_GoalViewActivity;
+import com.evergreen.treetop.activities.tasks.TM_TaskViewActivity;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;

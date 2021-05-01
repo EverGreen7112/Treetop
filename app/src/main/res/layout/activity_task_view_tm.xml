@@ -7,10 +7,10 @@
     tools:context=".activities.tasks.TM_GoalViewActivity">
 
     <fragment
-        android:id="@+id/tm_goal_view_frag"
+        android:id="@+id/tm_task_view_frag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.evergreen.treetop.ui.fragments.tasks.TM_GoalViewFragment"
+        class="com.evergreen.treetop.ui.fragments.tasks.TM_TaskViewFragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
