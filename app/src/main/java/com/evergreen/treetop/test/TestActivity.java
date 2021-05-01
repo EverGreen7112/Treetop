@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.activities.tasks.TM_GoalViewActivity;
+import com.evergreen.treetop.activities.tasks.TM_TaskViewActivity;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldPath;
@@ -24,6 +25,6 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        startActivity(new Intent(this, TM_GoalViewActivity.class));
+        startActivity(new Intent(this, TM_TaskViewActivity.class));
     }
 }
