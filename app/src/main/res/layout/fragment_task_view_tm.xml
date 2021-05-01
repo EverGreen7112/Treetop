@@ -50,8 +50,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tm_view_goal_text_description" />
 
-    <ListView
-        android:id="@+id/tm_view_goal_list_subtasks"
+    <com.evergreen.treetop.ui.custom.recycler.TaskListRecycler
+        android:id="@+id/tm_goal_view_list_subtasks"
         android:layout_width="350dp"
         android:layout_height="300dp"
         android:layout_marginTop="44dp"
