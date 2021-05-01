@@ -91,9 +91,11 @@ public class GeneralStats extends AppCompatActivity {
 
     private void updateScoreOverTime(Map<String, Object> raw) {
         Map<String, Object> data = getAllWhereKey(raw, "score");
+
         List<BarEntry> dataEntries = new ArrayList<>();
         List<String> sortedKeys = new ArrayList<>(data.keySet());
         Collections.sort(sortedKeys);
+
         sortedKeys.forEach(key -> {
             dataEntries.add(new BarEntry(sortedKeys.indexOf(key), Integer.parseInt(data.get(key).toString())));
         });
@@ -108,9 +110,13 @@ public class GeneralStats extends AppCompatActivity {
     private void updateRankingOverTime(Map<String, Object> raw) {
         Map<String, Object> data = getAllWhereKey(raw, "ranking");
 
-    }
+        List<BarEntry> dataEntries = new ArrayList<>();
+        List<String> sortedKeys = new ArrayList<>(data.keySet());
+        Collections.sort(sortedKeys);
 
-    private void updateScoreSources(HashMap<String, Object> scoutData) {
+        sortedKeys.forEach(key -> {
+            dataEntries.add(new BarEntry(sortedKeys.indexOf(key), Integer.parseInt(data.get(key).toString())));
+        });
 
         BarData bars = new BarData(new BarDataSet(dataEntries, "rankingOverTimeSet"));
         rankingOverTimeChart.setData(bars);
