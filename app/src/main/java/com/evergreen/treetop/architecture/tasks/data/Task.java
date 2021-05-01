@@ -1,5 +1,6 @@
 package com.evergreen.treetop.architecture.tasks.data;
 
+import android.widget.ArrayAdapter; // This one is for the javadoc in displayStr()
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
