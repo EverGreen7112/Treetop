@@ -78,11 +78,11 @@ public class Goal {
                 id,
                 id,
                 id,
-                new Unit(),
+                new Unit("TestUnit"),
                 this,
                 LocalDateTime.now().plus(Period.of(0, 0, 1)),
                 LocalDateTime.now().plus(Period.of(0, 0, 2)),
-                new User(),
+                new User("TestUser"),
                 id.length() > 5
         )).collect(Collectors.toList()); //TODO actually implement
     }
