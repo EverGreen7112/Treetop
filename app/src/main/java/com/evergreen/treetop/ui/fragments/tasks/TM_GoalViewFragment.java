@@ -35,9 +35,9 @@ public class TM_GoalViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    TextView m_titleBox;
-    TextView m_priorityBox;
-    TextView m_descriptionBox;
+    TextView m_textTitle;
+    TextView m_textPriority;
+    TextView m_textDescription;
     ProgressBar m_progressBar;
     TaskListRecycler m_listSubtasks;
 
@@ -48,11 +48,11 @@ public class TM_GoalViewFragment extends Fragment {
         // Inflate the layout for this fragment
         View thisView = inflater.inflate(R.layout.fragment_task_view_tm, container, false);
 
-        m_titleBox = thisView.findViewById(R.id.tm_view_goal_text_title);
-        m_descriptionBox = thisView.findViewById(R.id.tm_view_goal_text_description);
-        m_priorityBox = thisView.findViewById(R.id.tm_view_goal_text_priority);
-        m_progressBar = thisView.findViewById(R.id.tm_view_goal_prog_subtask_progress);
-        m_subtasksList = thisView.findViewById(R.id.tm_view_goal_list_subtasks);
+        m_textTitle = thisView.findViewById(R.id.tm_goal_view_text_title);
+        m_textDescription = thisView.findViewById(R.id.tm_goal_view_text_description);
+        m_textPriority = thisView.findViewById(R.id.tm_goal_view_text_priority);
+        m_progressBar = thisView.findViewById(R.id.tm_goal_view_prog_subtask_progress);
+        m_listSubtasks = thisView.findViewById(R.id.tm_goal_view_list_subtasks);
 
         return thisView;
     }
