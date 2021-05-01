@@ -1,6 +1,9 @@
 package com.evergreen.treetop.architecture.tasks.data;
 
 import android.widget.ArrayAdapter; // This one is for the javadoc in displayStr()
+
+import androidx.annotation.NonNull;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -91,4 +94,11 @@ public class Task extends Goal {
         m_assignees.remove(assignee);
     }
 
+
+
+    @Override
+    @NonNull
+    public String toString() {
+        return "Task \"" + getTitle() + "\"  " + getIcon() + ", id" + getId();
+    }
 }
