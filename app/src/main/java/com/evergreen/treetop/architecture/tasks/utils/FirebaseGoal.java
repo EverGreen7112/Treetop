@@ -1,27 +1,35 @@
 package com.evergreen.treetop.architecture.tasks.utils;
 
+import com.evergreen.treetop.architecture.tasks.data.Goal;
+
 import java.util.List;
 
 public class FirebaseGoal {
     private int m_priority;
-    private int m_startDeadlineEpoch;
-    private int m_endDeadlineEpoch;
     private String m_id;
     private String m_title;
     private String m_description;
     private String m_unitId;
-    private String m_assignerId;
-    private List<String> assigneeIds;
     private List<String> subtaskIds;
 
-    public FirebaseGoal(int priority, int startDeadlineEpoch, int endDeadlineEpoch, String id, String title, String unitId, String assignerId) {
+    public FirebaseGoal() {}
+
+    public FirebaseGoal(int priority, String id, String title, String description, String unitId) {
         m_priority = priority;
-        m_startDeadlineEpoch = startDeadlineEpoch;
-        m_endDeadlineEpoch = endDeadlineEpoch;
         m_id = id;
         m_title = title;
+        m_description = description;
         m_unitId = unitId;
-        m_assignerId = assignerId;
+    }
+
+    public static FirebaseGoal of(Goal goal) {
+        return new FirebaseGoal(
+              goal.getPriority(),
+              goal.getId(),
+              goal.getTitle(),
+              goal.getDescription(),
+              goal.getUnit().getId()
+        );
     }
 
     public int getPriority() {
@@ -30,22 +38,6 @@ public class FirebaseGoal {
 
     public void setPriority(int priority) {
         this.m_priority = priority;
-    }
-
-    public int getStartDeadlineEpoch() {
-        return m_startDeadlineEpoch;
-    }
-
-    public void setStartDeadlineEpoch(int startDeadlineEpoch) {
-        this.m_startDeadlineEpoch = startDeadlineEpoch;
-    }
-
-    public int getEndDeadlineEpoch() {
-        return m_endDeadlineEpoch;
-    }
-
-    public void setEndDeadlineEpoch(int endDeadlineEpoch) {
-        this.m_endDeadlineEpoch = endDeadlineEpoch;
     }
 
     public String getId() {
@@ -78,22 +70,6 @@ public class FirebaseGoal {
 
     public void setUnitId(String unitId) {
         this.m_unitId = unitId;
-    }
-
-    public String getAssignerId() {
-        return m_assignerId;
-    }
-
-    public void setAssignerId(String assignerId) {
-        this.m_assignerId = assignerId;
-    }
-
-    public List<String> getAssigneeIds() {
-        return assigneeIds;
-    }
-
-    public void setAssigneeIds(List<String> assigneeIds) {
-        this.assigneeIds = assigneeIds;
     }
 
     public List<String> getSubtaskIds() {

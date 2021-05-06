@@ -9,29 +9,26 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.evergreen.treetop.R;
-import com.evergreen.treetop.architecture.Utilities;
 import com.evergreen.treetop.architecture.scouts.form.FormObject;
-import com.evergreen.treetop.architecture.scouts.handlers.TeamDB;
 import com.evergreen.treetop.architecture.scouts.utils.MatchID;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
 import com.evergreen.treetop.test.TestActivity;
 import com.evergreen.treetop.ui.custom.spinner.BaseSpinner;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.SetOptions;
 
 public class SC_FormLauncher extends AppCompatActivity {
 
-    private static final boolean TEST = false;
+    private static final boolean TEST = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form_launcher_sc);
 
         if (TEST) {
             startActivity(new Intent(this, TestActivity.class));
             return;
         }
+
+        setContentView(R.layout.activity_form_launcher_sc);
 
         BaseSpinner matchTypeSpinner = findViewById(R.id.sc_form_launcher_spinner_match_type);
         matchTypeSpinner.loadOptions(MatchID.MatchType.values());

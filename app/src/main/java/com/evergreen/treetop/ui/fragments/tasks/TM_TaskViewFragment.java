@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.evergreen.treetop.R;
-import com.evergreen.treetop.architecture.tasks.data.Task;
+import com.evergreen.treetop.architecture.tasks.data.AppTask;
 import com.evergreen.treetop.architecture.tasks.data.User;
 import com.evergreen.treetop.ui.custom.recycler.TaskListRecycler;
 
@@ -33,7 +33,7 @@ public class TM_TaskViewFragment extends Fragment {
     private TaskListRecycler m_listSubtasks;
     private String m_id;
 
-    public void loadTask(Task task) {
+    public void loadTask(AppTask task) {
         m_id = task.getId();
 
         m_textTitle.setText(task.getTitle());

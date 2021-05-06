@@ -1,24 +1,45 @@
 package com.evergreen.treetop.architecture.tasks.data;
 
-import java.time.LocalDateTime;
-import java.time.Period;
+import com.evergreen.treetop.architecture.Utilities;
+import com.evergreen.treetop.architecture.tasks.handlers.UnitDB;
+import com.evergreen.treetop.architecture.tasks.utils.FirebaseGoal;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class Goal {
     private int m_priority;
-    private boolean completed;
+    private boolean m_completed;
     private String m_id;
     private String m_title;
     private String m_description;
     private Set<String> m_subtaskIds;
     private Unit m_unit;
 
-    String COMPLETE_ICON = "✓"; //✔
-    String INCOMPLETE_ICON = "";
+    public final static String COMPLETE_ICON = "✓"; // ✔
+    public final static String INCOMPLETE_ICON = "";
 
+    public static Goal of(String id) {
+        return Utilities.dummyGoal(id);
+    }
+    
+    public static Goal of(FirebaseGoal goal) throws ExecutionException, InterruptedException {
+        Goal result = new Goal(
+                goal.getPriority(),
+                goal.getId(),
+                goal.getTitle(),
+                goal.getDescription(),
+                UnitDB.getInstance().getUnitById(goal.getUnitId())
+        );
+        
+        goal.getSubtaskIds().forEach(result::addTaskById);
+
+        return result;
+        
+    }
 
     public Goal(int priority, String id, String title, String description, Unit unit) {
         m_priority = priority;
@@ -27,6 +48,7 @@ public class Goal {
         m_description = description;
         m_unit = unit;
         m_subtaskIds = new HashSet<>();
+        m_completed = false;
     }
 
     public int getPriority() {
@@ -37,10 +59,10 @@ public class Goal {
     }
 
     public boolean isCompleted() {
-        return completed;
+        return m_completed;
     }
     public void setCompleted(boolean completed) {
-        this.completed = completed;
+        this.m_completed = completed;
     }
 
     public String getTitle() {
@@ -69,41 +91,25 @@ public class Goal {
         return m_id;
     }
 
-    public List<Task> getSubtasks() {
+    public List<AppTask> getSubtasks() {
         // Return dummy tasks for testing
-        return m_subtaskIds.stream().map(id -> new Task(
-                0,
-                id,
-                id,
-                id,
-                new Unit("TestUnit"),
-                this,
-                LocalDateTime.now().plus(Period.of(0, 0, 1)),
-                LocalDateTime.now().plus(Period.of(0, 0, 2)),
-                new User("TestUser"),
-                id.length() > 5
-        )).collect(Collectors.toList()); //TODO actually implement
+        return m_subtaskIds.stream().map(Utilities::dummyTask).collect(Collectors.toList()); //TODO actually implement
     }
 
-    public void addTask(Task subtask) {
+    public void addTask(AppTask subtask) {
         m_subtaskIds.add(subtask.getId());
     }
 
-    /**
-     * Use for testing only, until we'll actually be able interchange tasks and ids
-     * @deprecated
-     */
-    @Deprecated
-    public void addTask(String subtask) {
-        m_subtaskIds.add(subtask);
+    public void addTaskById(String taskId) {
+        m_subtaskIds.add(taskId);
     }
 
-    public void removeSubtask(Task subtask) {
+    public void removeSubtask(AppTask subtask) {
         m_subtaskIds.remove(subtask.getId());
     }
 
     public int getCompletedCount() {
-        return (int)getSubtasks().stream().filter(Task::isCompleted).count();
+        return (int)getSubtasks().stream().filter(AppTask::isCompleted).count();
     }
 
     public int getTaskCount() {
@@ -111,21 +117,7 @@ public class Goal {
     }
 
     public String priorityChar() {
-
-        switch (getPriority()) {
-            case 0:
-                return "A";
-            case 1:
-                return "B";
-            case 2:
-                return "C";
-            case 3:
-                return "D";
-            case 4:
-                return "E";
-            default:
-                return null;
-        }
+        return Utilities.priorityChar(getPriority());
     }
 
     public String getIcon() {

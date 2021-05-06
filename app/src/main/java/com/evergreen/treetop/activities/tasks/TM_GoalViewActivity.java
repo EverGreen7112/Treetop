@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.evergreen.treetop.R;
+import com.evergreen.treetop.architecture.Utilities;
 import com.evergreen.treetop.architecture.tasks.data.Goal;
 import com.evergreen.treetop.architecture.tasks.data.Unit;
 import com.evergreen.treetop.ui.fragments.tasks.TM_GoalViewFragment;
@@ -20,21 +21,7 @@ public class TM_GoalViewActivity extends AppCompatActivity {
         @NonNull
         TM_GoalViewFragment frag =
                 (TM_GoalViewFragment)getSupportFragmentManager().findFragmentById(R.id.tm_goal_view_frag);
-        Goal goal = new Goal(0, "test-id", "Test Goal", "this is a test goal", new Unit("TestUnit"));
-        goal.addTask("hello");
-        goal.addTask("test");
-        goal.addTask("Long one");
-        goal.addTask("and");
-        goal.addTask("see?");
-        goal.addTask("see?");
-        goal.addTask("see?");
-        goal.addTask("see?");
-        goal.addTask("see?");
-        goal.addTask("see?");
-        goal.addTask("see?");
-        goal.addTask("see?");
-        goal.addTask("see?");
 
-        frag.loadGoal(goal);
+        frag.loadGoal(Utilities.dummyGoal("test-goal"));
     }
 }

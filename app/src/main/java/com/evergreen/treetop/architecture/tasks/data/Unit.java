@@ -15,4 +15,8 @@ public class Unit {
     public void setName(String name) {
         m_name = name;
     }
+
+    public String getId() {
+        return m_name;
+    }
 }
