@@ -28,8 +28,7 @@
         <activity android:name=".activities.scouts.form.SC_ResultsForm" />
         <activity android:name=".activities.scouts.form.SC_ScoutingForm" />
         <activity android:name=".activities.scouts.stats.GeneralStats" />
-        <activity android:name=".activities.users.SC_SignUpActivity" />
-        <activity android:name=".test.TestActivity" />
+        <activity android:name=".activities.scouts.StatsLauncher" />
     </application>
 
 </manifest>
