@@ -1,14 +1,19 @@
 package com.evergreen.treetop.activities.scouts.form;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.evergreen.treetop.R;
+import com.evergreen.treetop.activities.scouts.StatsLauncher;
+import com.evergreen.treetop.architecture.Utilities;
 import com.evergreen.treetop.architecture.scouts.form.FormObject;
 import com.evergreen.treetop.architecture.scouts.utils.MatchID;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
@@ -50,5 +55,24 @@ public class SC_FormLauncher extends AppCompatActivity {
                 }
         );
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_global_options_menu, menu);
+        menu.setGroupVisible(R.id.global_menu_tm, false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_sc_stats:
+                startActivity(new Intent(this, StatsLauncher.class));
+                break;
+            default:
+                super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 }
