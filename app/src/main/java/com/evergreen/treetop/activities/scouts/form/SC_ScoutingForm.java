@@ -34,22 +34,22 @@ public class SC_ScoutingForm extends AppCompatActivity {
 
         viewPager = findViewById(R.id.sc_form_pager);
 
-        new TabLayoutMediator(m_tabLayout, viewPager, ((tab, position) -> {
-            switch (position) {
-                case 1:
-                    tab.setText("auto");
-                    break;
-                case 2:
-                    tab.setText("teleop");
-                    break;
-                case 3:
-                    tab.setText("endgame");
-                    break;
-                case 4:
-                    tab.setText("submit");
-                    break;
-            }
-        })).attach();
+//        new TabLayoutMediator(m_tabLayout, viewPager, ((tab, position) -> {
+//            switch (position) {
+//                case 1:
+//                    tab.setText("auto");
+//                    break;
+//                case 2:
+//                    tab.setText("teleop");
+//                    break;
+//                case 3:
+//                    tab.setText("endgame");
+//                    break;
+//                case 4:
+//                    tab.setText("submit");
+//                    break;
+//            }
+//        })).attach();
 
         m_tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

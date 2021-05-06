@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.architecture.scouts.form.FormObject;
+import com.evergreen.treetop.architecture.scouts.handlers.MatchDB;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -23,10 +24,8 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,7 +36,7 @@ import java.util.Map;
 public class GeneralStats extends AppCompatActivity {
     private static final String TAG = "GeneralStats_sc";
 
-    private final DocumentReference scoutDataDoc = ScoutingMatch.getCurrent().getDocRef(FormObject.getScoutedTeam());
+    private final DocumentReference scoutDataDoc = new MatchDB(1690).getRef();
 
     private BarChart scoreOverTimeChart;
     private BarChart rankingOverTimeChart;
@@ -63,10 +62,10 @@ public class GeneralStats extends AppCompatActivity {
         Button updateCharts = findViewById(R.id.sc_stats_general_update_charts);
         updateCharts.setOnClickListener(v -> {
             Log.i(TAG, "updating charts...");
-            updateCharts(getScoutingData());
+            initiateScouting();
         });
 
-        updateCharts(getScoutingData());
+        initiateScouting();
     }
 
     private void updateCharts(Map<String, Object> scoutData) {
@@ -82,8 +81,10 @@ public class GeneralStats extends AppCompatActivity {
     private Map<String, Object> getAllWhereKey(Map<String, Object> data, String key) {
         Map<String, Object> results = new HashMap<>();
         data.forEach((k, v) -> {
-            v = (Map<String, Object>)v;
-            results.put(k, ((Map) v).get(key));
+            if (!k.equals("exists")) {
+                v = (Map<String, Object>) v;
+                results.put(k, ((Map) v).get(key));
+            }
         });
 
         return results;
@@ -97,8 +98,13 @@ public class GeneralStats extends AppCompatActivity {
         Collections.sort(sortedKeys);
 
         sortedKeys.forEach(key -> {
-            dataEntries.add(new BarEntry(sortedKeys.indexOf(key), Integer.parseInt(data.get(key).toString())));
+            if (data.get(key) != null) {
+                dataEntries.add(new BarEntry(sortedKeys.indexOf(key), Integer.parseInt(data.get(key).toString())));
+            }
+            else Log.v(TAG, "null key is " + key);
         });
+
+        Log.v(TAG, "dataEntries:\n" + dataEntries.toString());
 
         BarData bars = new BarData(new BarDataSet(dataEntries, "scoreOverTimeSet"));
         scoreOverTimeChart.setData(bars);
@@ -115,7 +121,10 @@ public class GeneralStats extends AppCompatActivity {
         Collections.sort(sortedKeys);
 
         sortedKeys.forEach(key -> {
-            dataEntries.add(new BarEntry(sortedKeys.indexOf(key), Integer.parseInt(data.get(key).toString())));
+            if (data.get(key) != null) {
+                dataEntries.add(new BarEntry(sortedKeys.indexOf(key), Integer.parseInt(data.get(key).toString())));
+            }
+            else Log.v(TAG, "null key is " + key);
         });
 
         BarData bars = new BarData(new BarDataSet(dataEntries, "rankingOverTimeSet"));
@@ -132,17 +141,17 @@ public class GeneralStats extends AppCompatActivity {
         Map<String, Object> teleopData = (Map)matchData.get("teleop");
         Map<String, Object> endgameData = (Map)matchData.get("endgame");
 
-        score += (int)((Map)autoData.get("bottom")).get("hit") * 2;
-        score += (int)((Map)autoData.get("outer")).get("hit") * 4;
-        score += (int)((Map)autoData.get("inner")).get("hit") * 6;
+        score += (long)((Map)autoData.get("bottom")).get("hit") * 2;
+        score += (long)((Map)autoData.get("outer")).get("hit") * 4;
+        score += (long)((Map)autoData.get("inner")).get("hit") * 6;
 
-        score += (int)((Map)teleopData.get("bottom")).get("hit") * 2;
-        score += (int)((Map)teleopData.get("outer")).get("hit") * 4;
-        score += (int)((Map)teleopData.get("inner")).get("hit") * 6;
+        score += (long)((Map)teleopData.get("bottom")).get("hit") * 1;
+        score += (long)((Map)teleopData.get("outer")).get("hit") * 2;
+        score += (long)((Map)teleopData.get("inner")).get("hit") * 3;
 
-        score += (int)((Map)endgameData.get("bottom")).get("hit") * 2;
-        score += (int)((Map)endgameData.get("outer")).get("hit") * 4;
-        score += (int)((Map)endgameData.get("inner")).get("hit") * 6;
+        score += (long)((Map)endgameData.get("bottom")).get("hit") * 1;
+        score += (long)((Map)endgameData.get("outer")).get("hit") * 2;
+        score += (long)((Map)endgameData.get("inner")).get("hit") * 3;
 
         return score;
     }
@@ -170,10 +179,12 @@ public class GeneralStats extends AppCompatActivity {
     private void updateScoreSources(Map<String, Object> raw) {
         int powercellScore = 0, wheelScore = 0, climbScore = 0;
 
-        for(Object obj : raw.values()) {
-            powercellScore += getPowercellScore((Map<String, Object>)obj);
-            wheelScore += getWheelScore((Map<String, Object>)obj);
-            climbScore += getClimbScore((Map<String, Object>)obj);
+        for(String str : raw.keySet()) {
+            if (str.equals("autonomous") || str.equals("teleop") || str.equals("endgame")) {
+                powercellScore += getPowercellScore((Map<String, Object>)raw.get(str));
+                wheelScore += getWheelScore((Map<String, Object>)raw.get(str));
+                climbScore += getClimbScore((Map<String, Object>)raw.get(str));
+            }
         }
 
         List<PieEntry> dataEntries = new ArrayList<>();
@@ -190,31 +201,33 @@ public class GeneralStats extends AppCompatActivity {
     }
 
     private void updateScorePortion(Map<String, Object> raw) {
-        Map<String, Object> individualData = getAllWhereKey(raw, "score");
-        Map<String, Object> allianceData = getAllWhereKey(raw, "alliance-score");
-
-        List<BarEntry> dataEntries = new ArrayList<>();
-        List<String> sortedKeys = new ArrayList<>(individualData.keySet());
-        Collections.sort(sortedKeys);
-
-        sortedKeys.forEach(key -> {
-            dataEntries.add(new BarEntry(sortedKeys.indexOf(key),
-                    Integer.parseInt(individualData.get(key).toString())
-                    / Integer.parseInt(allianceData.get(key).toString())));
-        });
-
-        BarData bars = new BarData(new BarDataSet(dataEntries, "allianceScorePortionSet"));
-        scorePortionChart.setData(bars);
-        scorePortionChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(sortedKeys));
-        scorePortionChart.getDescription().setEnabled(false);
-        scorePortionChart.invalidate();
+//        Map<String, Object> individualData = getAllWhereKey(raw, "score");
+//        Map<String, Object> allianceData = getAllWhereKey(raw, "alliance-score");
+//
+//        List<BarEntry> dataEntries = new ArrayList<>();
+//        List<String> sortedKeys = new ArrayList<>(individualData.keySet());
+//        Collections.sort(sortedKeys);
+//
+//        sortedKeys.forEach(key -> {
+//            dataEntries.add(new BarEntry(sortedKeys.indexOf(key),
+//                    Integer.parseInt(individualData.get(key).toString())
+//                    / Integer.parseInt(allianceData.get(key).toString())));
+//        });
+//
+//        BarData bars = new BarData(new BarDataSet(dataEntries, "allianceScorePortionSet"));
+//        scorePortionChart.setData(bars);
+//        scorePortionChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(sortedKeys));
+//        scorePortionChart.getDescription().setEnabled(false);
+//        scorePortionChart.invalidate();
     }
 
     private void updateShieldEnergized(Map<String, Object> raw) {
         Map<String, Object> energizedData = getAllWhereKey(raw, "shield-energized");
         int energizedAmount = 0;
         for (Object obj : energizedData.values()) {
-            if ((boolean) obj) energizedAmount++;
+            if (obj != null) {
+                if ((boolean) obj) energizedAmount++;
+            }
         }
 
         List<PieEntry> dataEntries = new ArrayList<>();
@@ -278,8 +291,7 @@ public class GeneralStats extends AppCompatActivity {
         resultChart.invalidate();
     }
 
-    private Map<String, Object> getScoutingData() {
-        final Map<String, Object> data = new HashMap<>();
+    private void initiateScouting() {
         scoutDataDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -288,8 +300,8 @@ public class GeneralStats extends AppCompatActivity {
                     DocumentSnapshot docSnap = task.getResult();
                     if (docSnap.exists()) {
                         Log.i(TAG, "scouting data exists, retrieving data.");
-                        data.putAll(docSnap.getData());
-                        Log.v(TAG, data.toString());
+
+                        updateCharts(docSnap.getData());
                     }
                     else {
                         Log.d(TAG, "no data found");
@@ -300,7 +312,5 @@ public class GeneralStats extends AppCompatActivity {
                 }
             }
         });
-
-        return data;
     }
 }
