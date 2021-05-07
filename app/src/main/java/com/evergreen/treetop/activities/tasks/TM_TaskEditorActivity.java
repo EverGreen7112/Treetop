@@ -137,7 +137,7 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
                         && getPriority() != -1
                         && !m_textStartDeadline.getText().toString().equals("")
                         && !m_textEndDeadline.getText().toString().equals("")
-//                        && !m_textUnit.getText().toString().equals("")
+                        && !m_textUnit.getText().toString().equals("")
 //                        && !m_textAssignees.getText().toString().equals("");
                         ;
     }
@@ -175,7 +175,7 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
     }
 
     private Unit getUnit() {
-        return new Unit("Unit-" + getTitle());
+        return new Unit(m_textUnit.getText().toString());
     }
 
     private User getAssigner() {

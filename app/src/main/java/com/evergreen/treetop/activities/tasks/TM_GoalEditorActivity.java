@@ -78,7 +78,6 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
                 });
             }).start();
 
-
         }
     }
 
@@ -104,7 +103,7 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
     private boolean canSubmit() {
         return
                 getTitle() != ""
-//                && !m_textUnit.getText().toString().equals("")
+                && !m_textUnit.getText().toString().equals("")
                 && getPriority() != -1;
     }
 
@@ -132,7 +131,7 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
     }
 
     private Unit getUnit() {
-        return new Unit("Unit-" + getTitle());
+        return new Unit(m_textUnit.getText().toString());
     }
 
 
@@ -154,7 +153,6 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             cancel();
         }
-
     }
 
     private void cancel() {
@@ -165,5 +163,4 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
 
         finish();
     }
-
 }
