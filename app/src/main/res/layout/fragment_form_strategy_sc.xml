@@ -12,7 +12,7 @@
         android:textAlignment="center">
 
 
-        <com.evergreen.treetop.ui.custom.spinner.OvalSpinner
+        <com.evergreen.treetop.ui.views.spinner.OvalSpinner
             android:id="@+id/sc_form_strategy_spinner_picker"
             android:layout_width="363dp"
             android:layout_height="46dp"
@@ -36,7 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.evergreen.treetop.ui.custom.text.OvalTextView
+        <com.evergreen.treetop.ui.views.text.OvalTextView
             android:id="@+id/sc_form_strategy_text_option_desc"
             android:layout_width="350dp"
             android:layout_height="342dp"
@@ -49,7 +49,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sc_form_strategy_spinner_picker" />
 
-        <com.evergreen.treetop.ui.custom.text.OvalTextView
+        <com.evergreen.treetop.ui.views.text.OvalTextView
             android:id="@+id/sc_form_strategy_button_submit"
             android:layout_width="150dp"
             android:layout_height="32dp"

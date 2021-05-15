@@ -1,17 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.tasks.TM_GoalViewActivity">
+    tools:context=".activities.tasks.TM_GoalViewActivity" >
 
-    <fragment
-        android:id="@+id/tm_goal_view_frag"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tm_goal_view_constr_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.evergreen.treetop.ui.fragments.tasks.TM_GoalViewFragment"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent" >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tm_goal_view_text_title"
+            android:layout_width="181dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="36dp"
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tm_goal_view_text_priority"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/circle"
+            android:gravity="center"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.327"
+            app:layout_constraintStart_toEndOf="@+id/tm_goal_view_text_title"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.evergreen.treetop.ui.views.text.OvalTextView
+            android:id="@+id/tm_goal_view_text_description"
+            android:layout_width="350dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tm_goal_view_text_title" />
+
+        <ProgressBar
+            android:id="@+id/tm_goal_view_prog_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="344dp"
+            android:layout_height="23dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.537"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tm_goal_view_text_description" />
+
+        <com.evergreen.treetop.ui.views.recycler.TaskListRecycler
+            android:id="@+id/tm_goal_view_list_subtasks"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tm_goal_view_text_description" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include layout="@layout/loading_overlay" />
+
+</FrameLayout>

@@ -35,7 +35,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Icon" />
 
-                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                <com.evergreen.treetop.ui.views.text.OvalTextView
                     android:id="@+id/tm_task_view_text_description"
                     android:layout_width="350dp"
                     android:layout_height="200dp"
@@ -46,7 +46,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tm_task_view_text_title"
                     tools:text="Description" />
 
-                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                <com.evergreen.treetop.ui.views.text.OvalTextView
                     android:id="@+id/tm_task_view_text_start_deadline"
                     android:layout_width="166dp"
                     android:layout_height="50dp"
@@ -56,7 +56,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tm_task_view_prog_progress"
                     tools:text="Start Deadline" />
 
-                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                <com.evergreen.treetop.ui.views.text.OvalTextView
                     android:id="@+id/tm_task_view_text_end_deadline"
                     android:layout_width="166dp"
                     android:layout_height="50dp"
@@ -66,7 +66,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tm_task_view_prog_progress"
                     tools:text="End Deadline" />
 
-                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                <com.evergreen.treetop.ui.views.text.OvalTextView
                     android:id="@+id/tm_task_view_text_assigner"
                     android:layout_width="197dp"
                     android:layout_height="54dp"
@@ -76,7 +76,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tm_task_view_prog_progress"
                     tools:text="Assigner" />
 
-                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                <com.evergreen.treetop.ui.views.text.OvalTextView
                     android:id="@+id/tm_task_view_text_assignees"
                     android:layout_width="326dp"
                     android:layout_height="60dp"
@@ -86,7 +86,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tm_task_view_prog_progress"
                     tools:text="Assignees" />
 
-                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                <com.evergreen.treetop.ui.views.text.OvalTextView
                     android:id="@+id/tm_task_view_text_priority"
                     android:layout_width="110dp"
                     android:layout_height="51dp"
@@ -96,7 +96,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tm_task_view_prog_progress"
                     tools:text="Priority" />
 
-                <com.evergreen.treetop.ui.custom.text.OvalTextView
+                <com.evergreen.treetop.ui.views.text.OvalTextView
                     android:id="@+id/tm_task_view_text_unit"
                     android:layout_width="102dp"
                     android:layout_height="91dp"
@@ -117,7 +117,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tm_task_view_text_description" />
 
-                <com.evergreen.treetop.ui.custom.recycler.TaskListRecycler
+                <com.evergreen.treetop.ui.views.recycler.TaskListRecycler
                     android:id="@+id/tm_task_view_list_subtasks"
                     android:layout_width="350dp"
                     android:layout_height="300dp"

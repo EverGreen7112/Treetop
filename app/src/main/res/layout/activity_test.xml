@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.evergreen.treetop.ui.custom.spinner.OvalSpinner
+    <com.evergreen.treetop.ui.views.spinner.OvalSpinner
         android:id="@+id/spinner"
         android:layout_width="363dp"
         android:layout_height="46dp"

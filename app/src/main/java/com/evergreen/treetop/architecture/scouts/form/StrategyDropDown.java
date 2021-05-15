@@ -3,9 +3,8 @@ package com.evergreen.treetop.architecture.scouts.form;
 import android.widget.TextView;
 
 import com.evergreen.treetop.architecture.scouts.utils.StrategyOptions;
-import com.evergreen.treetop.ui.custom.spinner.BaseSpinner;
+import com.evergreen.treetop.ui.views.spinner.BaseSpinner;
 
-import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class StrategyDropDown extends DropDown {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -13,22 +14,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.activities.tasks.TM_TaskViewActivity;
-import com.evergreen.treetop.architecture.Utilities;
+import com.evergreen.treetop.architecture.Logging;
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHolder> {
+public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<AppTask> m_data;
     private final Context m_context;
 
+
     public TaskListAdapter(Context context, List<AppTask> data) {
         m_data = data;
         m_context = context;
-        Log.v("UI_EVENT", "Created a new TaskList with values " + Utilities.stringify(m_data));
+        Log.v("UI_EVENT", "Created a new TaskList with values " + Logging.stringify(m_data));
     }
 
 
@@ -43,21 +46,26 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
 
     @NonNull
     @Override
-    public TaskHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.listrow_recycler_task_list, parent, false);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         Log.v("UI_EVENT", "Created new TaskHolder");
-        return new TaskHolder(view);
+        return new TaskHolder(parent);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
-        holder.load(m_data.get(position));
-        holder.getView().setOnClickListener(v ->
-                m_context.startActivity(new Intent(m_context, TM_TaskViewActivity.class)
-                        .putExtra(TM_TaskViewActivity.TASK_ID_EXTRA_KEY, m_data.get(position).getId())));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        TaskHolder holderTask = (TaskHolder)holder;
+        holderTask.setContent(m_data.get(position));
+
+        OnClickListener action = v -> m_context.startActivity(
+                new Intent(m_context, TM_TaskViewActivity.class)
+                .putExtra(TM_TaskViewActivity.TASK_ID_EXTRA_KEY, m_data.get(position).getId())
+        );
+
+        holderTask.getView().setOnClickListener(action);
+        // Scroll View ClickListeners need to be set manually: see
+        // https://stackoverflow.com/questions/16776687/onclicklistener-on-scrollview/16776927#16776927
+        holderTask.getMainView().setOnClickListener(action);
         Log.v("UI_EVENT", "Bound new TaskHolder to " + m_data.get(position));
     }
 
@@ -66,26 +74,31 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
         return m_data.size();
     }
 
-    public static class TaskHolder extends RecyclerView.ViewHolder {
+    public class TaskHolder extends RecyclerView.ViewHolder {
 
         private final TextView m_textMain;
         private final TextView m_textComplete;
-        private final View m_view;
 
-        public TaskHolder(View view) {
-            super(view);
-            m_view = view;
-            m_textMain = view.findViewById(R.id.tm_task_list_text_title);
-            m_textComplete = view.findViewById(R.id.tm_task_list_text_complete_icon);
+        public TaskHolder(ViewGroup parent) {
+
+            super(LayoutInflater.from(m_context)
+                    .inflate(R.layout.listrow_recycler_task_list, parent, false)
+            );
+
+            m_textMain = itemView.findViewById(R.id.tm_task_list_text_title);
+            m_textComplete = itemView.findViewById(R.id.tm_task_list_text_complete_icon);
         }
 
-        public void load(AppTask task) {
+        public void setContent(AppTask task) {
             m_textMain.setText(task.listDisplayString());
             m_textComplete.setText(task.getIcon());
         }
 
         public View getView() {
-            return m_view;
+            return itemView;
+        }
+        public TextView getMainView() {
+            return m_textMain;
         }
 
     }
@@ -101,5 +114,20 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
         m_data.addAll(tasks);
         notifyItemRangeInserted(init, getItemCount());
     }
+
+    public List<String> getTaskIds() {
+        return m_data.stream().map(AppTask::getId).collect(Collectors.toList());
+    }
+
+    public List<AppTask> getData() {
+        return m_data;
+    }
+
+    public void clear() {
+        int init = getItemCount();
+        m_data.clear();
+        notifyItemRangeRemoved(0, init);
+    }
+
 
 }

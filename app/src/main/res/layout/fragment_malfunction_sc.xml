@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.evergreen.treetop.ui.custom.spinner.OvalSpinner
+    <com.evergreen.treetop.ui.views.spinner.OvalSpinner
         android:id="@+id/sc_form_malfunction_spinner"
         android:layout_width="250dp"
         android:layout_height="40dp"
@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/sc_form_malfunction_time" />
 
-    <com.evergreen.treetop.ui.custom.text.OvalTextView
+    <com.evergreen.treetop.ui.views.text.OvalTextView
         android:id="@+id/sc_form_malfunction_time"
         android:layout_width="120dp"
         android:layout_height="40dp"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="@id/sc_form_malfunction_spinner"
         app:layout_constraintBottom_toBottomOf="@id/sc_form_malfunction_spinner" />
 
-    <com.evergreen.treetop.ui.custom.text.OvalTextView
+    <com.evergreen.treetop.ui.views.text.OvalTextView
         android:id="@+id/sc_form_malfunction_description"
         android:layout_width="380dp"
         android:layout_height="150dp"

@@ -1,26 +1,18 @@
 package com.evergreen.treetop.architecture.tasks.handlers;
 
-import android.app.Activity;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.evergreen.treetop.architecture.tasks.data.AppTask;
+import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.data.Goal;
-import com.evergreen.treetop.architecture.tasks.utils.FirebaseGoal;
-import com.evergreen.treetop.architecture.tasks.utils.FirebaseTask;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.evergreen.treetop.architecture.tasks.utils.DBGoal;
+import com.evergreen.treetop.architecture.tasks.utils.DBGoal.GoalDBKey;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 
 public class GoalDB {
 
@@ -44,8 +36,30 @@ public class GoalDB {
         return  m_goals.document(id).get();
     }
 
-    public Goal awaitGoal(String id) throws ExecutionException, InterruptedException {
-        FirebaseGoal firebaseGoal = Tasks.await(m_goals.document(id).get()).toObject(FirebaseGoal.class);
-        return Goal.of(firebaseGoal);
+    public DocumentReference getGoalRef(String id) {
+        return m_goals.document(id);
+    }
+
+    public Query tasksWhereEqual(GoalDBKey key, Object value) {
+        return m_goals.whereEqualTo(key.getKey(), value);
+    }
+
+    public Task<Void> update(String id, GoalDBKey key, Object value) {
+        return getGoalRef(id).update(key.getKey(), value);
+    }
+
+    public Task<Void> delete(String id) {
+        return getGoalRef(id).delete();
+    }
+
+    public Goal awaitGoal(String id) throws ExecutionException, InterruptedException, NoSuchDocumentException {
+        DBGoal dbGoal = Tasks.await(m_goals.document(id).get()).toObject(DBGoal.class);
+
+        if (dbGoal == null) {
+            throw new NoSuchDocumentException("Tried to retrieve task by id " + id
+                    + ", but there was no such document!");
+        }
+
+        return Goal.of(dbGoal);
     }
 }

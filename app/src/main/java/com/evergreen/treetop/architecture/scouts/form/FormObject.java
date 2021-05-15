@@ -4,12 +4,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.evergreen.treetop.architecture.Utilities;
 import com.evergreen.treetop.architecture.scouts.handlers.MatchDB;
-import com.evergreen.treetop.architecture.scouts.handlers.TeamDB;
 import com.evergreen.treetop.architecture.scouts.utils.Loggable;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
-import com.google.firebase.firestore.SetOptions;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
