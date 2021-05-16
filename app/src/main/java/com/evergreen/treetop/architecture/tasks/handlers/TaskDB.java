@@ -54,13 +54,19 @@ public class TaskDB {
         return getTaskRef(id).update(key.getKey(), value);
     }
 
-    public Pair<Task<Void>, Task<Void>> delete(AppTask task) {
-        return new Pair<>(
-                getTaskRef(task.getId()).delete(),
-                task.isRootTask()  ?
-                        GoalDB.getInstance().update(task.getParentId(), GoalDBKey.SUBTASK_IDS, FieldValue.arrayRemove(task.getId())) :
-                        update(task.getParentId(), TaskDBKey.SUBTASK_IDS, FieldValue.arrayRemove(task.getId()))
-        );
+    public void delete(AppTask task) throws InterruptedException, ExecutionException, NoSuchDocumentException {
+
+        for (AppTask subtask : task.getSubtasks()) {
+            delete(subtask);
+        }
+
+        Tasks.await(getTaskRef(task.getId()).delete());
+
+        if (task.isRootTask()) {
+            Tasks.await(GoalDB.getInstance().update(task.getParentId(), GoalDBKey.SUBTASK_IDS, FieldValue.arrayRemove(task.getId())));
+        } else {
+            Tasks.await(update(task.getParentId(), TaskDBKey.SUBTASK_IDS, FieldValue.arrayRemove(task.getId())));
+        }
     }
 
     @NonNull

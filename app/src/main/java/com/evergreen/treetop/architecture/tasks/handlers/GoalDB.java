@@ -1,6 +1,7 @@
 package com.evergreen.treetop.architecture.tasks.handlers;
 
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
+import com.evergreen.treetop.architecture.tasks.data.AppTask;
 import com.evergreen.treetop.architecture.tasks.data.Goal;
 import com.evergreen.treetop.architecture.tasks.utils.DBGoal;
 import com.evergreen.treetop.architecture.tasks.utils.DBGoal.GoalDBKey;
@@ -48,8 +49,13 @@ public class GoalDB {
         return getGoalRef(id).update(key.getKey(), value);
     }
 
-    public Task<Void> delete(String id) {
-        return getGoalRef(id).delete();
+    public Task<Void> delete(Goal goal) throws InterruptedException, ExecutionException, NoSuchDocumentException {
+
+        for (AppTask subtask : goal.getSubtasks()) {
+            TaskDB.getInstance().delete(subtask);
+        }
+
+        return getGoalRef(goal.getId()).delete();
     }
 
     public Goal awaitGoal(String id) throws ExecutionException, InterruptedException, NoSuchDocumentException {
