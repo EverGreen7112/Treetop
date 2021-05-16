@@ -32,6 +32,7 @@ import com.evergreen.treetop.architecture.tasks.utils.TaskUtils;
 import com.evergreen.treetop.architecture.tasks.utils.UIUtils;
 import com.evergreen.treetop.ui.views.recycler.TaskEditListRecycler;
 import com.evergreen.treetop.ui.views.spinner.BaseSpinner;
+import com.google.firebase.firestore.FieldValue;
 
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -41,8 +42,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class TM_TaskEditorActivity extends AppCompatActivity {
 
@@ -76,13 +80,12 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
 
                     assert result.getData() != null : "If result is OK then it should contain data!";
 
+                    DBTask newTask = (DBTask) result.getData().getSerializableExtra(RESULT_TASK_EXTRA_KEY);
+
                     TaskDB.getInstance().update(
                             m_id,
                             TaskDBKey.SUBTASK_IDS,
-                            ListUtils.union(
-                                    m_listSubtasks.getAdapter().getData(),
-                                    Arrays.asList(AppTask.of((DBTask)result.getData().getSerializableExtra(RESULT_TASK_EXTRA_KEY)))
-                            )
+                            FieldValue.arrayUnion(newTask.getId())
                     );
                 }
             }
