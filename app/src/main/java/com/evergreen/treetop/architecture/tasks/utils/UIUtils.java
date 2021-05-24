@@ -90,23 +90,23 @@ public class UIUtils {
         alertBuilder.setMessage("Are you sure you want to delete the task?\n" +
                 "This action is permanent and cannot be undone.");
         alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
-            TaskDB.getInstance().delete(taskToDelete);
+//            TaskDB.getInstance().delete(taskToDelete);
             context.finish();
         });
-        alertBuilder.setNegativeButton("No", (dialog, which) -> {});
+        alertBuilder.setNegativeButton("No", null);
         alertBuilder.create().show();
     }
 
 
-    public static void deleteGoalDialouge(Activity context, String goalId) {
+    public static void deleteGoalDialouge(Activity context, Goal goal) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
         alertBuilder.setMessage("Are you sure you want to delete the task?\n" +
                 "This action is permanent and cannot be undone.");
         alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
-            GoalDB.getInstance().delete(goalId);
+//            GoalDB.getInstance().delete(goal);
             context.finish();
         });
-        alertBuilder.setNegativeButton("No", (dialog, which) -> {});
+        alertBuilder.setNegativeButton("No", null);
         alertBuilder.create().show();
     }
 

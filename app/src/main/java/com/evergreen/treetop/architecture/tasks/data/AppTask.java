@@ -4,7 +4,7 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
-import com.evergreen.treetop.architecture.Logging;
+import com.evergreen.treetop.architecture.LoggingUtils;
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.handlers.GoalDB;
 import com.evergreen.treetop.architecture.tasks.handlers.TaskDB;
@@ -56,7 +56,10 @@ public class AppTask extends Goal {
                 task.getRootTaskId()
         );
 
-        task.getAssigneeIds().forEach(id -> res.addAssignee(Logging.dummyUser(id)));  // task.getAssigneeIds().forEach(id -> res.addAssignee(UserDB.getInstance().getUserById(id)));
+        if (task.getAssigneeIds() != null) {
+            // Firebase seems to put empty lists as null.
+            task.getAssigneeIds().forEach(id -> res.addAssignee(LoggingUtils.dummyUser(id)));  // task.getAssigneeIds().forEach(id -> res.addAssignee(UserDB.getInstance().getUserById(id)));
+        }
         task.getSubtaskIds().forEach(res::addSubtaskById);
         res.setCompleted(task.isCompleted());
 

@@ -1,5 +1,7 @@
 package com.evergreen.treetop.architecture.tasks.data;
 
+import androidx.annotation.NonNull;
+
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.handlers.TaskDB;
 import com.evergreen.treetop.architecture.tasks.handlers.UnitDB;
@@ -9,6 +11,7 @@ import com.evergreen.treetop.architecture.tasks.utils.TaskUtils;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
@@ -139,7 +142,18 @@ public class Goal {
     }
 
     @Override
+    @NonNull
     public String toString() {
         return "Goal " + getId() + " (" + getTitle() + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Goal && ((Goal) o).m_id.equals(m_id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(m_priority, m_completed, m_id, m_title, m_description, m_subtaskIds, m_unitId);
     }
 }

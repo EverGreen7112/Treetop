@@ -3,6 +3,7 @@ package com.evergreen.treetop.architecture.tasks.handlers;
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
 import com.evergreen.treetop.architecture.tasks.data.Goal;
+import com.evergreen.treetop.architecture.tasks.data.Unit;
 import com.evergreen.treetop.architecture.tasks.utils.DBGoal;
 import com.evergreen.treetop.architecture.tasks.utils.DBGoal.GoalDBKey;
 import com.google.android.gms.tasks.Task;
@@ -13,7 +14,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 public class GoalDB {
 
@@ -27,6 +30,12 @@ public class GoalDB {
 
     public CollectionReference getRef() {
         return m_goals;
+    }
+
+    public List<Goal> getAll() throws ExecutionException, InterruptedException {
+        return  Tasks.await(getRef().get())
+                .getDocuments().stream().map(doc -> Goal.of(doc.toObject(DBGoal.class)))
+                .collect(Collectors.toList());
     }
 
     public DocumentReference newDoc() {
@@ -67,5 +76,12 @@ public class GoalDB {
         }
 
         return Goal.of(dbGoal);
+    }
+
+    public List<Goal> getUniitGoals(List<String> unitIds) throws ExecutionException, InterruptedException {
+        return Tasks.await(m_goals.whereIn(GoalDBKey.UNIT_ID.getKey(), unitIds).get())
+                .getDocuments().stream()
+                .map(doc -> Goal.of(doc.toObject(DBGoal.class)))
+                .collect(Collectors.toList());
     }
 }

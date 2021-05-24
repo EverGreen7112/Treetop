@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.tasks.TM_GoalViewActivity" >
+    tools:context=".activities.tasks.goals.TM_GoalViewActivity" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/tm_goal_view_constr_layout"

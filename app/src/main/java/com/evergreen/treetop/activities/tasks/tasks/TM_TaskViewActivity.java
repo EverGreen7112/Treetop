@@ -1,4 +1,4 @@
-package com.evergreen.treetop.activities.tasks;
+package com.evergreen.treetop.activities.tasks.tasks;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,18 +10,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.evergreen.treetop.R;
-import com.evergreen.treetop.architecture.Logging;
+import com.evergreen.treetop.activities.tasks.TM_DasboardActivity;
+import com.evergreen.treetop.activities.tasks.goals.TM_GoalViewActivity;
+import com.evergreen.treetop.architecture.LoggingUtils;
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
 import com.evergreen.treetop.architecture.tasks.data.User;
 import com.evergreen.treetop.architecture.tasks.handlers.TaskDB;
-import com.evergreen.treetop.architecture.tasks.utils.DBTask;
 import com.evergreen.treetop.architecture.tasks.utils.DBTask.TaskDBKey;
 import com.evergreen.treetop.architecture.tasks.utils.TaskUtils;
 import com.evergreen.treetop.architecture.tasks.utils.UIUtils;
@@ -52,16 +51,6 @@ public class TM_TaskViewActivity extends AppCompatActivity {
     private String m_id;
     private AppTask m_taskToDisplay;
 
-
-    private final ActivityResultLauncher<Intent> m_editThis = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    m_taskToDisplay = AppTask.of((DBTask)result.getData().getSerializableExtra(TM_TaskEditorActivity.RESULT_TASK_EXTRA_KEY));
-                    showTask(m_taskToDisplay);
-                }
-            }
-    );
 
     public static final String TASK_ID_EXTRA_KEY = "task-id";
 
@@ -115,7 +104,7 @@ public class TM_TaskViewActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_task_dots, menu);
+        getMenuInflater().inflate(R.menu.menu_task_options_tm, menu);
         menu.findItem(R.id.tm_task_options_meni_edit_mode).setTitle("Edit Mode");
         menu.removeItem(R.id.tm_task_options_meni_submit);
         return true;
@@ -146,7 +135,7 @@ public class TM_TaskViewActivity extends AppCompatActivity {
         if (itemId == R.id.tm_task_options_meni_dashboard) {
             startActivity(new Intent(this, TM_DasboardActivity.class));
         } else if (itemId == R.id.tm_task_options_meni_edit_mode) {
-            m_editThis.launch(new Intent(this, TM_TaskEditorActivity.class)
+            startActivity(new Intent(this, TM_TaskEditorActivity.class)
                     .putExtra(TM_TaskEditorActivity.TASK_ID_EXTRA_KEY, m_id)
                     .putExtra(TM_TaskEditorActivity.PARENT_GOAL_EXTRA_KEY, m_taskToDisplay.getParentId())
                     .putExtra(TM_TaskEditorActivity.IS_ROOT_TASK_EXTRA_KEY, m_taskToDisplay.isRootTask())
@@ -330,7 +319,7 @@ public class TM_TaskViewActivity extends AppCompatActivity {
                 Toast.makeText(this, "Error: could not identify task's unit.", Toast.LENGTH_SHORT).show();
                 Log.w("DB_ERROR",
                         "Tried to retrieve assigner of " + task.toString()
-                                + "from id " + task.getAssignerId() + ", but no such user exists");
+                                + " from id " + task.getAssignerId() + ", but no such user exists");
             }
         }).start();
 
@@ -343,7 +332,7 @@ public class TM_TaskViewActivity extends AppCompatActivity {
                 Toast.makeText(this, "Error: could not retrieve some assignees.", Toast.LENGTH_SHORT).show();
                 Log.w("DB_ERROR",
                         "Tried to retrieve assignees of " + task.toString() + "from id "
-                                + Logging.stringify(task.getAssigneesIds()) + ", but failed:\n"
+                                + LoggingUtils.stringify(task.getAssigneesIds()) + ", but failed:\n"
                                 + ExceptionUtils.getStackTrace(e));
             } catch (InterruptedException e) {
                 Log.w(

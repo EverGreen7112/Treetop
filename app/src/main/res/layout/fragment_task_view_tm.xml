@@ -7,7 +7,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".activities.tasks.TM_GoalViewActivity">
+                tools:context=".activities.tasks.goals.TM_GoalViewActivity">
 
                 <TextView
                     android:id="@+id/tm_task_view_text_title"

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.tasks.units.TM_UnitViewActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/tm_unit_view_constr_form"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:divider="@drawable/linear_divider"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tm_unit_view_text_title"
+                android:layout_width="355dp"
+                android:layout_height="77dp"
+                android:ems="10"
+                android:textSize="30sp"
+                android:layout_gravity="center"
+                android:hint="Name" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="20dp" />
+
+
+            <TextView
+                android:id="@+id/tm_unit_view_text_description"
+                android:layout_width="362dp"
+                android:layout_height="140dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="Description" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="20dp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tm_unit_view_recycler_subunits"
+                android:layout_width="348dp"
+                android:layout_height="215dp" />
+
+        </LinearLayout>
+
+        <!-- Progress bar overlay; shown while login is in progress -->
+        <include layout="@layout/loading_overlay" />
+
+    </FrameLayout>
+</ScrollView>

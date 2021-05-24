@@ -155,4 +155,8 @@ public class DBTask extends DBGoal {
         }
     }
 
+    @Override
+    public String toString() {
+        return "DBTask " + getId() + " (" + getTitle() + ")";
+    }
 }

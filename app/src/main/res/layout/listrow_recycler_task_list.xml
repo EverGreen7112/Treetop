@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tm_task_list_text_title"
+            android:id="@+id/tm_unit_picker_text_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:focusable="true"
@@ -38,7 +38,7 @@
 
 
     <TextView
-        android:id="@+id/tm_task_list_text_complete_icon"
+        android:id="@+id/tm_unit_picker_text_more_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="60dp"

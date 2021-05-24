@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evergreen.treetop.R;
-import com.evergreen.treetop.activities.tasks.TM_TaskViewActivity;
-import com.evergreen.treetop.architecture.Logging;
+import com.evergreen.treetop.activities.tasks.tasks.TM_TaskViewActivity;
+import com.evergreen.treetop.architecture.LoggingUtils;
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public TaskListAdapter(Context context, List<AppTask> data) {
         m_data = data;
         m_context = context;
-        Log.v("UI_EVENT", "Created a new TaskList with values " + Logging.stringify(m_data));
+        Log.v("UI_EVENT", "Created a new TaskList with values " + LoggingUtils.stringify(m_data));
     }
 
 
@@ -85,8 +85,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .inflate(R.layout.listrow_recycler_task_list, parent, false)
             );
 
-            m_textMain = itemView.findViewById(R.id.tm_task_list_text_title);
-            m_textComplete = itemView.findViewById(R.id.tm_task_list_text_complete_icon);
+            m_textMain = itemView.findViewById(R.id.tm_unit_picker_text_title);
+            m_textComplete = itemView.findViewById(R.id.tm_unit_picker_text_more_icon);
         }
 
         public void setContent(AppTask task) {

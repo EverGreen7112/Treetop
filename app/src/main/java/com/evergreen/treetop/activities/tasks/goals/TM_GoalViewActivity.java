@@ -1,4 +1,4 @@
-package com.evergreen.treetop.activities.tasks;
+package com.evergreen.treetop.activities.tasks.goals;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,13 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.evergreen.treetop.R;
+import com.evergreen.treetop.activities.tasks.TM_DasboardActivity;
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
 import com.evergreen.treetop.architecture.tasks.data.Goal;
 import com.evergreen.treetop.architecture.tasks.handlers.GoalDB;
-import com.evergreen.treetop.architecture.tasks.handlers.TaskDB;
 import com.evergreen.treetop.architecture.tasks.utils.DBGoal.GoalDBKey;
-import com.evergreen.treetop.architecture.tasks.utils.DBTask.TaskDBKey;
 import com.evergreen.treetop.architecture.tasks.utils.UIUtils;
 import com.evergreen.treetop.ui.views.recycler.TaskListRecycler;
 
@@ -108,7 +107,7 @@ public class TM_GoalViewActivity extends AppCompatActivity {
             startActivity(new Intent(this, TM_DasboardActivity.class));
 
         } else if (itemId == R.id.tm_goal_options_meni_delete) {
-            UIUtils.deleteGoalDialouge(this, m_id);
+            UIUtils.deleteGoalDialouge(this, m_goalToDisplay);
 
         } else if (itemId == R.id.tm_goal_options_meni_edit_mode) {
             startActivity(

@@ -1,4 +1,4 @@
-package com.evergreen.treetop.activities.tasks;
+package com.evergreen.treetop.activities.tasks.goals;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.evergreen.treetop.R;
+import com.evergreen.treetop.activities.tasks.TM_DasboardActivity;
+import com.evergreen.treetop.activities.tasks.tasks.TM_TaskEditorActivity;
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
 import com.evergreen.treetop.architecture.tasks.data.Goal;
@@ -133,7 +135,7 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
             startActivity(new Intent(this, TM_DasboardActivity.class));
 
         } else if (itemId == R.id.tm_goal_options_meni_delete) {
-            UIUtils.deleteGoalDialouge(this, m_id);
+            UIUtils.deleteGoalDialouge(this, m_goalToDisplay);
         } else if (itemId == R.id.tm_goal_options_meni_edit_mode) {
             startActivity(
                     new Intent(this, TM_GoalViewActivity.class)
@@ -154,18 +156,24 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
 
     private void submit() {
         DBGoal result = DBGoal.of(getGoal());
-        GoalDB.getInstance().getGoalRef(m_id).set(result);
+        GoalDB.getInstance().getGoalRef(m_id).set(result)
+                .addOnSuccessListener( aVoid -> {
 
-        setResult(
-                Activity.RESULT_OK,
-                new Intent().putExtra(
-                        RESULT_GOAL_EXTRA_KEY,
-                        DBTask.of(getGoal())
-                )
-        );
+                    Log.i("DB_EVENT", "Submitted " + result.toString());
+                    setResult(
+                            Activity.RESULT_OK,
+                            new Intent().putExtra(
+                                    RESULT_GOAL_EXTRA_KEY,
+                                    result
+                            )
+                    );
 
-
-        finish();
+                    finish();
+                }).addOnFailureListener(e -> {
+            Log.w("DB_ERROR", "Attempted to submit " + result.toString() + ", but failed:\n"
+                    + ExceptionUtils.getStackTrace(e));
+            Toast.makeText(this, "Failed to submit goal: Database Error", Toast.LENGTH_SHORT).show();
+        }).addOnCanceledListener(() -> Log.w("DB_ERROR", "Cancelled submission of goal" + result.toString()));
     }
 
     private boolean canSubmit() {

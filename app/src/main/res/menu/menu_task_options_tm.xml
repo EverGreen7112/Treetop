@@ -44,4 +44,15 @@
         android:icon="@drawable/ic_event"
         android:title="Task Dashboard" />
 
+    <item
+        android:id="@+id/tm_task_options_meni_add_event_end"
+        android:icon="@drawable/ic_calendar"
+        android:title="Add end as event" />
+
+
+    <item
+        android:id="@+id/tm_task_options_meni_add_event_start"
+        android:icon="@drawable/ic_calendar"
+        android:title="Add start as event" />
+
 </menu>

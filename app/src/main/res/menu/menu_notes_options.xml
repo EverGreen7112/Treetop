@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/tm_notes_options_meni_add_text"
+        android:title="Add a text note"
+        android:icon="@drawable/ic_text"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/tm_notes_options_meni_add_image"
+        android:title="Add an image note"
+        android:icon="@drawable/ic_gallery"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/tm_notes_options_meni_add_camera"
+        android:title="Take a photo note"
+        android:icon="@drawable/ic_camera"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>

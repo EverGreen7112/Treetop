@@ -1,5 +1,7 @@
 package com.evergreen.treetop.architecture.tasks.utils;
 
+import com.evergreen.treetop.architecture.tasks.handlers.UserDB;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +10,20 @@ public class DBUser implements Serializable {
 
     String m_id;
     String m_name;
-    List<String> unitIds;
+    List<String> m_unitIds;
+    List<String> m_leadingIds;
 
     public DBUser() {}
 
     public DBUser(String id, String name) {
+        this(id, name, new ArrayList<>(), new ArrayList<>());
+    }
+
+    public DBUser(String id, String name, List<String> unitIds, List<String> leadingIds) {
         m_id = id;
         m_name = name;
-        unitIds = new ArrayList<>();
+        m_unitIds = unitIds;
+        m_leadingIds = leadingIds;
     }
 
     public String getId() {
@@ -35,10 +43,34 @@ public class DBUser implements Serializable {
     }
 
     public List<String> getUnitIds() {
-        return unitIds;
+        return m_unitIds;
     }
 
     public void setUnitIds(List<String> unitIds) {
-        this.unitIds = unitIds;
+        m_unitIds = unitIds;
+    }
+
+    public List<String> getLeadingIds() {
+        return m_leadingIds;
+    }
+
+    public void setLeadingIds(List<String> leadingIds) {
+        m_leadingIds = leadingIds;
+    }
+
+    public enum UserDBKey {
+        ID("id"),
+        NAME("name"),
+        UNIT_IDS("unitIds");
+
+        String m_key;
+
+        UserDBKey(String key) {
+            m_key = key;
+        }
+
+        public String getKey() {
+            return m_key;
+        }
     }
 }

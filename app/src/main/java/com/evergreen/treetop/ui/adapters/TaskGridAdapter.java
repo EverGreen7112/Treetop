@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.activities.tasks.TM_DasboardActivity;
-import com.evergreen.treetop.activities.tasks.TM_TaskViewActivity;
+import com.evergreen.treetop.activities.tasks.tasks.TM_TaskViewActivity;
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
-import com.evergreen.treetop.architecture.Logging;
+import com.evergreen.treetop.architecture.LoggingUtils;
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
 import com.evergreen.treetop.architecture.tasks.data.User;
 
@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class TaskGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -47,7 +46,7 @@ public class TaskGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public TaskGridAdapter(Context context, List<AppTask> data) {
         m_data = data;
         m_context = context;
-        Log.v("UI_EVENT", "Created a new TaskGrid with values " + Logging.stringify(m_data));
+        Log.v("UI_EVENT", "Created a new TaskGrid with values " + LoggingUtils.stringify(m_data));
     }
 
 

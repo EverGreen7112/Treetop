@@ -2,7 +2,7 @@ package com.evergreen.treetop.architecture.scouts.handlers;
 
 import android.util.Log;
 
-import com.evergreen.treetop.architecture.Logging;
+import com.evergreen.treetop.architecture.LoggingUtils;
 import com.evergreen.treetop.architecture.scouts.form.FormObject;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.SetOptions;
@@ -17,7 +17,7 @@ public class MatchDB {
 
     public MatchDB(int team) {
         m_team = team;
-        getRef().set(Logging.PLACEHOLDER_OBJECT, SetOptions.merge());
+        getRef().set(LoggingUtils.PLACEHOLDER_OBJECT, SetOptions.merge());
     }
 
     /**

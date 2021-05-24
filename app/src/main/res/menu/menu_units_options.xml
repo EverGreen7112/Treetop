@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--First item should be left most when shown as action icon -->
+    <item
+        android:id="@+id/tm_task_options_meni_submit"
+        android:icon="@drawable/ic_confirm"
+        android:title="Submit"
+        app:showAsAction="always" />
+
+</menu>

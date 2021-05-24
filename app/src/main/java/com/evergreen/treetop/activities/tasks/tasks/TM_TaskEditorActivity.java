@@ -1,10 +1,16 @@
-package com.evergreen.treetop.activities.tasks;
+package com.evergreen.treetop.activities.tasks.tasks;
 
+import android.Manifest.permission;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
+import android.provider.CalendarContract;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
@@ -16,37 +22,47 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.evergreen.treetop.R;
-import com.evergreen.treetop.architecture.Logging;
+import com.evergreen.treetop.activities.tasks.TM_DasboardActivity;
+import com.evergreen.treetop.activities.tasks.goals.TM_GoalViewActivity;
+import com.evergreen.treetop.activities.tasks.units.TM_UnitPickerActivity;
+import com.evergreen.treetop.architecture.LoggingUtils;
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
+import com.evergreen.treetop.architecture.tasks.data.Goal;
+import com.evergreen.treetop.architecture.tasks.data.Unit;
 import com.evergreen.treetop.architecture.tasks.data.User;
+import com.evergreen.treetop.architecture.tasks.handlers.GoalDB;
 import com.evergreen.treetop.architecture.tasks.handlers.TaskDB;
 import com.evergreen.treetop.architecture.tasks.utils.DBTask;
 import com.evergreen.treetop.architecture.tasks.utils.DBTask.TaskDBKey;
+import com.evergreen.treetop.architecture.tasks.utils.DBUnit;
 import com.evergreen.treetop.architecture.tasks.utils.TaskUtils;
 import com.evergreen.treetop.architecture.tasks.utils.UIUtils;
 import com.evergreen.treetop.ui.views.recycler.TaskEditListRecycler;
 import com.evergreen.treetop.ui.views.spinner.BaseSpinner;
 import com.google.firebase.firestore.FieldValue;
 
-import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+import java.util.concurrent.TimeUnit;
 
 public class TM_TaskEditorActivity extends AppCompatActivity {
 
@@ -65,8 +81,12 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
     private String m_goalId;
     private boolean m_new;
 
-    private  AppTask m_givenTask;
+    private AppTask m_givenTask;
+    private Unit m_pickedUnit;
     private final Calendar m_calendar = Calendar.getInstance();
+
+    private static final int START_CAL_PERMISSION_REQ = 0;
+    private static final int END_CAL_PERMISSION_REQ = 1;
 
     public static final String PARENT_GOAL_EXTRA_KEY = "task-parent";
     public static final String TASK_ID_EXTRA_KEY = "task-id";
@@ -87,6 +107,16 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
                             TaskDBKey.SUBTASK_IDS,
                             FieldValue.arrayUnion(newTask.getId())
                     );
+                }
+            }
+    );
+
+    ActivityResultLauncher<Intent> m_unitPicker = registerForActivityResult(
+            new StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    m_pickedUnit = Unit.of((DBUnit) result.getData().getSerializableExtra(TM_UnitPickerActivity.RESULT_PICKED_EXTRA_KEY));
+                    m_textUnit.setText(m_pickedUnit.getName());
                 }
             }
     );
@@ -139,10 +169,21 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_task_dots, menu);
+        if(m_new) { // If the task is new none of the options apply yet, just add the submit button.
+            MenuItem submitButton =
+                    menu.add(Menu.NONE, R.id.tm_task_options_meni_submit, Menu.NONE, "Submit");
+            submitButton.setIcon(R.drawable.ic_confirm);
+            submitButton.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+            return true;
+        }
+
+
+        getMenuInflater().inflate(R.menu.menu_task_options_tm, menu);
         menu.findItem(R.id.tm_task_options_meni_edit_mode).setTitle("View Mode");
         menu.findItem(R.id.tm_task_options_meni_edit_mode).setIcon(R.drawable.ic_view);
         return true;
+
+
     }
 
     @Override
@@ -156,6 +197,11 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
             if (m_givenTask.isRootTask()) {
                 menu.removeItem(R.id.tm_task_options_meni_view_root_task);
             }
+        }
+
+        if (m_new) {
+            menu.removeItem(R.id.tm_task_options_meni_edit_mode);
+            menu.removeItem(R.id.tm_task_options_meni_delete);
         }
 
 
@@ -197,10 +243,16 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please fill out all fields before submitting", Toast.LENGTH_LONG).show();
                 Log.i("TASK_FAIL", "User tried to submit task without filling details");
             }
+        } else if (itemId == R.id.tm_task_options_meni_add_event_start) {
+            addAsEvent(m_givenTask.getStartDeadline(), START_CAL_PERMISSION_REQ);
+        } else if (itemId == R.id.tm_task_options_meni_add_event_end) {
+            addAsEvent(m_givenTask.getEndDeadline(), END_CAL_PERMISSION_REQ);
         }
 
         return true;
     }
+
+
 
 
     private void setCompleted(boolean completed) {
@@ -222,6 +274,46 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
                 });
     }
 
+    private void addAsEvent(LocalDate day, int requestCode) {
+
+        if (ContextCompat.checkSelfPermission(this, permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED
+        || ContextCompat.checkSelfPermission(this, permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {permission.WRITE_CALENDAR, permission.READ_CALENDAR}, requestCode);
+            return;
+        }
+
+        // this handles the event creation.
+        ContentResolver eventResolver = getContentResolver();
+        // this saves the event details (title, description, starting time, ending time, location).
+        ContentValues eventValues = new ContentValues();
+        LocalDateTime startInstant = LocalDateTime.of(day, LocalTime.MIDNIGHT);
+        long startEpochMillis = startInstant.toEpochSecond(ZoneOffset.UTC) * 1000;
+        long endEpochMillis = startEpochMillis + 60 * 60 * 1000;
+
+        eventValues.put(CalendarContract.Events.DTSTART, startEpochMillis);
+        eventValues.put(CalendarContract.Events.DTEND, endEpochMillis);
+        eventValues.put(CalendarContract.Events.TITLE, m_givenTask.getTitle());
+        eventValues.put(CalendarContract.Events.DESCRIPTION, m_givenTask.getDescription());
+        // sets the event to be in the first account on the phone.
+        eventValues.put(CalendarContract.Events.CALENDAR_ID, 1);
+        // sets the event to be in the default timezone.
+        eventValues.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+        // saves the event.
+        Uri res = eventResolver.insert(CalendarContract.Events.CONTENT_URI, eventValues);
+
+        // sets an alert dialogue that notifies the user that the event was saved.
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+
+        if (res != null) {
+            alertBuilder.setMessage("Event saved!");
+        } else {
+            alertBuilder.setMessage("Failed to save event.");
+        }
+        alertBuilder.setPositiveButton("OK", null);
+
+        alertBuilder.create().show();
+    }
+
     private void viewMode() {
         startActivity(new Intent(this, TM_TaskViewActivity.class)
                 .putExtra(TM_TaskViewActivity.TASK_ID_EXTRA_KEY, m_id)
@@ -235,7 +327,7 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
         alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
             cancel();
         });
-        alertBuilder.setNegativeButton("No", (dialog, which) -> {});
+        alertBuilder.setNegativeButton("No", null);
         alertBuilder.create().show();
     }
 
@@ -265,6 +357,45 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
             m_listSubtasks.setAddAction(v ->
                     m_subtaskLauncher.launch(new Intent(this, getClass()).putExtra(PARENT_GOAL_EXTRA_KEY, m_id))
             );
+        }
+
+        initUnitPicker();
+    }
+
+    private void initUnitPicker() {
+
+        Intent unitIntent = new Intent(this, TM_UnitPickerActivity.class)
+//                .putExtra(TM_UnitPickerActivity.USER_FILTER_EXTRA_KEY, true)
+                ;
+
+        if (m_rootId.equals(m_id)) {
+            new Thread(() ->{ {
+                Looper.prepare();
+                try {
+                    unitIntent.putExtra(TM_UnitPickerActivity.ROOT_UNIT_EXTRA_KEY, DBUnit.of(getParentTask().getUnit()));
+                    runOnUiThread(() -> {
+                        m_textUnit.setOnClickListener(v -> m_unitPicker.launch(unitIntent));
+                    });
+                } catch (ExecutionException e) {
+                    Log.w("DB_ERROR", "Could not initialize a root unit for UnitPicker from "
+                            + LoggingUtils.stringify(m_givenTask) + ":\n" + ExceptionUtils.getStackTrace(e));
+                    Toast.makeText(this, "Could not initialize root unit. Aborting.", Toast.LENGTH_SHORT).show();
+                    finish();
+                } catch (InterruptedException e) {
+                    Log.w("DB_ERROR", "Canceled initializing root unit for UnitPicker from "
+                            + LoggingUtils.stringify(m_givenTask) + ":\n" + ExceptionUtils.getStackTrace(e));
+                    finish();
+                } catch (NoSuchDocumentException e) {
+                    Log.w("DB_ERROR", "Tried to get Root unit of " + LoggingUtils.stringify(m_givenTask)
+                            + ", but it specifies a non-existent parent or unit:\n"
+                            + ExceptionUtils.getStackTrace(e));
+                    Toast.makeText(this, "Could not initialize root unit. Aborting.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+            }).start();
+        } else {
+            m_textUnit.setOnClickListener(v -> m_unitPicker.launch(unitIntent));
         }
     }
 
@@ -297,20 +428,26 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
 
     private void submit() {
 
-
         DBTask result = DBTask.of(getTask());
-        TaskDB.getInstance().getTaskRef(m_id).set(result);
+        TaskDB.getInstance().getTaskRef(m_id).set(result)
+        .addOnSuccessListener( aVoid -> {
 
-        setResult(
-                Activity.RESULT_OK,
-                new Intent().putExtra(
-                        RESULT_TASK_EXTRA_KEY,
-                        DBTask.of(getTask())
-                )
-        );
+            Log.i("DB_EVENT", "Subbmitted " + result.toString());
+            setResult(
+                    Activity.RESULT_OK,
+                    new Intent().putExtra(
+                            RESULT_TASK_EXTRA_KEY,
+                            result
+                    )
+            );
 
+            finish();
+        }).addOnFailureListener(e -> {
+            Log.w("DB_ERROR", "Attempted to submit " + result.toString() + ", but failed:\n"
+                    + ExceptionUtils.getStackTrace(e));
+            Toast.makeText(this, "Failed to submit task: Database Error", Toast.LENGTH_SHORT).show();
+        }).addOnCanceledListener(() -> Log.w("DB_ERROR", "Cancelled submission of task" + result.toString()));
 
-        finish();
     }
 
     private boolean canSubmit() {
@@ -412,13 +549,13 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
         m_spinPriority.setSelection(task.getPriority() + 1);
         m_editTitle.setText(task.getTitle());
         m_editDescription.setText(task.getDescription());
-        m_textStartDeadline.setText(DateFormat.format("yyyy-MM-dd", Logging.toDate(task.getStartDeadline())));
-        m_textEndDeadline.setText(DateFormat.format("yyyy-MM-dd", Logging.toDate(task.getEndDeadline())));
+        m_textStartDeadline.setText(DateFormat.format("yyyy-MM-dd", LoggingUtils.toDate(task.getStartDeadline())));
+        m_textEndDeadline.setText(DateFormat.format("yyyy-MM-dd", LoggingUtils.toDate(task.getEndDeadline())));
 
         new Thread( () -> {
             Looper.prepare();
             try {
-                String assignees = Logging.stringify(task.getAssignees(), User::getName, false);
+                String assignees = LoggingUtils.stringify(task.getAssignees(), User::getName, false);
                 runOnUiThread(() -> m_textAssignees.setText(assignees));
             } catch (InterruptedException | ExecutionException e) {
                 Toast.makeText(this, "Failed to retrieve task assignees", Toast.LENGTH_LONG).show();
@@ -427,7 +564,7 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
             } catch (NoSuchDocumentException e) {
                 Toast.makeText(this, "Error: failed to identify task assignees", Toast.LENGTH_SHORT).show();
                 Log.w("DB_ERROR", "Tried to retrieve unit of " + task.toString() +
-                        ", but it specifies assignees that do not exist:\n" + Logging.stringify(task.getAssigneesIds()));
+                        ", but it specifies assignees that do not exist:\n" + LoggingUtils.stringify(task.getAssigneesIds()));
             }
         }).start();
 
@@ -469,7 +606,7 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
 
         try {
             m_givenTask = TaskDB.getInstance().awaitTask(id);
-            Log.d("TASK_EDIT_EVENT", "GIVEN " + Logging.stringify(m_givenTask));
+            Log.d("TASK_EDIT_EVENT", "GIVEN " + LoggingUtils.stringify(m_givenTask));
         } catch (ExecutionException e) {
             Log.w("DB_ERROR", "Tried to edit task from id " + m_id + ", but failed:\n" + ExceptionUtils.getStackTrace(e));
             Toast.makeText(this, "could not retrieve task, aborting", Toast.LENGTH_LONG).show();
@@ -483,7 +620,7 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
             cancel();
         }
 
-        Log.d("TASK_EDIT_EVENT", "GIVEN " + Logging.stringify(m_givenTask));
+        Log.d("TASK_EDIT_EVENT", "GIVEN " + LoggingUtils.stringify(m_givenTask));
     }
 
 
@@ -523,6 +660,20 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
         }).start();
     }
 
+    private Goal getParentTask() throws InterruptedException, ExecutionException, NoSuchDocumentException {
+        return
+                isRootTask()?
+                        GoalDB.getInstance().awaitGoal(m_parentId)
+                :
+                        TaskDB.getInstance().awaitTask(m_parentId);
+
+    }
+
+
+    private boolean isRootTask() {
+        return m_rootId.equals(m_id);
+    }
+
     private void cancel() {
 
         if (getCallingActivity() != null) {
@@ -530,5 +681,26 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
         }
 
         finish();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+            case START_CAL_PERMISSION_REQ:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    addAsEvent(m_givenTask.getStartDeadline(), START_CAL_PERMISSION_REQ);
+                }
+                break;
+            case END_CAL_PERMISSION_REQ:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED
+                         && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    addAsEvent(m_givenTask.getEndDeadline(), END_CAL_PERMISSION_REQ);
+                }
+                break;
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
