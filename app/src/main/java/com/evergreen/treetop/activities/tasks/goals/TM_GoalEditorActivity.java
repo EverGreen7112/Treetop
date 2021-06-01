@@ -31,6 +31,8 @@ import com.evergreen.treetop.ui.views.spinner.BaseSpinner;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class TM_GoalEditorActivity extends AppCompatActivity {
@@ -45,6 +47,8 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
     boolean m_new;
     private Goal m_goalToDisplay;
     private Unit m_pickedUnit;
+
+    private static final List<String> s_editingIds = new ArrayList<>();
 
     public static final String GOAL_ID_EXTRA_KEY = "goal-id";
     public static final String RESULT_GOAL_EXTRA_KEY = "result-goal";
@@ -94,28 +98,20 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+
+        if (m_goalToDisplay != null) {
+            s_editingIds.remove(m_id);
+        }
+
+        super.onDestroy();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_goals_editor_options, menu);
         getMenuInflater().inflate(R.menu.menu_goals_navigation_options, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        if (m_goalToDisplay != null) {
-            menu.getItem(R.id.tm_goal_options_meni_toggle_complete)
-                    .setTitle("Mark " + (m_goalToDisplay.isCompleted() ? "in" : "") + "complete");
-        }
-
-        if (m_new) {
-            menu.removeItem(R.id.tm_goal_options_meni_edit_mode);
-            menu.removeItem(R.id.tm_goal_options_meni_delete);
-            menu.removeItem(R.id.tm_goal_options_meni_toggle_complete);
-        }
-
         return true;
     }
 
@@ -236,6 +232,7 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
         try {
             Looper.prepare();
             m_goalToDisplay = GoalDB.getInstance().awaitGoal(id);
+            s_editingIds.add(m_id);
             m_pickedUnit = m_goalToDisplay.getUnit();
             runOnUiThread(() -> showGoal(m_goalToDisplay));
         } catch (ExecutionException e) {
@@ -260,4 +257,7 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
         finish();
     }
 
+    public static List<String> getEditingIds() {
+        return s_editingIds;
+    }
 }

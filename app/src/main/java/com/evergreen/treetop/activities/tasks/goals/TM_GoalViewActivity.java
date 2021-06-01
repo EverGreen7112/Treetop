@@ -282,6 +282,10 @@ public class TM_GoalViewActivity extends AppCompatActivity {
 
                     if (UserDB.getInstance().getCurrentUser().isLeading(m_unit)) {
                         getMenuInflater().inflate(R.menu.menu_goals_leader_options, m_menuOptions);
+
+                        if (TM_GoalEditorActivity.getEditingIds().contains(m_id)) {
+                            m_menuOptions.removeItem(R.id.tm_goal_options_meni_edit_mode);
+                        }
                     }
                 });
 
