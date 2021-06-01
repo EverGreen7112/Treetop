@@ -1,24 +1,20 @@
 package com.evergreen.treetop.activities.scouts.form;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.activities.scouts.StatsLauncher;
-import com.evergreen.treetop.activities.users.SignUpActivity;
-import com.evergreen.treetop.architecture.Utilities;
 import com.evergreen.treetop.architecture.scouts.form.FormObject;
 import com.evergreen.treetop.architecture.scouts.utils.MatchID;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
-import com.evergreen.treetop.test.TestActivity;
 import com.evergreen.treetop.ui.views.spinner.BaseSpinner;
 
 public class SC_FormLauncher extends AppCompatActivity {
