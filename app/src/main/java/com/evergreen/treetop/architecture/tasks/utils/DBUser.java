@@ -1,5 +1,6 @@
 package com.evergreen.treetop.architecture.tasks.utils;
 
+import com.evergreen.treetop.architecture.tasks.data.User;
 import com.evergreen.treetop.architecture.tasks.handlers.UserDB;
 
 import java.io.Serializable;
@@ -24,6 +25,15 @@ public class DBUser implements Serializable {
         m_name = name;
         m_unitIds = unitIds;
         m_leadingIds = leadingIds;
+    }
+
+    public static DBUser of(User user) {
+        return new DBUser(
+                user.getId(),
+                user.getName(),
+                user.getUnitIds(),
+                user.getUnitIds()
+        );
     }
 
     public String getId() {
@@ -61,7 +71,9 @@ public class DBUser implements Serializable {
     public enum UserDBKey {
         ID("id"),
         NAME("name"),
-        UNIT_IDS("unitIds");
+        UNIT_IDS("unitIds"),
+        LEADING_IDS("leadingIds");
+
 
         String m_key;
 

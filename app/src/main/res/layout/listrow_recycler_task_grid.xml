@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/tm_task_grid_item_text_frame"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_width="160dp"
+        android:layout_height="120dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
@@ -24,23 +24,23 @@
     <ProgressBar
         android:id="@+id/tm_task_grid_item_prog_color"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="150dp"
-        android:layout_height="15dp"
-        android:layout_marginTop="56dp"
+        android:layout_width="160dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tm_task_grid_item_text_frame"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tm_task_grid_item_text_title" />
 
     <TextView
         android:id="@+id/tm_task_grid_item_text_title"
-        android:layout_width="140dp"
-        android:layout_height="42dp"
-        android:text="Title"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
         android:paddingStart="10dp"
         android:paddingTop="10dp"
+        android:text="Title"
         android:textSize="16sp"
-        android:ellipsize="marquee"
         app:layout_constraintEnd_toEndOf="@+id/tm_task_grid_item_text_frame"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tm_task_grid_item_text_frame"
@@ -48,16 +48,16 @@
 
     <TextView
         android:id="@+id/tm_task_grid_item_text_info"
-        android:layout_width="150dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="12dp"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:text="Unit · Assignees"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tm_task_grid_item_text_frame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tm_task_grid_item_text_frame" />
+        app:layout_constraintStart_toStartOf="@+id/tm_task_grid_item_text_frame"
+        app:layout_constraintTop_toBottomOf="@+id/tm_task_grid_item_prog_color" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

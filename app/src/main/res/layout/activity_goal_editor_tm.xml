@@ -72,16 +72,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/tm_goal_editor_edit_title" />
 
 
-            <com.evergreen.treetop.ui.views.recycler.TaskEditListRecycler
-                android:id="@+id/tm_goal_editor_recycler_subtasks"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.514"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tm_goal_editor_text_unit" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Progress bar overlay; shown while login is in progress -->

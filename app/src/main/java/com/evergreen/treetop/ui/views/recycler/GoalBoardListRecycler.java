@@ -1,8 +1,10 @@
 package com.evergreen.treetop.ui.views.recycler;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,27 +41,23 @@ public class GoalBoardListRecycler extends RecyclerView {
     }
 
     private void init(Context context)  {
-        m_adapter = new GoalBoardListAdapter(context);
+        m_adapter = new GoalBoardListAdapter((Activity) context);
         setAdapter(m_adapter);
-        setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-
-        new Thread( () -> {
-            try {
-                List<Goal> goals = GoalDB.getInstance().getAll();
-                post(() -> m_adapter.add(goals));
-            } catch (ExecutionException e) {
-                Toast.makeText(context, "DB ERROR: Failed to retrieve some goals", Toast.LENGTH_SHORT).show();
-                Log.w("DB_ERROR", "Could not retrieve goals for dashboard grid:\n" + ExceptionUtils.getStackTrace(e));
-            } catch (InterruptedException e) {
-                Log.w("DB_ERROR", "Cancelled retrieval of goals for dashboard grid:\n" + ExceptionUtils.getStackTrace(e));
+        getAdapter().refresh();
+        setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false) {
+            @Override
+            public int getPaddingLeft() {
+                View parent = (View) GoalBoardListRecycler.this.getParent();
+                return Math.round(parent.getWidth() / 2f - GoalBoardListRecycler.this.getWidth() / 2f);
             }
-        }).start();
+
+            @Override
+            public int getPaddingRight() {
+                return getPaddingLeft();
+            }
+        });
 
 
-    }
-
-    public void refresh() throws ExecutionException, InterruptedException {
-        m_adapter.refresh();
     }
 
     @Override

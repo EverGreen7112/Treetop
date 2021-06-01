@@ -16,4 +16,11 @@
         app:showAsAction="ifRoom"
         />
 
+
+    <item
+        android:id="@+id/tm_dashboard_options_meni_log_out"
+        android:title="Log Out"
+        app:showAsAction="never"
+        />
+
 </menu>

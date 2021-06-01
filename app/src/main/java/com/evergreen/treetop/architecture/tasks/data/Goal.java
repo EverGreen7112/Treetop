@@ -1,7 +1,12 @@
 package com.evergreen.treetop.architecture.tasks.data;
 
-import androidx.annotation.NonNull;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+
+import com.evergreen.treetop.R;
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.handlers.TaskDB;
 import com.evergreen.treetop.architecture.tasks.handlers.UnitDB;
@@ -9,6 +14,7 @@ import com.evergreen.treetop.architecture.tasks.utils.DBGoal;
 import com.evergreen.treetop.architecture.tasks.utils.TaskUtils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -27,6 +33,9 @@ public class Goal {
     public final static String COMPLETE_ICON = "✓"; // ✔
     public final static String INCOMPLETE_ICON = "";
 
+    public static final Comparator<Goal> PRIORITY_COMPARATOR =
+            (goal1, goal2) -> Integer.compare(goal1.getPriority(), goal2.getPriority());
+
     public static Goal of(DBGoal goal)  {
         Goal result = new Goal(
                 goal.getPriority(),
@@ -36,7 +45,8 @@ public class Goal {
                 goal.getUnitId()
         );
         
-        goal.getSubtaskIds().forEach(result::addSubtaskById);
+        goal.getSubtaskIds().forEach(result::addChildById);
+        result.setCompleted(goal.isCompleted());
 
         return result;
         
@@ -99,25 +109,25 @@ public class Goal {
         return m_id;
     }
 
-    public List<AppTask> getSubtasks() throws ExecutionException, InterruptedException, NoSuchDocumentException {
+    public List<AppTask> getChildren() throws ExecutionException, InterruptedException, NoSuchDocumentException {
         List<AppTask> res = new ArrayList<>();
 
-        for (String id : getSubtaskIds()) {
+        for (String id : getChildrenIds()) {
             res.add(TaskDB.getInstance().awaitTask(id));
         }
 
         return res;
     }
 
-    public Set<String> getSubtaskIds() {
+    public Set<String> getChildrenIds() {
         return m_subtaskIds;
     }
 
-    public void addSubtask(AppTask subtask) {
+    public void addChild(AppTask subtask) {
         m_subtaskIds.add(subtask.getId());
     }
 
-    public void addSubtaskById(String taskId) {
+    public void addChildById(String taskId) {
         m_subtaskIds.add(taskId);
     }
 
@@ -126,11 +136,15 @@ public class Goal {
     }
 
     public int getCompletedCount() throws InterruptedException, ExecutionException, NoSuchDocumentException {
-        return (int)getSubtasks().stream().filter(AppTask::isCompleted).count();
+        return (int) getChildren().stream().filter(AppTask::isCompleted).count();
     }
 
-    public int getTaskCount() {
+    public int getChildCount() {
         return m_subtaskIds.size();
+    }
+
+    public boolean hasChildren() {
+        return getChildCount() > 0;
     }
 
     public String priorityChar() {
@@ -156,4 +170,40 @@ public class Goal {
     public int hashCode() {
         return Objects.hash(m_priority, m_completed, m_id, m_title, m_description, m_subtaskIds, m_unitId);
     }
+
+    public int getPriorityColor(Context context) {
+        int colorId;
+
+        switch (getPriority()) {
+            case 0:
+                colorId = R.color.priority_a;
+                break;
+            case 1:
+                colorId = R.color.priority_b;
+                break;
+            case 2:
+                colorId = R.color.priority_c;
+                break;
+            case 3:
+                colorId = R.color.priority_d;
+                break;
+            case 4:
+                colorId = R.color.priority_e;
+                break;
+            default:
+                throw new IllegalStateException("Illegal Priority Value: " + getPriority());
+        }
+
+        return context.getColor(colorId);
+    }
+
+    public Drawable getCompletedDrawable(Context context) {
+        if (isCompleted()) {
+            return ContextCompat.getDrawable(context, R.drawable.circle);
+        } else {
+            return ContextCompat.getDrawable(context, R.drawable.ring);
+        }
+    }
+
 }
+

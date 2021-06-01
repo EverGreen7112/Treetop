@@ -1,17 +1,8 @@
 package com.evergreen.treetop.test;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.evergreen.treetop.activities.tasks.TM_DasboardActivity;
-import com.evergreen.treetop.activities.tasks.goals.TM_GoalEditorActivity;
-import com.evergreen.treetop.activities.tasks.notes.TM_NotesActivity;
-import com.evergreen.treetop.activities.tasks.tasks.TM_TaskEditorActivity;
-import com.evergreen.treetop.activities.tasks.tasks.TM_TaskViewActivity;
-import com.evergreen.treetop.activities.tasks.units.TM_UnitEditorActivity;
-import com.evergreen.treetop.activities.tasks.units.TM_UnitPickerActivity;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -20,6 +11,9 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        startActivity(new Intent(this, SC_FormLauncher.class));
+
 //        setContentView(R.layout.activity_test);
 
 
@@ -38,12 +32,13 @@ public class TestActivity extends AppCompatActivity {
 
 //        startActivity(
 //                new Intent(this, TM_GoalEditorActivity.class)
-//                    .putExtra(TM_GoalEditorActivity.GOAL_ID_EXTRA_KEY, "BVkyjKBLVutgXFFP3471")
+////                    .putExtra(TM_GoalEditorActivity.GOAL_ID_EXTRA_KEY, "BVkyjKBLVutgXFFP3471")
 //        );
 
 //        startActivity(new Intent(this, TM_GoalEditorActivity.class));
 
-        startActivity(new Intent(this, TM_DasboardActivity.class));
+//        startActivity(new Intent(this, TM_DasboardActivity.class)
+//        .putExtra(TM_DasboardActivity.FORBID_BACK_EXTRA_KEY, true));
 
 //        startActivity(new Intent(this, TM_UnitEditorActivity.class));
 

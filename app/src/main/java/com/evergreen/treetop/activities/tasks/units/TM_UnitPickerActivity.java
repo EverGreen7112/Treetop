@@ -1,5 +1,8 @@
 package com.evergreen.treetop.activities.tasks.units;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,18 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.evergreen.treetop.R;
-import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.data.Unit;
 import com.evergreen.treetop.architecture.tasks.data.User;
 import com.evergreen.treetop.architecture.tasks.handlers.UserDB;
 import com.evergreen.treetop.architecture.tasks.utils.DBUnit;
 import com.evergreen.treetop.ui.adapters.UnitPickerAdapter;
+import com.evergreen.treetop.ui.adapters.UserPickerAdapter;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -28,12 +32,19 @@ import java.util.concurrent.ExecutionException;
 public class TM_UnitPickerActivity extends AppCompatActivity {
 
     public static final String ROOT_UNIT_EXTRA_KEY = "root-unit";
-    public static final String USER_FILTER_EXTRA_KEY = "user-filter";
+    public static final String USER_IN_FILTER_EXTRA_KEY = "user-in";
+    public static final String USER_LEADING_FILTER_EXTRA_KEY = "user-leading";
     public static final String RESULT_PICKED_EXTRA_KEY = "picked-unit";
 
-    private static final int ADD_UNIT_MENI_ID = 0;
+    private Menu m_menuOptions;
 
+    private static final int ADD_UNIT_MENI_ID = 0;
     RecyclerView m_list;
+
+    private final ActivityResultLauncher<Intent> m_newLauncher = registerForActivityResult(
+            new StartActivityForResult(),
+            result -> getAdapter().newUnitCallback(result)
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +53,21 @@ public class TM_UnitPickerActivity extends AppCompatActivity {
 
         m_list = findViewById(R.id.tm_unit_picker_recycler_picker);
 
-        boolean filterForUser = getIntent().getBooleanExtra(USER_FILTER_EXTRA_KEY, false);
-        Serializable dbUnit = getIntent().getSerializableExtra(USER_FILTER_EXTRA_KEY);
+        boolean filterForUser = getIntent().getBooleanExtra(USER_IN_FILTER_EXTRA_KEY, false);
+        boolean leadingOnly = getIntent().getBooleanExtra(USER_LEADING_FILTER_EXTRA_KEY, false);
+        Serializable dbUnit = getIntent().getSerializableExtra(ROOT_UNIT_EXTRA_KEY);
 
 
         new Thread(() -> {
+            Looper.prepare();
             try {
-                User user = filterForUser? UserDB.getInstance().getCurrentUser() : null;
+
+                boolean usingUser = filterForUser || leadingOnly;
+
+                User user = usingUser? UserDB.getInstance().getCurrentUser() : null;
                 Unit unit = dbUnit != null? Unit.of((DBUnit)dbUnit) : null;
-                UnitPickerAdapter adapter = new UnitPickerAdapter(this, user);
+
+                UnitPickerAdapter adapter = new UnitPickerAdapter(this, user, leadingOnly,  unit);
                 runOnUiThread(() -> {
                     m_list.setAdapter(adapter);
                     m_list.setLayoutManager(new LinearLayoutManager(this));
@@ -70,27 +87,36 @@ public class TM_UnitPickerActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
 
+        m_menuOptions = menu;
+
         // If no filters are given, meaning we're coming from dashboard,
         // Add option to add new unit.
-        if (!getIntent().getBooleanExtra(USER_FILTER_EXTRA_KEY, false)
-                &&  getIntent().getSerializableExtra(USER_FILTER_EXTRA_KEY) != null) {
+        if (!getIntent().getBooleanExtra(USER_IN_FILTER_EXTRA_KEY, false)
+                &&  getIntent().getSerializableExtra(USER_IN_FILTER_EXTRA_KEY) == null) {
             MenuItem item = menu.add("New Unit");
             item.setIcon(R.drawable.ic_add);
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         }
 
         return true;
-
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        startActivity(new Intent(this, TM_UnitPickerActivity.class));
+        m_newLauncher.launch(getAdapter().newUnit());
         return true;
     }
 
     @Override
     public void onBackPressed() {
         ((UnitPickerAdapter)m_list.getAdapter()).onBackPressed();
+    }
+
+    public UnitPickerAdapter getAdapter() {
+        return (UnitPickerAdapter)m_list.getAdapter();
+    }
+
+    public Menu getOptionsMenu() {
+        return m_menuOptions;
     }
 }

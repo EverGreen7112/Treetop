@@ -103,17 +103,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_text_start_deadline" />
 
-
-            <com.evergreen.treetop.ui.views.recycler.TaskEditListRecycler
-                android:id="@+id/tm_task_editor_recycler_subtasks"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:layout_marginBottom="50dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_text_Assignees" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include layout="@layout/loading_overlay" />

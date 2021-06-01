@@ -1,5 +1,7 @@
 package com.evergreen.treetop.architecture.tasks.data;
 
+import androidx.annotation.NonNull;
+
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.handlers.UnitDB;
 import com.evergreen.treetop.architecture.tasks.handlers.UserDB;
@@ -18,6 +20,15 @@ public class Unit {
     private final String m_parentId;
     private final String m_leaderId;
     private final List<String> m_childrenIds;
+    private final List<String> m_memberIds;
+
+    public static final Unit ROOT = new Unit(
+            "root",
+            "Evergreen #7112",
+            "",
+            ""
+
+    );
 
     public Unit(String id, String name, String description, String leaderId) {
         this(id, name, description, leaderId, null);
@@ -30,6 +41,9 @@ public class Unit {
         m_leaderId = leaderId;
         m_parentId = parentId;
         m_childrenIds = new ArrayList<>();
+        m_memberIds = new ArrayList<>();
+
+        m_memberIds.add(leaderId);
     }
 
     public String getName() {
@@ -56,7 +70,7 @@ public class Unit {
         return m_leaderId;
     }
 
-    public User getUser() throws InterruptedException, ExecutionException, NoSuchDocumentException {
+    public User getLeader() throws InterruptedException, ExecutionException, NoSuchDocumentException {
         return UserDB.getInstance().awaitUser(m_leaderId);
     }
 
@@ -77,6 +91,10 @@ public class Unit {
         return UnitDB.getInstance().getByIds(getChildrenIds());
     }
 
+    public boolean hasChildren() {
+        return m_childrenIds.size() > 0;
+    }
+
     public void addChild(String id) {
         m_childrenIds.add(id);
     }
@@ -84,6 +102,32 @@ public class Unit {
     public void removeChild(String id) {
         m_childrenIds.remove(id);
     }
+
+    public List<String> getMemberIds() {
+        return m_memberIds;
+    }
+
+    public List<User> getMembers() throws InterruptedException, ExecutionException, NoSuchDocumentException {
+
+        List<User> res = new ArrayList<>();
+
+        for (String id : getMemberIds()) {
+            res.add(UserDB.getInstance().awaitUser(id));
+        }
+
+        return res;
+    }
+
+    public void addMember(String userId) {
+        if (!m_memberIds.contains(userId)) {
+            m_memberIds.add(userId);
+        }
+    }
+
+    public void removeMember(String userId) {
+        m_memberIds.remove(userId);
+    }
+
 
     public boolean isRootUnit() {
         return m_parentId == null;
@@ -102,6 +146,14 @@ public class Unit {
             dbUnit.getChildrenIds().forEach(res::addChild);
         }
 
+        dbUnit.getMemberIds().forEach(res::addMember);
+
         return res;
+    }
+
+    @Override
+    @NonNull
+    public String toString() {
+        return "Unit " + getId() + " (" + getName() + ")";
     }
 }

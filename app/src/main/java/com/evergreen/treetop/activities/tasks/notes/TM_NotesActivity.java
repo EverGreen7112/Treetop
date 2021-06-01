@@ -72,6 +72,7 @@ public class TM_NotesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notes_tm);
 
 
+        getSaveFile().edit().clear().apply();
         m_listNotes = findViewById(R.id.tm_notes_recycler);
         m_listNotes.load(getData());
     }
@@ -102,9 +103,9 @@ public class TM_NotesActivity extends AppCompatActivity {
         // Currently camera is only supported for Android 10 and below, due to the heavier
         // Storage permissions.
         // TODO use file provider to support API 30 and up.
-        if (android.os.Build.VERSION.SDK_INT >= 30) {
-            menu.removeItem(R.id.tm_notes_options_meni_add_camera);
-        }
+//        if (android.os.Build.VERSION.SDK_INT >= 30) {
+//            menu.removeItem(R.id.tm_notes_options_meni_add_camera);
+//        }
 
         return true;
     }

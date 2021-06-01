@@ -2,22 +2,38 @@ package com.evergreen.treetop.architecture.tasks.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
+import android.os.Looper;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
 import com.evergreen.treetop.R;
+import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
 import com.evergreen.treetop.architecture.tasks.data.Goal;
+import com.evergreen.treetop.architecture.tasks.data.Unit;
 import com.evergreen.treetop.architecture.tasks.handlers.GoalDB;
 import com.evergreen.treetop.architecture.tasks.handlers.TaskDB;
+import com.evergreen.treetop.architecture.tasks.handlers.UnitDB;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+import java.util.concurrent.ExecutionException;
 
 public class UIUtils {
 
@@ -90,8 +106,18 @@ public class UIUtils {
         alertBuilder.setMessage("Are you sure you want to delete the task?\n" +
                 "This action is permanent and cannot be undone.");
         alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
-//            TaskDB.getInstance().delete(taskToDelete);
-            context.finish();
+            new Thread(() -> {
+                Looper.prepare();
+                try {
+                    TaskDB.getInstance().delete(taskToDelete);
+                    context.runOnUiThread(context::finish);
+                } catch (InterruptedException e) {
+                    Log.w("DB_ERROR", "Cancelled deletion of " + taskToDelete.toString() + ":\n" + ExceptionUtils.getStackTrace(e));
+                } catch (ExecutionException | NoSuchDocumentException e) {
+                    Toast.makeText(context, "Failed to delete task; database error", Toast.LENGTH_SHORT).show();
+                    Log.w("DB_ERROR", "Failed to delete " + taskToDelete.toString() + ":\n" + ExceptionUtils.getStackTrace(e));
+                }
+            }).start();
         });
         alertBuilder.setNegativeButton("No", null);
         alertBuilder.create().show();
@@ -103,11 +129,63 @@ public class UIUtils {
         alertBuilder.setMessage("Are you sure you want to delete the task?\n" +
                 "This action is permanent and cannot be undone.");
         alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
-//            GoalDB.getInstance().delete(goal);
-            context.finish();
+            try {
+                GoalDB.getInstance().delete(goal);
+                context.finish();
+            } catch (InterruptedException e) {
+                Log.w("DB_ERROR", "Cancelled deletion of " + goal.toString() + ":\n" + ExceptionUtils.getStackTrace(e));
+            } catch (ExecutionException | NoSuchDocumentException e) {
+                Toast.makeText(context, "Failed to delete task; database error", Toast.LENGTH_SHORT).show();
+                Log.w("DB_ERROR", "Failed to delete " + goal.toString() + ":\n" + ExceptionUtils.getStackTrace(e));
+            }
         });
         alertBuilder.setNegativeButton("No", null);
         alertBuilder.create().show();
     }
 
+
+
+    public static void deleteUnitDialouge(Activity context, Unit unit) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+
+        alertBuilder.setMessage("Are you sure you want to delete the task?\n" +
+                "This action is permanent and cannot be undone.\n\n" +
+                "This will also delete any child units you have created, and leave all " +
+                "of the unit's tasks without a unit."
+        );
+
+        alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
+            new Thread(() -> {
+                Looper.prepare();
+                try {
+                    UnitDB.getInstance().delete(unit);
+                    context.runOnUiThread(context::finish);
+                } catch (InterruptedException e) {
+                    Log.w("DB_ERROR", "Cancelled deletion of " + unit.toString() + ":\n" + ExceptionUtils.getStackTrace(e));
+                } catch (ExecutionException  e) {
+                    Toast.makeText(context, "Failed to delete unit: database error", Toast.LENGTH_SHORT).show();
+                    Log.w("DB_ERROR", "Failed to delete " + unit.toString() + ":\n" + ExceptionUtils.getStackTrace(e));
+                }
+            }).start();
+        });
+        alertBuilder.setNegativeButton("No", null);
+        alertBuilder.create().show();
+    }
+
+
+    public static void setProgressColor(ProgressBar view, int color) {
+        view.getIndeterminateDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+        view.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+    }
+
+    public static void setBackgroundColor(View view, int color) {
+        view.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+    }
+
+    public static void animateProgress(ProgressBar view, int to) {
+        ObjectAnimator animation = ObjectAnimator.ofInt(view, "progress", view.getProgress(), to); // see this max value coming back here, we animate towards that value
+        animation.setDuration(5000); // in milliseconds
+        animation.setInterpolator(new DecelerateInterpolator());
+        animation.start();
+    }
 }

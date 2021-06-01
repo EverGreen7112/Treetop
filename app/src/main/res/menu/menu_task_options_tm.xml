@@ -3,56 +3,5 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--First item should be left most when shown as action icon -->
-    <item
-        android:id="@+id/tm_task_options_meni_submit"
-        android:icon="@drawable/ic_confirm"
-        android:title="Submit"
-        app:showAsAction="always" />
-
-    <item
-        android:id="@+id/tm_task_options_meni_edit_mode"
-        android:icon="@drawable/ic_edit"
-        android:title="Toggle Edit Mode"
-        app:showAsAction="ifRoom"
-        />
-
-
-    <item
-        android:id="@+id/tm_task_options_meni_delete"
-        android:icon="@drawable/ic_trash"
-        android:title="Delete Task"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/tm_task_options_meni_view_goal"
-        android:icon="@drawable/ic_flag"
-        android:title="Goal Page" />
-
-    <item
-        android:id="@+id/tm_task_options_meni_view_root_task"
-        android:icon="@drawable/ic_branch"
-        android:title="Root Task" />
-
-
-    <item
-        android:id="@+id/tm_task_options_meni_toggle_complete"
-        android:icon="@drawable/ic_complete"
-        android:title="Mark Complete" />
-
-    <item
-        android:id="@+id/tm_task_options_meni_dashboard"
-        android:icon="@drawable/ic_event"
-        android:title="Task Dashboard" />
-
-    <item
-        android:id="@+id/tm_task_options_meni_add_event_end"
-        android:icon="@drawable/ic_calendar"
-        android:title="Add end as event" />
-
-
-    <item
-        android:id="@+id/tm_task_options_meni_add_event_start"
-        android:icon="@drawable/ic_calendar"
-        android:title="Add start as event" />
 
 </menu>

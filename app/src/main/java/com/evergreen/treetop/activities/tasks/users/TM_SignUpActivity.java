@@ -1,15 +1,20 @@
 package com.evergreen.treetop.activities.tasks.users;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.evergreen.treetop.R;
-import com.evergreen.treetop.activities.tasks.TM_DasboardActivity;
+import com.evergreen.treetop.activities.tasks.TM_DashboardActivity;
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.LoggingUtils;
 import com.evergreen.treetop.architecture.tasks.handlers.UserDB;
@@ -35,23 +40,78 @@ public class TM_SignUpActivity extends AppCompatActivity {
             ))
             .setIsSmartLockEnabled(false)
             .setLogo(R.drawable.ic_tree)
+            .setTheme(R.style.Theme_Treetop)
             .build();
+
+    private final ActivityResultLauncher<Intent> m_signInLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), this::handleSignIn);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         if (TestActivity.TEST) {
             startActivity(new Intent(this, TestActivity.class));
             return;
         }
 
-//        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-//            launchHomepage();
-//        }
+        Log.d("SIGN_UP", "onCreate");
 
-        launchSignIn();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            Log.v("DB_EVENT", "Already logged in: " + LoggingUtils.stringify(user));
+            new Thread(() -> {
+                Looper.prepare();
+                tryConnect(user);
+            }).start();
+        } else {
+            Log.d("DB_EVENT", "User is not logged in.");
+            launchSignIn();
+        }
 
+
+    }
+
+    private void tryRegister(FirebaseUser user) {
+        try {
+            UserDB.getInstance().registerCurrent();
+            Log.i("DB_EVENT", "New User Registered: User " + user.getUid() + " (" + user.getDisplayName() + ")" );
+            launchHomepage();
+        } catch (ExecutionException e) {
+            Toast.makeText(this, "Failed to register; Database error", Toast.LENGTH_SHORT).show();
+            Log.w("DB_ERROR", "Could not register user " + LoggingUtils.stringify(user) + ":\n" + ExceptionUtils.getStackTrace(e));
+            user.delete();
+            launchSignIn();
+        } catch (InterruptedException e) {
+            Log.w("DB_ERROR", "Cancelled registration of " + LoggingUtils.stringify(user) + ":\n" + ExceptionUtils.getStackTrace(e));
+            user.delete();
+            launchSignIn();
+        }
+    }
+
+    private void tryConnect(FirebaseUser user) {
+
+        try {
+            UserDB.getInstance().cacheCurrent();
+            Log.i("DB_EVENT", "Cached user: " + LoggingUtils.stringify(user) );
+            launchHomepage();
+        } catch (ExecutionException e) {
+            Toast.makeText(this, "Failed to cache user; Database error", Toast.LENGTH_SHORT).show();
+            Log.w("DB_ERROR", "Could not cache user " + LoggingUtils.stringify(user) + ":\n" + ExceptionUtils.getStackTrace(e));
+            launchSignIn();
+        } catch (InterruptedException e) {
+            Log.w("DB_ERROR", "Cancelled cache of " + LoggingUtils.stringify(user) + ":\n" + ExceptionUtils.getStackTrace(e));
+            launchSignIn();
+        } catch (NoSuchDocumentException e) {
+            Toast.makeText(this,"User does not exist on the database. Aborting.", Toast.LENGTH_SHORT).show();
+            Log.w("DB_ERROR", LoggingUtils.stringify(user) + " exists on " +
+                    "FirebaseAuth, but isn't on CloudFirestore!\n" + ExceptionUtils.getStackTrace(e));
+            launchSignIn();
+
+        }
     }
 
 
@@ -61,44 +121,12 @@ public class TM_SignUpActivity extends AppCompatActivity {
 
         if (result.getResultCode() == RESULT_OK) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            Log.i("DB_EVENT", "User connected: " + FirebaseAuth.getInstance().getCurrentUser().getEmail());
-
                 new Thread(() -> {
+                    Looper.prepare();
                     if (resultData.isNewUser()) {
-                        try {
-                            UserDB.getInstance().registerCurrent();
-                            Log.i("DB_EVENT", "New User Registered: User " + user.getUid() + " (" + user.getDisplayName() + ")" );
-                            launchHomepage();
-                        } catch (ExecutionException e) {
-                            Toast.makeText(this, "Failed to register; Database error", Toast.LENGTH_SHORT).show();
-                            Log.w("DB_ERROR", "Could not register user " + LoggingUtils.stringify(user) + ":\n" + ExceptionUtils.getStackTrace(e));
-                            user.delete();
-                            startActivity(new Intent(this, getClass()));
-                        } catch (InterruptedException e) {
-                            Log.w("DB_ERROR", "Cancelled registration of " + LoggingUtils.stringify(user) + ":\n" + ExceptionUtils.getStackTrace(e));
-                            user.delete();
-                            startActivity(new Intent(this, getClass()));
-                        }
-
+                        tryRegister(user);
                     } else {
-                        Log.i("DB_EVENT", "User connected: " + LoggingUtils.stringify(user));
-                        try {
-                            UserDB.getInstance().cacheCurrent();
-                            Log.i("DB_EVENT", "Connected user: User " + user.getUid() + " (" + user.getDisplayName() + ")" );
-                            launchHomepage();
-                        } catch (ExecutionException e) {
-                            Toast.makeText(this, "Failed to cache user; Database error", Toast.LENGTH_SHORT).show();
-                            Log.w("DB_ERROR", "Could not cache user " + LoggingUtils.stringify(user) + ":\n" + ExceptionUtils.getStackTrace(e));
-                            startActivity(new Intent(this, getClass()));
-                        } catch (InterruptedException e) {
-                            Log.w("DB_ERROR", "Cancelled cache of " + LoggingUtils.stringify(user) + ":\n" + ExceptionUtils.getStackTrace(e));
-                            startActivity(new Intent(this, getClass()));
-                        } catch (NoSuchDocumentException e) {
-                            Toast.makeText(this,"User does not exist on the database. Aborting.", Toast.LENGTH_SHORT).show();
-                            Log.w("DB_ERROR", LoggingUtils.stringify(user) + " exists on " +
-                                    "FirebaseAuth, but isn't on CloudFirestore!\n" + ExceptionUtils.getStackTrace(e));
-
-                        }
+                        tryConnect(user);
                     }
                 }).start();
 
@@ -131,12 +159,13 @@ public class TM_SignUpActivity extends AppCompatActivity {
     }
 
     private void launchSignIn() {
-        registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::handleSignIn)
-            .launch(m_signInIntent);
-        Log.i("UI_EVENT|DB_EVENT", "Redirected to sign in/sign up activity");
+            m_signInLauncher.launch(m_signInIntent);
+                Log.d("UI_EVENT|DB_EVENT", "Redirected to sign in/sign up activity");
     }
 
     private void launchHomepage() {
-        startActivity(new Intent(this, TM_DasboardActivity.class));
+        startActivity(new Intent(this, TM_DashboardActivity.class)
+                        .putExtra(TM_DashboardActivity.FORBID_BACK_EXTRA_KEY, true)
+        );
     }
 }

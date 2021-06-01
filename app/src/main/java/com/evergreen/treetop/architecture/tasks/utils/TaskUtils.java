@@ -6,9 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
 import com.evergreen.treetop.architecture.tasks.data.Goal;
-import com.evergreen.treetop.architecture.tasks.data.Unit;
 import com.evergreen.treetop.architecture.tasks.data.User;
-import com.evergreen.treetop.architecture.tasks.handlers.TaskDB;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -57,19 +55,19 @@ public class TaskUtils {
     public static Goal dummyGoal(String id) {
 
         Goal goal = new Goal(0, id, "Test Goal " + id, "this is a test goal", "TestUnit");
-        goal.addSubtaskById("hello");
-        goal.addSubtaskById("test");
-        goal.addSubtaskById("Long one");
-        goal.addSubtaskById("and");
-        goal.addSubtaskById("see?");
-        goal.addSubtaskById("see?");
-        goal.addSubtaskById("see?");
-        goal.addSubtaskById("see?");
-        goal.addSubtaskById("see?");
-        goal.addSubtaskById("see?");
-        goal.addSubtaskById("see?");
-        goal.addSubtaskById("see?");
-        goal.addSubtaskById("see?");
+        goal.addChildById("hello");
+        goal.addChildById("test");
+        goal.addChildById("Long one");
+        goal.addChildById("and");
+        goal.addChildById("see?");
+        goal.addChildById("see?");
+        goal.addChildById("see?");
+        goal.addChildById("see?");
+        goal.addChildById("see?");
+        goal.addChildById("see?");
+        goal.addChildById("see?");
+        goal.addChildById("see?");
+        goal.addChildById("see?");
 
         return goal;
     }
@@ -91,25 +89,39 @@ public class TaskUtils {
                         "test-root"
                 );
         task.setCompleted(task.getId().length() > 5);
-        task.addSubtaskById("hello");
-        task.addSubtaskById("test");
-        task.addSubtaskById("Long one");
-        task.addSubtaskById("and");
-        task.addSubtaskById("see?");
-        task.addSubtaskById("see?");
-        task.addSubtaskById("see?");
-        task.addSubtaskById("see?");
-        task.addSubtaskById("see?");
-        task.addSubtaskById("see?");
-        task.addSubtaskById("see?");
-        task.addSubtaskById("see?");
-        task.addSubtaskById("see?");
+        task.addChildById("hello");
+        task.addChildById("test");
+        task.addChildById("Long one");
+        task.addChildById("and");
+        task.addChildById("see?");
+        task.addChildById("see?");
+        task.addChildById("see?");
+        task.addChildById("see?");
+        task.addChildById("see?");
+        task.addChildById("see?");
+        task.addChildById("see?");
+        task.addChildById("see?");
+        task.addChildById("see?");
 
         task.addAssignee(new User("ID1", "Test Assignee 1"));
         task.addAssignee(new User("ID2", "Test Assignee 2"));
 
         return task;
     }
+
+
+    public static void discardDialouge(Activity context) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setMessage("Discard Changes?");
+        alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
+            context.setResult(Activity.RESULT_CANCELED);
+            context.finish();
+        });
+        alertBuilder.setNegativeButton("No", null);
+        alertBuilder.create().show();
+    }
+
+
 
 
 

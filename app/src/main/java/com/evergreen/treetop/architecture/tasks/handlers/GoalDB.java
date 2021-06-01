@@ -3,7 +3,6 @@ package com.evergreen.treetop.architecture.tasks.handlers;
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
 import com.evergreen.treetop.architecture.tasks.data.Goal;
-import com.evergreen.treetop.architecture.tasks.data.Unit;
 import com.evergreen.treetop.architecture.tasks.utils.DBGoal;
 import com.evergreen.treetop.architecture.tasks.utils.DBGoal.GoalDBKey;
 import com.google.android.gms.tasks.Task;
@@ -54,13 +53,17 @@ public class GoalDB {
         return m_goals.whereEqualTo(key.getKey(), value);
     }
 
+    public void create(Goal goal) throws ExecutionException, InterruptedException {
+        Tasks.await(getGoalRef(goal.getId()).set(DBGoal.of(goal)));
+    }
+
     public Task<Void> update(String id, GoalDBKey key, Object value) {
         return getGoalRef(id).update(key.getKey(), value);
     }
 
     public Task<Void> delete(Goal goal) throws InterruptedException, ExecutionException, NoSuchDocumentException {
 
-        for (AppTask subtask : goal.getSubtasks()) {
+        for (AppTask subtask : goal.getChildren()) {
             TaskDB.getInstance().delete(subtask);
         }
 
@@ -76,12 +79,5 @@ public class GoalDB {
         }
 
         return Goal.of(dbGoal);
-    }
-
-    public List<Goal> getUniitGoals(List<String> unitIds) throws ExecutionException, InterruptedException {
-        return Tasks.await(m_goals.whereIn(GoalDBKey.UNIT_ID.getKey(), unitIds).get())
-                .getDocuments().stream()
-                .map(doc -> Goal.of(doc.toObject(DBGoal.class)))
-                .collect(Collectors.toList());
     }
 }

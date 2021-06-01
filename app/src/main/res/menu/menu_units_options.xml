@@ -3,9 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <!--First item should be left most when shown as action icon -->
     <item
-        android:id="@+id/tm_task_options_meni_submit"
+        android:id="@+id/tm_units_options_meni_submit"
         android:icon="@drawable/ic_confirm"
         android:title="Submit"
         app:showAsAction="always" />
+
+
+    <item
+        android:id="@+id/tm_unit_options_meni_edit_mode"
+        android:icon="@drawable/ic_edit"
+        android:title="Edit Mode"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/tm_unit_options_meni_delete"
+        android:icon="@drawable/ic_trash"
+        android:title="Delete"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/tm_unit_options_meni_join_leave"
+        android:icon="@drawable/ic_join"
+        android:title="Join"
+        app:showAsAction="ifRoom" />
+
 
 </menu>

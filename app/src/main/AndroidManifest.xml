@@ -4,10 +4,11 @@
     package="com.evergreen.treetop">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--Does not work on Android 11 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -18,19 +19,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Treetop"
         tools:ignore="AllowBackup">
-        <activity android:name=".activities.tasks.units.TM_UnitViewActivity"></activity>
-        <activity android:name=".activities.tasks.notes.TM_NotesActivity" />
-        <activity android:name=".activities.tasks.units.TM_UnitPickerActivity" />
-        <activity android:name=".activities.tasks.TM_ParentPickerActivity" />
-        <activity android:name=".activities.tasks.units.TM_UnitEditorActivity" />
-        <activity android:name=".activities.tasks.TM_DasboardActivity" />
-        <activity android:name=".activities.tasks.goals.TM_GoalEditorActivity" />
-        <activity android:name=".activities.tasks.tasks.TM_TaskEditorActivity" />
-        <activity android:name=".activities.tasks.goals.TM_GoalViewActivity" />
-        <activity android:name=".activities.tasks.tasks.TM_TaskViewActivity" />
-        <activity android:name=".activities.scouts.form.SC_TeamStrategyForm" />
-        <activity android:name=".activities.scouts.form.SC_AllianceStrategyForm" />
-        <activity android:name=".activities.tasks.users.TM_SignUpActivity">
+        <activity android:name=".activities.tasks.users.TM_UserPickerActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.tasks.units.TM_UnitViewActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.tasks.notes.TM_NotesActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.tasks.units.TM_UnitPickerActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.tasks.units.TM_UnitEditorActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.tasks.TM_DashboardActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.tasks.goals.TM_GoalEditorActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.tasks.tasks.TM_TaskEditorActivity"  android:screenOrientation="portrait" />
+        <activity android:name=".activities.tasks.goals.TM_GoalViewActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.tasks.tasks.TM_TaskViewActivity"  android:screenOrientation="portrait" />
+        <activity android:name=".activities.scouts.form.SC_TeamStrategyForm" android:screenOrientation="portrait" />
+        <activity android:name=".activities.scouts.form.SC_AllianceStrategyForm" android:screenOrientation="portrait" />
+        <activity android:name=".activities.tasks.users.TM_SignUpActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,12 +39,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".test.TestActivity" />
-        <activity android:name=".activities.scouts.form.SC_FormLauncher" />
-        <activity android:name=".activities.scouts.form.SC_ResultsForm" />
-        <activity android:name=".activities.scouts.form.SC_ScoutingForm" />
-        <activity android:name=".activities.scouts.stats.GeneralStats" />
-        <activity android:name=".activities.scouts.StatsLauncher" />
+        <activity android:name=".test.TestActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.scouts.form.SC_FormLauncher" android:screenOrientation="portrait" />
+        <activity android:name=".activities.scouts.form.SC_ResultsForm" android:screenOrientation="portrait" />
+        <activity android:name=".activities.scouts.form.SC_ScoutingForm" android:screenOrientation="portrait" />
+        <activity android:name=".activities.scouts.stats.GeneralStats" android:screenOrientation="portrait" />
+        <activity android:name=".activities.scouts.StatsLauncher" android:screenOrientation="portrait" />
     </application>
 
 </manifest>

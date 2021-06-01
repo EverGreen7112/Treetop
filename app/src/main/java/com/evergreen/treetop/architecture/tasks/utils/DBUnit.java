@@ -4,6 +4,8 @@ import com.evergreen.treetop.architecture.tasks.data.Unit;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class DBUnit implements Serializable {
@@ -14,20 +16,18 @@ public class DBUnit implements Serializable {
     String m_leaderId;
     String m_parentId = null;
     List<String> m_childrenIds = new ArrayList<>();
+    List<String> m_memberIds = new ArrayList<>();
 
     public DBUnit() {}
 
-    public DBUnit(String id, String name, String description) {
+    public DBUnit(String id, String name, String description, String leaderId, String parentId, List<String> childrenIds, List<String> memberIds) {
         m_name = name;
-        m_id = id;
-    }
-
-    public DBUnit(String id, String name, String description, String leaderId, String parentId, List<String> childrenIds) {
-        m_name = name;
+        m_description = description;
         m_id = id;
         m_leaderId = leaderId;
         m_parentId = parentId;
         m_childrenIds = childrenIds;
+        m_memberIds = memberIds != null? memberIds : Collections.singletonList(leaderId);
     }
 
     public static DBUnit of(Unit unit) {
@@ -35,9 +35,10 @@ public class DBUnit implements Serializable {
                 unit.getId(),
                 unit.getName(),
                 unit.getDescription(),
-                unit.getParentId(),
                 unit.getLeaderId(),
-                unit.getChildrenIds()
+                unit.getParentId(),
+                unit.getChildrenIds(),
+                unit.getMemberIds()
         );
     }
 
@@ -89,6 +90,14 @@ public class DBUnit implements Serializable {
         m_childrenIds = childrenIds;
     }
 
+    public List<String> getMemberIds() {
+        return m_memberIds;
+    }
+
+    public void setMemberIds(List<String> memberIds) {
+        m_memberIds = memberIds;
+    }
+
     public boolean isRootUnit() {
         return m_parentId == null;
     }
@@ -98,7 +107,8 @@ public class DBUnit implements Serializable {
         ID("id"),
         PARENT_ID("parentId"),
         IS_ROOT("rootUnit"),
-        CHILDREN_IDS("childrenIds");
+        CHILDREN_IDS("childrenIds"),
+        MEMBER_IDS("memberIds");
 
         private final String m_key;
 
