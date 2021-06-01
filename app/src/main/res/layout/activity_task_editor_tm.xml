@@ -1,115 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    tools:context=".activities.tasks.TM_TaskViewActivity"
     android:layout_height="match_parent"
-    tools:context=".activities.tasks.TM_TaskEditorActivity" >
+    android:layout_width="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/tm_task_editor_constr_form"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/tm_task_editor_edit_title"
-            android:layout_width="256dp"
-            android:layout_height="75dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="44dp"
-            android:ems="10"
-            android:hint="Title"
-            android:inputType="text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <!-- Progress bar overlay; shown while login is in progress -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tm_task_editor_constr_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
-        <com.evergreen.treetop.ui.custom.spinner.EllipseSpinner
-            android:id="@+id/tm_task_editor_spin_priority"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="4dp"
-            android:paddingStart="21.5dp"
-            app:layout_constraintStart_toEndOf="@+id/tm_task_editor_edit_title"
-            app:layout_constraintTop_toTopOf="@+id/tm_task_editor_edit_title" />
+            <EditText
+                android:id="@+id/tm_task_editor_edit_title"
+                android:layout_width="256dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:ems="10"
+                android:hint="Title"
+                android:inputType="text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.evergreen.treetop.ui.custom.text.OvalTextView
-            android:id="@+id/tm_task_editor_text_unit"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:hint="Unit"
-            android:layout_marginStart="32dp"
-            app:layout_constraintStart_toEndOf="@+id/tm_task_editor_text_Assignees"
-            app:layout_constraintTop_toTopOf="@+id/tm_task_editor_text_Assignees" />
+            <com.evergreen.treetop.ui.views.spinner.EllipseSpinner
+                android:id="@+id/tm_task_editor_spin_priority"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="4dp"
+                android:paddingStart="21.5dp"
+                app:layout_constraintStart_toEndOf="@+id/tm_task_editor_edit_title"
+                app:layout_constraintTop_toTopOf="@+id/tm_task_editor_edit_title" />
 
-        <TextView
-            android:id="@+id/tm_task_editor_text_priority_label"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="10dp"
-            android:text="Priority"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="@+id/tm_task_editor_spin_priority"
-            app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_spin_priority" />
+            <com.evergreen.treetop.ui.views.text.OvalTextView
+                android:id="@+id/tm_task_editor_text_unit"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="32dp"
+                android:hint="Unit"
+                app:layout_constraintStart_toEndOf="@+id/tm_task_editor_text_Assignees"
+                app:layout_constraintTop_toTopOf="@+id/tm_task_editor_text_Assignees" />
 
-        <EditText
-            android:id="@+id/tm_task_editor_edit_description"
-            android:layout_width="366dp"
-            android:layout_height="144dp"
-            android:layout_marginTop="48dp"
-            android:ems="10"
-            android:hint="Description"
-            android:inputType="textMultiLine"
-            app:layout_constraintStart_toStartOf="@+id/tm_task_editor_edit_title"
-            app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_edit_title" />
+            <TextView
+                android:id="@+id/tm_task_editor_text_priority_label"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Priority"
+                app:layout_constraintEnd_toEndOf="@+id/tm_task_editor_spin_priority"
+                app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_spin_priority" />
 
-        <com.evergreen.treetop.ui.custom.text.OvalTextView
-            android:id="@+id/tm_task_editor_text_start_deadline"
-            android:layout_width="160dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="28dp"
-            android:hint="Start Deadline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_edit_description" />
+            <EditText
+                android:id="@+id/tm_task_editor_edit_description"
+                android:layout_width="366dp"
+                android:layout_height="144dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="44dp"
+                android:ems="10"
+                android:hint="Description"
+                android:inputType="textMultiLine"
+                app:layout_constraintStart_toStartOf="@+id/tm_task_editor_edit_title"
+                app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_edit_title" />
 
-        <com.evergreen.treetop.ui.custom.text.OvalTextView
-            android:id="@+id/tm_task_editor_text_end_deadline"
-            android:layout_width="160dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="28dp"
-            android:hint="End Deadline"
-            app:layout_constraintStart_toEndOf="@+id/tm_task_editor_text_start_deadline"
-            app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_edit_description" />
+            <com.evergreen.treetop.ui.views.text.OvalTextView
+                android:id="@+id/tm_task_editor_text_start_deadline"
+                android:layout_width="160dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="28dp"
+                android:hint="Start Deadline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_edit_description" />
+
+            <com.evergreen.treetop.ui.views.text.OvalTextView
+                android:id="@+id/tm_task_editor_text_end_deadline"
+                android:layout_width="160dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="28dp"
+                android:hint="End Deadline"
+                app:layout_constraintStart_toEndOf="@+id/tm_task_editor_text_start_deadline"
+                app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_edit_description" />
 
 
-        <com.evergreen.treetop.ui.custom.text.OvalTextView
-            android:id="@+id/tm_task_editor_text_Assignees"
-            android:layout_width="256dp"
-            android:layout_height="66dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="36dp"
-            android:gravity="center"
-            android:hint="Assignees"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_text_start_deadline" />
+            <com.evergreen.treetop.ui.views.text.OvalTextView
+                android:id="@+id/tm_task_editor_text_Assignees"
+                android:layout_width="256dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="36dp"
+                android:gravity="center"
+                android:hint="Assignees"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_text_start_deadline" />
 
-        <Button
-            android:id="@+id/tm_task_editor_button_submit"
-            android:layout_width="200dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="44dp"
-            android:text="Submit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.evergreen.treetop.ui.views.recycler.TaskEditListRecycler
+                android:id="@+id/tm_task_editor_recycler_subtasks"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_text_Assignees" />
 
-    <!-- Progress bar overlay; shown while login is in progress -->
-    <include layout="@layout/loading_overlay" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+        <include layout="@layout/loading_overlay" />
+    </FrameLayout>
+</ScrollView>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.evergreen.treetop">
 
     <application
@@ -8,8 +9,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Treetop">
-        <activity android:name=".activities.tasks.TM_GoalEditorActivity"></activity>
+        android:theme="@style/Theme.Treetop"
+        tools:ignore="AllowBackup">
+        <activity android:name=".activities.tasks.TM_DasboardActivity"></activity>
+        <activity android:name=".activities.tasks.TM_GoalEditorActivity" />
         <activity android:name=".activities.tasks.TM_TaskEditorActivity" />
         <activity android:name=".activities.tasks.TM_GoalViewActivity" />
         <activity android:name=".activities.tasks.TM_TaskViewActivity" />

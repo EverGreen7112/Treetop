@@ -1,13 +1,11 @@
 package com.evergreen.treetop.architecture.scouts.form;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-import com.evergreen.treetop.ui.custom.spinner.BaseSpinner;
+import com.evergreen.treetop.ui.views.spinner.BaseSpinner;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class DropDown extends FormObject {

@@ -21,7 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <com.evergreen.treetop.ui.custom.text.OvalTextView
+        <com.evergreen.treetop.ui.views.text.OvalTextView
             android:id="@+id/sc_form_malfunction_next"
             android:layout_width="150dp"
             android:layout_height="60dp"

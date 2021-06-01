@@ -1,60 +1,66 @@
 package com.evergreen.treetop.architecture.tasks.data;
 
-import android.widget.ArrayAdapter; // This one is for the javadoc in displayStr()
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
-import com.evergreen.treetop.architecture.Utilities;
-import com.evergreen.treetop.architecture.tasks.handlers.UnitDB;
+import com.evergreen.treetop.architecture.Logging;
+import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
+import com.evergreen.treetop.architecture.tasks.handlers.GoalDB;
+import com.evergreen.treetop.architecture.tasks.handlers.TaskDB;
 import com.evergreen.treetop.architecture.tasks.handlers.UserDB;
-import com.evergreen.treetop.architecture.tasks.utils.FirebaseTask;
+import com.evergreen.treetop.architecture.tasks.utils.DBTask;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 public class AppTask extends Goal {
-    private String m_parentId;
+    private final String m_parentId;
     private LocalDate m_startDeadline;
     private LocalDate m_endDeadline;
-    private User m_assigner;
-    private Set<User> m_assignees;
+    private final String m_assignerId;
+    private final String m_goalId;
+    private final String m_rootTaskId;
+    private Set<String> m_assigneesIds;
 
-    public AppTask(int priority, String id, String title, String description, Unit unit, String parentId,
-                   LocalDate startDeadline, LocalDate endDeadline, User assigner) {
-        super(priority, id, title, description, unit);
+    public static final Comparator<AppTask> PRIROITY_COMPARATOR =
+            (task1, task2) -> Integer.compare(task1.getPriority(), task2.getPriority());
+
+    public AppTask(int priority, String id, String title, String description, String unitId, String parentId,
+                   LocalDate startDeadline, LocalDate endDeadline, String assignerId, String goalId, String rootTaskId) {
+        super(priority, id, title, description, unitId);
         m_parentId = parentId;
         m_startDeadline = startDeadline;
         m_endDeadline = endDeadline;
-        m_assigner = assigner;
-        m_assignees = new HashSet<>();
+        m_assignerId = assignerId;
+        m_goalId = goalId;
+        m_rootTaskId = rootTaskId;
+        m_assigneesIds = new HashSet<>();
     }
 
-    public static AppTask of(FirebaseTask task) throws ExecutionException, InterruptedException {
+    public static AppTask of(DBTask task) {
         AppTask res = new AppTask(
                 task.getPriority(),
                 task.getId(),
                 task.getTitle(),
                 task.getDescription(),
-                new Unit(task.getId()),  // UnitDB.getInstance().getUnitById(task.getUnitId()),
+                task.getUnitId(),
                 task.getParentId(),
                 LocalDate.ofEpochDay(task.getStartDeadlineEpoch()),
                 LocalDate.ofEpochDay(task.getEndDeadlineEpoch()),
-                UserDB.getInstance().getUserById(task.getAssignerId())
+                task.getAssignerId(),
+                task.getGoalId(),
+                task.getRootTaskId()
         );
 
-        return res;
-    }
+        task.getAssigneeIds().forEach(id -> res.addAssignee(Logging.dummyUser(id)));  // task.getAssigneeIds().forEach(id -> res.addAssignee(UserDB.getInstance().getUserById(id)));
+        task.getSubtaskIds().forEach(res::addSubtaskById);
+        res.setCompleted(task.isCompleted());
 
-    @Deprecated
-    /**
-     * Use for testing only, should remove once tasks can be marked done via app
-     */
-    public AppTask(int priority, String id, String title, String description, Unit unit, String parentId,
-                   LocalDate startDeadline, LocalDate endDeadline, User assigner, boolean completed) {
-        this(priority, id, title, description, unit, parentId, startDeadline, endDeadline, assigner);
-        setCompleted(completed);
+        return res;
     }
 
     /**
@@ -84,42 +90,70 @@ public class AppTask extends Goal {
     public void setEndDeadline(LocalDate endDeadline) {
         m_endDeadline = endDeadline;
     }
-    public Goal getParent() {
-        return Goal.of(m_parentId);
+
+    public String getParentId() {
+        return m_parentId;
     }
 
-    public Goal getGoal() {
+    public Goal getParent() throws ExecutionException, InterruptedException, NoSuchDocumentException {
+        return GoalDB.getInstance().awaitGoal(m_parentId);
+    }
 
-        Goal iterationGoal = this;
+    public String getGoalId() {
+        return m_goalId;
+    }
 
-        while (iterationGoal instanceof AppTask) {
-            iterationGoal = ((AppTask)iterationGoal).getParent();
+    public Goal getGoal() throws ExecutionException, InterruptedException, NoSuchDocumentException {
+        return getRootTask().getParent();
+    }
+
+    public String getRootTaskId() {
+        return m_rootTaskId;
+    }
+
+    public AppTask getRootTask() throws ExecutionException, InterruptedException, NoSuchDocumentException {
+        return TaskDB.getInstance().awaitTask(m_rootTaskId);
+    }
+
+    public String getAssignerId() {
+        return m_assignerId;
+    }
+
+    public User getAssigner() throws ExecutionException, InterruptedException, NoSuchDocumentException {
+        return UserDB.getInstance().awaitUser(m_assignerId);
+    }
+
+    public Set<String> getAssigneesIds() {
+        return m_assigneesIds;
+    }
+
+    public Set<User> getAssignees() throws ExecutionException, InterruptedException, NoSuchDocumentException {
+
+        Set<User> res = new HashSet<>();
+        for (String id : m_assigneesIds) {
+            res.add(UserDB.getInstance().awaitUser(id));
         }
 
-        return iterationGoal;
-    }
+        return res;
 
-    public User getAssigner() {
-        return m_assigner;
-    }
-
-    public Set<User> getAssignees() {
-        return m_assignees;
     }
 
     public void addAssignee(User assignee) {
-        m_assignees.add(assignee);
+        m_assigneesIds.add(assignee.getId());
     }
 
     public void removeAssignee(User assignee) {
-        m_assignees.remove(assignee);
+        m_assigneesIds.remove(assignee.getId());
     }
 
+    public boolean isRootTask() {
+        return m_rootTaskId.equals(getId());
+    }
 
 
     @Override
     @NonNull
     public String toString() {
-        return "Task \"" + getTitle() + "\"  " + getIcon() + ", id" + getId();
+        return "Task " + getId() + " (" + getTitle() + ")";
     }
 }

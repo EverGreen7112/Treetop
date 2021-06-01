@@ -4,19 +4,12 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.evergreen.treetop.architecture.Utilities;
-import com.evergreen.treetop.architecture.scouts.data.MatchTeam;
 import com.evergreen.treetop.architecture.scouts.handlers.MatchDB;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Exclude;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ScoutingMatch {
     private long m_timerStart;

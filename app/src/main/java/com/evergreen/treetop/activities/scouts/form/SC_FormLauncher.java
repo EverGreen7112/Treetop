@@ -13,12 +13,11 @@ import android.widget.TextView;
 
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.activities.scouts.StatsLauncher;
-import com.evergreen.treetop.architecture.Utilities;
 import com.evergreen.treetop.architecture.scouts.form.FormObject;
 import com.evergreen.treetop.architecture.scouts.utils.MatchID;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
 import com.evergreen.treetop.test.TestActivity;
-import com.evergreen.treetop.ui.custom.spinner.BaseSpinner;
+import com.evergreen.treetop.ui.views.spinner.BaseSpinner;
 
 public class SC_FormLauncher extends AppCompatActivity {
 

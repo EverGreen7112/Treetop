@@ -1,5 +1,6 @@
 package com.evergreen.treetop.architecture.tasks.handlers;
 
+import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.data.Unit;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
@@ -26,8 +27,15 @@ public class UnitDB {
         return m_units.document();
     }
 
-    public Unit getUnitById(String id) throws ExecutionException, InterruptedException {
-        return Tasks.await(m_units.document(id).get()).toObject(Unit.class);
+    public Unit awaitUnit(String id) throws ExecutionException, InterruptedException, NoSuchDocumentException {
+        Unit res = Tasks.await(m_units.document(id).get()).toObject(Unit.class);
+
+        if (res == null) {
+            throw new NoSuchDocumentException("Tried to retrieve unit by id " + id
+                    + ", but no such unit exists!");
+        }
+
+        return res;
     }
 
     public Unit getUnitByName(String name) throws ExecutionException, InterruptedException {
