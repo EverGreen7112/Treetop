@@ -60,7 +60,7 @@ public class DBTask extends DBGoal {
                 task.getRootTaskId(),
                 task.getGoalId(),
                 task.isCompleted(),
-                new ArrayList<>(task.getSubtaskIds()),
+                new ArrayList<>(task.getChildrenIds()),
                 new ArrayList<>(task.getAssigneesIds())
         );
     }
@@ -155,4 +155,8 @@ public class DBTask extends DBGoal {
         }
     }
 
+    @Override
+    public String toString() {
+        return "DBTask " + getId() + " (" + getTitle() + ")";
+    }
 }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
+import com.evergreen.treetop.architecture.tasks.data.Goal;
 import com.evergreen.treetop.ui.adapters.TaskListAdapter;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class TaskListRecycler extends RecyclerView {
     }
 
     public void loadTasks(List<AppTask> tasks)  {
+        tasks.sort(Goal.PRIORITY_COMPARATOR);
         m_adapter.add(tasks);
     }
 

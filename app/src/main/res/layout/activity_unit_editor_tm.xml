@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.tasks.units.TM_UnitPickerActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/tm_unit_editor_constr_layout"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:divider="@drawable/linear_divider"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/tm_unit_editor_edit_title"
+                android:layout_width="355dp"
+                android:layout_height="77dp"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="text"
+                />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="20dp" />
+
+
+            <EditText
+                android:id="@+id/tm_unit_editor_edit_description"
+                android:layout_width="362dp"
+                android:layout_height="140dp"
+                android:ems="10"
+                android:hint="Description"
+                android:inputType="textMultiLine" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="20dp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tm_unit_editor_recycler_subunits"
+                android:layout_width="348dp"
+                android:layout_height="215dp" />
+
+        </LinearLayout>
+
+        <!-- Progress bar overlay; shown while login is in progress -->
+        <include layout="@layout/loading_overlay" />
+
+    </FrameLayout>
+</ScrollView>

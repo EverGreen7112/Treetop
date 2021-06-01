@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.evergreen.treetop.R;
-import com.evergreen.treetop.architecture.Logging;
+import com.evergreen.treetop.architecture.LoggingUtils;
 import com.evergreen.treetop.architecture.scouts.form.FormObject;
 import com.evergreen.treetop.architecture.scouts.form.FormRadio;
 import com.evergreen.treetop.architecture.scouts.form.FormSwitch;
@@ -36,7 +36,7 @@ public class SC_ResultsForm extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        ScoutingMatch.getCurrent().getDocRef(FormObject.getScoutedTeam()).set(Logging.PLACEHOLDER_OBJECT, SetOptions.merge());
+        ScoutingMatch.getCurrent().getDocRef(FormObject.getScoutedTeam()).set(LoggingUtils.PLACEHOLDER_OBJECT, SetOptions.merge());
         Map<Integer, Object> radioValueMap = new HashMap<>();
         radioValueMap.put(R.id.sc_form_results_radio_loss, RESULT_LOSS);
         radioValueMap.put(R.id.sc_form_results_radio_draw, RESULT_DRAW);

@@ -85,7 +85,7 @@ public class TaskEditListAdapter extends TaskListAdapter {
         public HeaderHolder(ViewGroup parent) {
 
             super(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.listrow_recycler_task_list_edit_header, parent, false)
+                    .inflate(R.layout.listrow_recycler_add_header, parent, false)
             );
 
         }

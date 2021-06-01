@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.activities.scouts.form.SC_AllianceStrategyForm;
-import com.evergreen.treetop.architecture.Logging;
 import com.evergreen.treetop.architecture.scouts.form.StrategyDropDown;
 import com.evergreen.treetop.architecture.scouts.utils.StrategyOptions;
 import com.evergreen.treetop.architecture.tasks.utils.UIUtils;

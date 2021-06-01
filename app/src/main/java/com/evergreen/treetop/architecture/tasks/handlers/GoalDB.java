@@ -13,7 +13,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 public class GoalDB {
 
@@ -27,6 +29,12 @@ public class GoalDB {
 
     public CollectionReference getRef() {
         return m_goals;
+    }
+
+    public List<Goal> getAll() throws ExecutionException, InterruptedException {
+        return  Tasks.await(getRef().get())
+                .getDocuments().stream().map(doc -> Goal.of(doc.toObject(DBGoal.class)))
+                .collect(Collectors.toList());
     }
 
     public DocumentReference newDoc() {
@@ -45,13 +53,17 @@ public class GoalDB {
         return m_goals.whereEqualTo(key.getKey(), value);
     }
 
+    public void create(Goal goal) throws ExecutionException, InterruptedException {
+        Tasks.await(getGoalRef(goal.getId()).set(DBGoal.of(goal)));
+    }
+
     public Task<Void> update(String id, GoalDBKey key, Object value) {
         return getGoalRef(id).update(key.getKey(), value);
     }
 
     public Task<Void> delete(Goal goal) throws InterruptedException, ExecutionException, NoSuchDocumentException {
 
-        for (AppTask subtask : goal.getSubtasks()) {
+        for (AppTask subtask : goal.getChildren()) {
             TaskDB.getInstance().delete(subtask);
         }
 

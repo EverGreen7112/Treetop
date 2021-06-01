@@ -31,3 +31,5 @@ local.properties
 
 # Gradle Wrapper exception
 !gradle/wrapper/gradle-wrapper.jar
+
+*.plantuml

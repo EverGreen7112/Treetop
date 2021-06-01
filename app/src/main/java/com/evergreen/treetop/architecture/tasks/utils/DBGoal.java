@@ -44,7 +44,7 @@ public class DBGoal implements Serializable {
               goal.getUnitId()
         );
 
-        goal.getSubtaskIds().forEach(result::addSubtaskId);
+        goal.getChildrenIds().forEach(result::addSubtaskId);
         return result;
     }
 

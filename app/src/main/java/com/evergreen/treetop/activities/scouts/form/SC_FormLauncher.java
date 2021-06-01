@@ -23,17 +23,10 @@ import com.evergreen.treetop.ui.views.spinner.BaseSpinner;
 
 public class SC_FormLauncher extends AppCompatActivity {
 
-    private static final boolean TEST = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-        if (TEST) {
-            startActivity(new Intent(this, SC_TeamStrategyForm.class));
-            return;
-        }
 
         setContentView(R.layout.activity_form_launcher_sc);
 

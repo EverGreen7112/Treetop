@@ -1,14 +1,12 @@
 package com.evergreen.treetop.architecture.tasks.handlers;
 
 import androidx.annotation.NonNull;
-import androidx.core.util.Pair;
 
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
 import com.evergreen.treetop.architecture.tasks.utils.DBGoal.GoalDBKey;
 import com.evergreen.treetop.architecture.tasks.utils.DBTask;
 import com.evergreen.treetop.architecture.tasks.utils.DBTask.TaskDBKey;
-import com.evergreen.treetop.architecture.tasks.utils.DBUser;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
@@ -16,12 +14,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class TaskDB {
@@ -46,8 +41,8 @@ public class TaskDB {
         return m_tasks.document();
     }
 
-    public Task<Void> update(String id, TaskDBKey key, Object value) {
-        return getTaskRef(id).update(key.getKey(), value);
+    public Void update(String id, TaskDBKey key, Object value) throws ExecutionException, InterruptedException {
+        return Tasks.await(getTaskRef(id).update(key.getKey(), value));
     }
 
     public Task<Void> update(String id, TaskDBKey key, FieldValue value) {
@@ -56,7 +51,7 @@ public class TaskDB {
 
     public void delete(AppTask task) throws InterruptedException, ExecutionException, NoSuchDocumentException {
 
-        for (AppTask subtask : task.getSubtasks()) {
+        for (AppTask subtask : task.getChildren()) {
             delete(subtask);
         }
 

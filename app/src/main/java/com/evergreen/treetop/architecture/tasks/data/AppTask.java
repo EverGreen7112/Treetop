@@ -4,7 +4,6 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
-import com.evergreen.treetop.architecture.Logging;
 import com.evergreen.treetop.architecture.Exceptions.NoSuchDocumentException;
 import com.evergreen.treetop.architecture.tasks.handlers.GoalDB;
 import com.evergreen.treetop.architecture.tasks.handlers.TaskDB;
@@ -12,7 +11,6 @@ import com.evergreen.treetop.architecture.tasks.handlers.UserDB;
 import com.evergreen.treetop.architecture.tasks.utils.DBTask;
 
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
@@ -26,8 +24,6 @@ public class AppTask extends Goal {
     private final String m_rootTaskId;
     private Set<String> m_assigneesIds;
 
-    public static final Comparator<AppTask> PRIROITY_COMPARATOR =
-            (task1, task2) -> Integer.compare(task1.getPriority(), task2.getPriority());
 
     public AppTask(int priority, String id, String title, String description, String unitId, String parentId,
                    LocalDate startDeadline, LocalDate endDeadline, String assignerId, String goalId, String rootTaskId) {
@@ -56,8 +52,12 @@ public class AppTask extends Goal {
                 task.getRootTaskId()
         );
 
-        task.getAssigneeIds().forEach(id -> res.addAssignee(Logging.dummyUser(id)));  // task.getAssigneeIds().forEach(id -> res.addAssignee(UserDB.getInstance().getUserById(id)));
-        task.getSubtaskIds().forEach(res::addSubtaskById);
+        // For testing with old data. TODO remove.
+        if (task.getAssigneeIds() != null) {
+            task.getAssigneeIds().forEach(res::addAssigneeById);
+        }
+
+        task.getSubtaskIds().forEach(res::addChildById);
         res.setCompleted(task.isCompleted());
 
         return res;
@@ -68,6 +68,8 @@ public class AppTask extends Goal {
      * object as text. However, toString is conventionally used for debugging, where we might want
      * to add other details. Thus, this method is used to provide a textual representation of the
      * task to display on listViews, etc.
+     *
+     * @deprecated dumb and unnecessary when using recycler view anyway.
      *
      * @return a textual representation of the task to display in list views.
      */
@@ -141,6 +143,9 @@ public class AppTask extends Goal {
     public void addAssignee(User assignee) {
         m_assigneesIds.add(assignee.getId());
     }
+    public void addAssigneeById(String id) {
+        m_assigneesIds.add(id);
+    }
 
     public void removeAssignee(User assignee) {
         m_assigneesIds.remove(assignee.getId());
@@ -149,6 +154,7 @@ public class AppTask extends Goal {
     public boolean isRootTask() {
         return m_rootTaskId.equals(getId());
     }
+
 
 
     @Override

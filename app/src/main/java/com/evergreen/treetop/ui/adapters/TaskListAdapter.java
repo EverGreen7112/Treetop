@@ -13,9 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evergreen.treetop.R;
-import com.evergreen.treetop.activities.tasks.TM_TaskViewActivity;
-import com.evergreen.treetop.architecture.Logging;
+import com.evergreen.treetop.activities.tasks.tasks.TM_TaskViewActivity;
+import com.evergreen.treetop.architecture.LoggingUtils;
 import com.evergreen.treetop.architecture.tasks.data.AppTask;
+import com.evergreen.treetop.architecture.tasks.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +32,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public TaskListAdapter(Context context, List<AppTask> data) {
         m_data = data;
         m_context = context;
-        Log.v("UI_EVENT", "Created a new TaskList with values " + Logging.stringify(m_data));
+        Log.v("UI_EVENT", "Created a new TaskList with values " + LoggingUtils.stringify(m_data));
     }
 
 
@@ -62,10 +63,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 .putExtra(TM_TaskViewActivity.TASK_ID_EXTRA_KEY, m_data.get(position).getId())
         );
 
+
         holderTask.getView().setOnClickListener(action);
         // Scroll View ClickListeners need to be set manually: see
         // https://stackoverflow.com/questions/16776687/onclicklistener-on-scrollview/16776927#16776927
-        holderTask.getMainView().setOnClickListener(action);
+        holderTask.getTitleView().setOnClickListener(action);
         Log.v("UI_EVENT", "Bound new TaskHolder to " + m_data.get(position));
     }
 
@@ -76,8 +78,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class TaskHolder extends RecyclerView.ViewHolder {
 
-        private final TextView m_textMain;
-        private final TextView m_textComplete;
+        private final TextView m_textTitle;
+        private final View m_viewPriorityComplete;
 
         public TaskHolder(ViewGroup parent) {
 
@@ -85,21 +87,23 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .inflate(R.layout.listrow_recycler_task_list, parent, false)
             );
 
-            m_textMain = itemView.findViewById(R.id.tm_task_list_text_title);
-            m_textComplete = itemView.findViewById(R.id.tm_task_list_text_complete_icon);
+            m_textTitle = itemView.findViewById(R.id.tm_task_list_item_text_title);
+            m_viewPriorityComplete = itemView.findViewById(R.id.tm_task_list_item_view_priority_complete);
         }
 
         public void setContent(AppTask task) {
-            m_textMain.setText(task.listDisplayString());
-            m_textComplete.setText(task.getIcon());
+            m_textTitle.setText(task.getTitle());
+            m_viewPriorityComplete.setBackground(task.getCompletedDrawable(m_context));
+            UIUtils.setBackgroundColor(m_viewPriorityComplete, task.getPriorityColor(m_context));
         }
 
         public View getView() {
             return itemView;
         }
-        public TextView getMainView() {
-            return m_textMain;
+        public TextView getTitleView() {
+            return m_textTitle;
         }
+
 
     }
 

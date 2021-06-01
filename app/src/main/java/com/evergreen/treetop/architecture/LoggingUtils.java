@@ -1,32 +1,10 @@
 package com.evergreen.treetop.architecture;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
-import android.content.Context;
-import android.content.ContextWrapper;
-import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.view.MenuItem;
-import android.view.View;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import com.evergreen.treetop.R;
-import com.evergreen.treetop.activities.tasks.TM_GoalViewActivity;
-import com.evergreen.treetop.activities.tasks.TM_TaskEditorActivity;
-import com.evergreen.treetop.activities.tasks.TM_TaskViewActivity;
-import com.evergreen.treetop.architecture.tasks.data.Goal;
-import com.evergreen.treetop.architecture.tasks.data.AppTask;
 import com.evergreen.treetop.architecture.tasks.data.Unit;
 import com.evergreen.treetop.architecture.tasks.data.User;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Collection;
@@ -36,10 +14,14 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Logging {
+public class LoggingUtils {
 
     public static String stringify(Object obj) {
-        return (obj == null ? "null" : obj.toString());
+        return (obj == null? "null" : obj.toString());
+    }
+
+    public static String stringify(FirebaseUser user) {
+        return user == null? "null" : "user " + user.getUid() + " (" + user.getDisplayName() + ")";
     }
 
     public static <T> String stringify(Collection<T> list, Function<T, Object> propertyMapper, boolean brackets) {
@@ -80,7 +62,7 @@ public class Logging {
     }
 
     public static Unit dummyUnit(String id) {
-        return new Unit(id);
+        return new Unit(id, id, id, id);
     }
     public static Date toDate(LocalDate date) {
         return Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
