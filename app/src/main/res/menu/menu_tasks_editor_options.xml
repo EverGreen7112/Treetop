@@ -8,11 +8,11 @@
         android:title="@string/tm_options_meni_submit_title"
         app:showAsAction="ifRoom" />
 
-<!--    <item-->
-<!--        android:id="@+id/tm_task_options_meni_view"-->
-<!--        android:icon="@drawable/ic_view"-->
-<!--        android:title="@string/tm_options_meni_view_mode_title"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        />-->
+    <item
+        android:id="@+id/tm_task_options_meni_view"
+        android:icon="@drawable/ic_view"
+        android:title="@string/tm_options_meni_view_mode_title"
+        app:showAsAction="ifRoom"
+        />
 
 </menu>

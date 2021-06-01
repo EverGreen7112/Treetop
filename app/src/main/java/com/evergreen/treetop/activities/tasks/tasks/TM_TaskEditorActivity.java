@@ -170,7 +170,7 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
         if (itemId == R.id.tm_task_options_meni_dashboard) {
             startActivity(new Intent(this, TM_DashboardActivity.class));
 
-        } else if (itemId == R.id.tm_task_options_meni_edit_mode) {
+        } else if (itemId == R.id.tm_task_options_meni_view) {
             startActivity(new Intent(this, TM_TaskViewActivity.class)
                     .putExtra(TM_TaskViewActivity.TASK_ID_EXTRA_KEY, m_id)
             );
