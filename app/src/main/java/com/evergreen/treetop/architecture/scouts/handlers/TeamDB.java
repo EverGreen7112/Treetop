@@ -7,7 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class TeamDB {
 
     private TeamDB() {}
-    private static  final TeamDB m_instance = new TeamDB();
+    private static final TeamDB m_instance = new TeamDB();
 
     public static TeamDB getInstance()  {
         return m_instance;

@@ -18,7 +18,7 @@
         <activity android:name=".activities.tasks.TM_TaskViewActivity" />
         <activity android:name=".activities.scouts.form.SC_TeamStrategyForm" />
         <activity android:name=".activities.scouts.form.SC_AllianceStrategyForm" />
-        <activity android:name=".activities.users.SC_SignUpActivity" />
+        <activity android:name=".activities.users.SignUpActivity" />
         <activity android:name=".test.TestActivity" />
         <activity android:name=".activities.scouts.form.SC_FormLauncher">
             <intent-filter>

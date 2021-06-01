@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.activities.scouts.StatsLauncher;
+import com.evergreen.treetop.activities.users.SignUpActivity;
+import com.evergreen.treetop.architecture.Utilities;
 import com.evergreen.treetop.architecture.scouts.form.FormObject;
 import com.evergreen.treetop.architecture.scouts.utils.MatchID;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
@@ -21,14 +23,15 @@ import com.evergreen.treetop.ui.views.spinner.BaseSpinner;
 
 public class SC_FormLauncher extends AppCompatActivity {
 
-    private static final boolean TEST = true;
+    private static final boolean TEST = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         if (TEST) {
-            startActivity(new Intent(this, TestActivity.class));
+            startActivity(new Intent(this, SC_TeamStrategyForm.class));
             return;
         }
 
