@@ -1,5 +1,7 @@
 package com.evergreen.treetop.activities.tasks.units;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +27,10 @@ import com.evergreen.treetop.architecture.tasks.data.Unit;
 import com.evergreen.treetop.architecture.tasks.data.User;
 import com.evergreen.treetop.architecture.tasks.handlers.UnitDB;
 import com.evergreen.treetop.architecture.tasks.handlers.UserDB;
+import com.evergreen.treetop.architecture.tasks.utils.DBUnit;
+import com.evergreen.treetop.architecture.tasks.utils.DBUnit.UnitDBKey;
 import com.evergreen.treetop.architecture.tasks.utils.UIUtils;
+import com.google.firebase.firestore.FieldValue;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -44,10 +49,6 @@ public class TM_UnitViewActivity extends AppCompatActivity {
     private Menu m_menuOptions;
 
     public static final String UNIT_ID_EXTRA_KEY = "unit-id";
-    /**
-     * marks that the edit mode buttons should go back rather than open a new one
-     */
-    public static final String COMING_FROM_EDIT_EXTRA_KEY = "come-from-edit";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,10 +90,10 @@ public class TM_UnitViewActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_units_options, menu);
+        getMenuInflater().inflate(R.menu.menu_units_user_options, menu);
         m_menuOptions = menu;
-        menu.removeItem(R.id.tm_units_options_meni_submit);
         m_meniToggleJoin = menu.findItem(R.id.tm_unit_options_meni_join_leave);
+
         return true;
     }
 
@@ -101,51 +102,73 @@ public class TM_UnitViewActivity extends AppCompatActivity {
         int itemId = item.getItemId();
 
         if (itemId == R.id.tm_unit_options_meni_join_leave) {
+            tryToggleMember();
+
+        } else if (itemId == R.id.tm_unit_options_meni_edit_mode) {
+            startActivity(
+                    new Intent(this, TM_UnitEditorActivity.class)
+                    .putExtra(TM_UnitEditorActivity.UNIT_ID_EXTRA_KEY, m_id)
+                    .putExtra(TM_UnitEditorActivity.PARENT_ID_EXTRA_KEY, m_unitToDisplay.getParentId())
+            );
+
+        } else if (itemId == R.id.tm_unit_options_meni_delete) {
+            UIUtils.deleteUnitDialouge(this, m_unitToDisplay);
+
+        } else if (itemId == R.id.tm_unit_in_options_meni_add_subunit) {
+            startActivity(
+                    new Intent(this, TM_UnitEditorActivity.class)
+                    .putExtra(TM_UnitEditorActivity.PARENT_ID_EXTRA_KEY, m_id)
+            );
+        }
+
+        return true;
+    }
+
+    private void tryToggleMember() {
+        if (UserDB.getInstance().getCurrentUser().isLeading(m_unitToDisplay)) {
+            Toast.makeText(this, "You cannot leave a unit you are leading.", Toast.LENGTH_SHORT).show();
+        } else {
             new Thread(() -> {
                 Looper.prepare();
                 if (!UserDB.getInstance().getCurrentUser().isIn(m_id)) {
-                    try {
-                        UserDB.getInstance().joinUnit(m_unitToDisplay);
-                        runOnUiThread(() -> m_meniToggleJoin.setIcon(R.drawable.ic_leave));
-                        Toast.makeText(this, "Joined unit successfully.", Toast.LENGTH_SHORT).show();
-                        Log.i("DB_EVENT", UserDB.getInstance().getCurrentUser().toString() + " joined " + m_unitToDisplay.toString());
-                    } catch (ExecutionException | NoSuchDocumentException e) {
-                        Toast.makeText(this, "Could not join unit: Database error", Toast.LENGTH_SHORT).show();
-                        Log.w("DB_ERROR", "Failed to join "
-                                + m_unitToDisplay.toString() + ":\n" + ExceptionUtils.getStackTrace(e));
-                    } catch (InterruptedException e) {
-                        Log.w("DB_ERROR", "Cancelled joining "
-                                + m_unitToDisplay.toString() + ":\n" + ExceptionUtils.getStackTrace(e));
-                    }
+                    tryJoining();
                 } else {
-                    if (m_unitToDisplay.hasChildren()) {
-                        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-                        alertBuilder.setMessage("Are you sure you want to leave the unit?\n" +
-                                "You will also automatically leave any child units you have joined.");
-                        alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
-                            new Thread(this::tryLeaving).start();
-                        });
-                        alertBuilder.setNegativeButton("No", null);
-                        runOnUiThread(() -> alertBuilder.create().show());
-                    } else {
-                        tryLeaving();
-                    }
+                    showTryLeaving();
                 }
             }).start();
-        } else if (itemId == R.id.tm_unit_options_meni_edit_mode) {
-            if (getIntent().getBooleanExtra(COMING_FROM_EDIT_EXTRA_KEY, false)) {
-                finish();
-            } else {
-                startActivity(
-                        new Intent(this, TM_UnitEditorActivity.class)
-                        .putExtra(TM_UnitEditorActivity.UNIT_ID_EXTRA_KEY, m_id)
-                        .putExtra(TM_UnitEditorActivity.PARENT_ID_EXTRA_KEY, m_unitToDisplay.getParentId())
-                );
-            }
-        } else if (itemId == R.id.tm_unit_options_meni_delete) {
-            UIUtils.deleteUnitDialouge(this, m_unitToDisplay);
         }
-        return true;
+
+    }
+
+    private void tryJoining() {
+        try {
+            UserDB.getInstance().joinUnit(m_unitToDisplay);
+            runOnUiThread(() -> m_meniToggleJoin.setIcon(R.drawable.ic_leave));
+            Toast.makeText(this, "Joined unit successfully.", Toast.LENGTH_SHORT).show();
+            Log.i("DB_EVENT", UserDB.getInstance().getCurrentUser().toString() + " joined " + m_unitToDisplay.toString());
+        } catch (ExecutionException | NoSuchDocumentException e) {
+            Toast.makeText(this, "Could not join unit: Database error", Toast.LENGTH_SHORT).show();
+            Log.w("DB_ERROR", "Failed to join "
+                    + m_unitToDisplay.toString() + ":\n" + ExceptionUtils.getStackTrace(e));
+        } catch (InterruptedException e) {
+            Log.w("DB_ERROR", "Cancelled joining "
+                    + m_unitToDisplay.toString() + ":\n" + ExceptionUtils.getStackTrace(e));
+        }
+    }
+
+    private void showTryLeaving() {
+        if (m_unitToDisplay.hasChildren()) {
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+            alertBuilder.setMessage("Are you sure you want to leave the unit?\n" +
+                    "You will also automatically leave any child units you have joined.");
+            alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
+                new Thread(this::tryLeaving).start();
+            });
+            alertBuilder.setNegativeButton("No", null);
+            runOnUiThread(() -> alertBuilder.create().show());
+        } else {
+            tryLeaving();
+        }
     }
 
     private void tryLeaving() {
@@ -166,21 +189,30 @@ public class TM_UnitViewActivity extends AppCompatActivity {
 
     private void initUnit(String id) {
         try {
+
+            User user = UserDB.getInstance().getCurrentUser();
             m_unitToDisplay = UnitDB.getInstance().awaitUnit(id);
             runOnUiThread(() -> {
-                if (UserDB.getInstance().getCurrentUser().isIn(m_id)) {
+                if (user.isIn(m_id)) {
                     m_meniToggleJoin.setIcon(R.drawable.ic_leave);
                 } else {
                     m_meniToggleJoin.setIcon(R.drawable.ic_join);
                 }
 
-                if (!UserDB.getInstance().getCurrentUser().isLeading(m_unitToDisplay)
-                && !UserDB.getInstance().getCurrentUser().isLeading(m_unitToDisplay.getParentId())) {
-                    m_menuOptions.removeItem(R.id.tm_unit_options_meni_edit_mode);
-                    m_menuOptions.removeItem(R.id.tm_unit_options_meni_delete);
+                if (user.isLeading(m_unitToDisplay) || user.isLeading(m_unitToDisplay.getParentId())) {
+                    getMenuInflater().inflate(R.menu.menu_units_leader_options, m_menuOptions);
+
+                    if (TM_UnitEditorActivity.getEditingIds().contains(m_id)) {
+                        m_menuOptions.removeItem(R.id.tm_unit_options_meni_edit_mode);
+                    }
+                }
+
+                if (user.isIn(m_unitToDisplay)) {
+                    getMenuInflater().inflate(R.menu.menu_units_in_options, m_menuOptions);
                 }
 
             });
+
         } catch (ExecutionException e) {
             Toast.makeText(this, "Could not retrieve unit: Database error. Aborting.", Toast.LENGTH_SHORT).show();
             Log.w("DB_ERROR", "Failed to retrieve unit by a id " + id + ":\n" + ExceptionUtils.getStackTrace(e));
@@ -214,6 +246,34 @@ public class TM_UnitViewActivity extends AppCompatActivity {
         }
     }
 
+    private Adapter<ViewHolder> getChildrenAdapter(List<Unit> data) {
+        return new Adapter<ViewHolder>() {
+            @NonNull
+            @Override
+            public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                Log.v("UI_EVENT", "Created a Unit ViewHolder for subunit");
+                return new ViewHolder(getLayoutInflater().inflate(R.layout.listrow_unit_list, parent, false)) {};
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+                ((TextView)holder.itemView).setText(data.get(position).getName());
+                holder.itemView.setOnClickListener(v ->
+                        startActivity(
+                                new Intent(TM_UnitViewActivity.this, TM_UnitViewActivity.class)
+                                        .putExtra(UNIT_ID_EXTRA_KEY, data.get(position).getId())
+                        )
+                );
+            }
+
+            @Override
+            public int getItemCount() {
+                return data.size();
+            }
+
+        };
+    }
+
     private void showUnit(Unit unit) {
 
         runOnUiThread(() -> {
@@ -224,34 +284,8 @@ public class TM_UnitViewActivity extends AppCompatActivity {
         try {
             List<Unit> data = unit.getChildren();
 
-            Adapter<ViewHolder> adapter = new Adapter<ViewHolder>() {
-                @NonNull
-                @Override
-                public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                    Log.v("UI_EVENT", "Created a Unit ViewHolder for subunit");
-                    return new ViewHolder(getLayoutInflater().inflate(R.layout.listrow_unit_list, parent, false)) {};
-                }
-
-                @Override
-                public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-                    ((TextView)holder.itemView).setText(data.get(position).getName());
-                    holder.itemView.setOnClickListener(v ->
-                            startActivity(
-                                    new Intent(TM_UnitViewActivity.this, TM_UnitViewActivity.class)
-                                    .putExtra(UNIT_ID_EXTRA_KEY, data.get(position).getId())
-                            )
-                    );
-                }
-
-                @Override
-                public int getItemCount() {
-                    return data.size();
-                }
-
-            };
-
             runOnUiThread(() -> {
-                m_listSubunits.setAdapter(adapter);
+                m_listSubunits.setAdapter(getChildrenAdapter(data));
                 m_listSubunits.setLayoutManager(new LinearLayoutManager(this));
             });
 
