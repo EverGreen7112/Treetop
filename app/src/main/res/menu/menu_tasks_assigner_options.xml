@@ -4,12 +4,6 @@
     >
 
     <item
-        android:id="@+id/tm_task_options_owner_meni_add_subtask"
-        android:icon="@drawable/ic_add_sub"
-        android:title="@string/tm_task_assigner_options_meni_add_task_title"
-        app:showAsAction="ifRoom"/>
-
-    <item
         android:id="@+id/tm_task_options_meni_edit_mode"
         android:icon="@drawable/ic_edit"
         android:title="@string/tm_task_options_owner_meni_toggle_edit_mode_title"
