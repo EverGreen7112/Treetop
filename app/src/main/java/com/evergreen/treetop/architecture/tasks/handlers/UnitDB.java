@@ -97,9 +97,11 @@ public class UnitDB {
 
     public void create(Unit unit) throws ExecutionException, InterruptedException, NoSuchDocumentException {
         Tasks.await(getUnitRef(unit.getId()).set(DBUnit.of(unit)));
+
         if (!unit.isRootUnit()) {
             Tasks.await(update(unit.getParentId(), UnitDBKey.CHILDREN_IDS, FieldValue.arrayUnion(unit.getId())));
         }
+
         UserDB.getInstance().joinUnit(unit, true);
     }
 
