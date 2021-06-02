@@ -33,11 +33,11 @@ public class SC_ScoutingForm extends AppCompatActivity {
         setContentView(R.layout.activity_scouting_form_sc);
 
         m_tabLayout = findViewById(R.id.sc_form_tab_layout);
-        setContent(new SC_FormAutoFragment());
 
         adapter = new ViewPagerAdapter(this);
 
         viewPager = findViewById(R.id.sc_form_pager);
+        viewPager.setOffscreenPageLimit(4);
         viewPager.setAdapter(adapter);
 
         new TabLayoutMediator(m_tabLayout, viewPager, ((tab, position) -> {
@@ -57,48 +57,7 @@ public class SC_ScoutingForm extends AppCompatActivity {
             }
         })).attach();
 
-        m_tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        setContent(new SC_FormAutoFragment());
-                        break;
-                    case 1:
-                        setContent(new SC_FormTeleopFragment());
-                        break;
-                    case 2:
-                        setContent(new SC_FormEndgameFragment());
-                        break;
-                    case 3:
-                        setContent(new SC_FormSubmissionFragment());
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
         ScoutingMatch.getCurrent().start();
-    }
-
-    private void setContent(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-        for (Fragment frag : getSupportFragmentManager().getFragments()) {
-            fragmentTransaction.remove(frag);
-        }
-
-        fragmentTransaction.add(R.id.sc_form_frag_tab_view_content, fragment);
-        fragmentTransaction.commit();
     }
 
     public class ViewPagerAdapter extends FragmentStateAdapter {

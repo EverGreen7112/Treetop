@@ -8,43 +8,13 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/sc_form_tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:tabMode="fixed">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/sc_tab_item_auto"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/sc_scouting_form_auto_tab_text" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/sc_tab_item_teleop"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/sc_scouting_form_teleop_tab_text" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/sc_tab_item_endgame"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/sc_scouting_form_end_tab_text" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/sc_tab_item_submit_form"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/sc_scouting_form_submit_tab_text" />
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/sc_form_frag_tab_view_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        app:tabMode="fixed" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/sc_form_pager"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>
