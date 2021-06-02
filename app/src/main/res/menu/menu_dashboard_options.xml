@@ -8,6 +8,9 @@
         app:showAsAction="ifRoom"
         />
 
+    <item
+        android:id="@+id/tm_dashboard_options_meni_notes_list"
+        android:title="View Notes" />
 
     <item
         android:id="@+id/tm_dashboard_options_meni_new_goal"

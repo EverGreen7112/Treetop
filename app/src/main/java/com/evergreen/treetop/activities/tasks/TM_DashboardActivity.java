@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.activities.tasks.goals.TM_GoalEditorActivity;
+import com.evergreen.treetop.activities.tasks.notes.TM_NotesActivity;
 import com.evergreen.treetop.activities.tasks.units.TM_UnitEditorActivity;
 import com.evergreen.treetop.activities.tasks.units.TM_UnitPickerActivity;
 import com.evergreen.treetop.activities.tasks.units.TM_UnitViewActivity;
@@ -123,6 +124,8 @@ public class TM_DashboardActivity extends AppCompatActivity {
             m_unitListLauncher.launch(new Intent(this, TM_UnitPickerActivity.class));
         } else if (itemId == R.id.tm_dashboard_options_meni_log_out) {
             UserDB.getInstance().logout(this);
+        } else if (itemId == R.id.tm_dashboard_options_meni_notes_list) {
+            startActivity(new Intent(this, TM_NotesActivity.class));
         }
 
         return true;
