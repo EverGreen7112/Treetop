@@ -31,7 +31,14 @@
         <activity android:name=".activities.tasks.tasks.TM_TaskViewActivity"  android:screenOrientation="portrait" />
         <activity android:name=".activities.scouts.form.SC_TeamStrategyForm" android:screenOrientation="portrait" />
         <activity android:name=".activities.scouts.form.SC_AllianceStrategyForm" android:screenOrientation="portrait" />
-        <activity android:name=".activities.tasks.users.TM_SignUpActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.tasks.users.TM_SignUpActivity" android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".test.TestActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activities.scouts.form.SC_FormLauncher" android:screenOrientation="portrait">
             <intent-filter>
