@@ -101,7 +101,7 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
 
-        if (m_goalToDisplay != null) {
+        if (!m_new) {
             s_editingIds.remove(m_id);
         }
 

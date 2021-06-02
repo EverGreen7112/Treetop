@@ -530,7 +530,7 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
 
-        if (m_givenTask != null) {
+        if (!m_new) {
             m_editingIds.remove(m_givenTask.getId());
         }
 
