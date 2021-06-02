@@ -24,4 +24,5 @@
     <string name="tm_task_options_owner_meni_toggle_edit_mode_title">Edit Mode</string>
     <string name="tm_task_assigner_options_meni_add_task_title">Add Subtasks</string>
     <string name="tm_task_options_assigner_meni_delete_goal_title">Delete Task</string>
+    <string name="tm_unit_assigner_options_meni_add_unit_title">Add Subunit</string>
 </resources>
