@@ -36,7 +36,7 @@ import java.util.Map;
 public class GeneralStats extends AppCompatActivity {
     private static final String TAG = "GeneralStats_sc";
 
-    private final DocumentReference scoutDataDoc = new MatchDB(1690).getRef();
+    public static DocumentReference scoutDataDoc;
 
     private BarChart scoreOverTimeChart;
     private BarChart rankingOverTimeChart;
@@ -50,6 +50,11 @@ public class GeneralStats extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats_general_sc);
+
+        if (scoutDataDoc == null) {
+            Log.i(TAG, "no team chosen, showing stats for 7112");
+            scoutDataDoc = new MatchDB(7112).getRef();
+        }
 
         scoreOverTimeChart = findViewById(R.id.sc_stats_general_score_over_time_chart);
         rankingOverTimeChart = findViewById(R.id.sc_stats_general_ranking_over_time_chart);
@@ -106,7 +111,7 @@ public class GeneralStats extends AppCompatActivity {
 
         Log.v(TAG, "dataEntries:\n" + dataEntries.toString());
 
-        BarData bars = new BarData(new BarDataSet(dataEntries, "scoreOverTimeSet"));
+        BarData bars = new BarData(new BarDataSet(dataEntries, "Match Score Over Time"));
         scoreOverTimeChart.setData(bars);
         scoreOverTimeChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(sortedKeys));
         scoreOverTimeChart.getDescription().setEnabled(false);
@@ -127,7 +132,7 @@ public class GeneralStats extends AppCompatActivity {
             else Log.v(TAG, "null key is " + key);
         });
 
-        BarData bars = new BarData(new BarDataSet(dataEntries, "rankingOverTimeSet"));
+        BarData bars = new BarData(new BarDataSet(dataEntries, "Ranking Points Over Time"));
         rankingOverTimeChart.setData(bars);
         rankingOverTimeChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(sortedKeys));
         rankingOverTimeChart.getDescription().setEnabled(false);
@@ -141,17 +146,17 @@ public class GeneralStats extends AppCompatActivity {
         Map<String, Object> teleopData = (Map)matchData.get("teleop");
         Map<String, Object> endgameData = (Map)matchData.get("endgame");
 
-        score += (long)((Map)autoData.get("bottom")).get("hit") * 2;
-        score += (long)((Map)autoData.get("outer")).get("hit") * 4;
-        score += (long)((Map)autoData.get("inner")).get("hit") * 6;
+        score += (float)((Map)autoData.get("bottom")).get("hit") * 2;
+        score += (float)((Map)autoData.get("outer")).get("hit") * 4;
+        score += (float)((Map)autoData.get("inner")).get("hit") * 6;
 
-        score += (long)((Map)teleopData.get("bottom")).get("hit") * 1;
-        score += (long)((Map)teleopData.get("outer")).get("hit") * 2;
-        score += (long)((Map)teleopData.get("inner")).get("hit") * 3;
+        score += (float)((Map)teleopData.get("bottom")).get("hit") * 1;
+        score += (float)((Map)teleopData.get("outer")).get("hit") * 2;
+        score += (float)((Map)teleopData.get("inner")).get("hit") * 3;
 
-        score += (long)((Map)endgameData.get("bottom")).get("hit") * 1;
-        score += (long)((Map)endgameData.get("outer")).get("hit") * 2;
-        score += (long)((Map)endgameData.get("inner")).get("hit") * 3;
+        score += (float)((Map)endgameData.get("bottom")).get("hit") * 1;
+        score += (float)((Map)endgameData.get("outer")).get("hit") * 2;
+        score += (float)((Map)endgameData.get("inner")).get("hit") * 3;
 
         return score;
     }
@@ -179,12 +184,10 @@ public class GeneralStats extends AppCompatActivity {
     private void updateScoreSources(Map<String, Object> raw) {
         int powercellScore = 0, wheelScore = 0, climbScore = 0;
 
-        for(String str : raw.keySet()) {
-            if (str.equals("autonomous") || str.equals("teleop") || str.equals("endgame")) {
-                powercellScore += getPowercellScore((Map<String, Object>)raw.get(str));
-                wheelScore += getWheelScore((Map<String, Object>)raw.get(str));
-                climbScore += getClimbScore((Map<String, Object>)raw.get(str));
-            }
+        for(Object obj : raw.values()) {
+            powercellScore += getPowercellScore((Map<String, Object>)obj);
+            wheelScore += getWheelScore((Map<String, Object>)obj);
+            climbScore += getClimbScore((Map<String, Object>)obj);
         }
 
         List<PieEntry> dataEntries = new ArrayList<>();

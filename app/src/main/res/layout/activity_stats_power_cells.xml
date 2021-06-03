@@ -62,50 +62,6 @@
             app:layout_constraintEnd_toEndOf="@id/stats_pc_hit_distribution_label" />
 
         <TextView
-            android:id="@+id/stats_pc_bottom_reliability_label"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:text="Bottom Reliability"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginTop="18dp"
-            app:layout_constraintTop_toBottomOf="@id/stats_pc_hit_distribution_chart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/stats_pc_bottom_reliability_chart"
-            android:layout_width="320dp"
-            android:layout_height="256dp"
-            android:layout_marginTop="18dp"
-            app:layout_constraintTop_toBottomOf="@id/stats_pc_bottom_reliability_label"
-            app:layout_constraintStart_toStartOf="@id/stats_pc_bottom_reliability_label"
-            app:layout_constraintEnd_toEndOf="@id/stats_pc_bottom_reliability_label" />
-
-        <TextView
-            android:id="@+id/stats_pc_top_reliability_label"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:text="Top Reliability"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginTop="18dp"
-            app:layout_constraintTop_toBottomOf="@id/stats_pc_bottom_reliability_chart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/stats_pc_top_reliability_chart"
-            android:layout_width="320dp"
-            android:layout_height="256dp"
-            android:layout_marginTop="18dp"
-            app:layout_constraintTop_toBottomOf="@id/stats_pc_top_reliability_label"
-            app:layout_constraintStart_toStartOf="@id/stats_pc_top_reliability_label"
-            app:layout_constraintEnd_toEndOf="@id/stats_pc_top_reliability_label" />
-
-        <TextView
             android:id="@+id/stats_pc_average_per_bottom_label"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
@@ -114,7 +70,7 @@
             android:textStyle="bold"
             android:gravity="center"
             android:layout_marginTop="18dp"
-            app:layout_constraintTop_toBottomOf="@id/stats_pc_top_reliability_chart"
+            app:layout_constraintTop_toBottomOf="@id/stats_pc_hit_distribution_chart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/stats_pc_average_per_bottom_value" />
 
@@ -244,28 +200,6 @@
             app:layout_constraintTop_toBottomOf="@id/stats_pc_inner_over_time_label"
             app:layout_constraintStart_toStartOf="@id/stats_pc_inner_over_time_label"
             app:layout_constraintEnd_toEndOf="@id/stats_pc_inner_over_time_label" />
-
-        <TextView
-            android:id="@+id/stats_pc_score_significance_label"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:text="Score Significance"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginTop="18dp"
-            app:layout_constraintTop_toBottomOf="@id/stats_pc_inner_over_time_chart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/stats_pc_score_significance_chart"
-            android:layout_width="320dp"
-            android:layout_height="256dp"
-            android:layout_marginTop="18dp"
-            app:layout_constraintTop_toBottomOf="@id/stats_pc_score_significance_label"
-            app:layout_constraintStart_toStartOf="@id/stats_pc_score_significance_label"
-            app:layout_constraintEnd_toEndOf="@id/stats_pc_score_significance_label" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
