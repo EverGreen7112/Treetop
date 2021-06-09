@@ -1,7 +1,10 @@
 package com.evergreen.treetop.activities.scouts.stats;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -72,6 +75,24 @@ public class GeneralStats extends AppCompatActivity {
         });
 
         initiateScouting();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_global_options_menu, menu);
+        menu.setGroupVisible(R.id.global_menu_tm, false);
+        menu.setGroupVisible(R.id.global_menu_sc, false);
+        menu.setGroupVisible(R.id.global_menu_stats, false);
+        menu.setGroupVisible(R.id.global_menu_stats_pc, false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_stats_pc) {
+            startActivity(new Intent(this, PowerCellStats.class));
+        }
+        return true;
     }
 
     private void updateCharts(Map<String, Object> scoutData) {
@@ -252,7 +273,9 @@ public class GeneralStats extends AppCompatActivity {
         Map<String, Object> operationalData = getAllWhereKey(raw, "shield-operational");
         int operationalAmount = 0;
         for (Object obj : operationalData.values()) {
-            if ((boolean) obj) operationalAmount++;
+            if (obj != null) {
+                if ((boolean) obj) operationalAmount++;
+            }
         }
 
         List<PieEntry> dataEntries = new ArrayList<>();
@@ -271,6 +294,7 @@ public class GeneralStats extends AppCompatActivity {
         Map<String, Object> resultData = getAllWhereKey(raw, "result");
         int winCount = 0, lossCount = 0, drawCount = 0;
         for (Object obj : resultData.values()) {
+            if (obj == null) break;
             switch ((String) obj) {
                 case "win":
                     winCount++;

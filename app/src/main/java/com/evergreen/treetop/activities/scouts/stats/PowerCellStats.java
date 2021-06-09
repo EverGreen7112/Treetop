@@ -1,7 +1,10 @@
 package com.evergreen.treetop.activities.scouts.stats;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -62,7 +65,7 @@ public class PowerCellStats extends AppCompatActivity {
         averagePerBottomHit = findViewById(R.id.stats_pc_average_per_bottom_value);
         averagePerTopHit = findViewById(R.id.stats_pc_average_per_top_value);
         hitsOverTime = findViewById(R.id.stats_pc_hits_over_time_chart);
-        scoreOverTime = findViewById(R.id.sc_stats_general_score_over_time_chart);
+        scoreOverTime = findViewById(R.id.stats_pc_score_over_time_chart);
         outerHitsOverTime = findViewById(R.id.stats_pc_outer_over_time_chart);
         innerHitsOverTime = findViewById(R.id.stats_pc_inner_over_time_chart);
 
@@ -73,6 +76,24 @@ public class PowerCellStats extends AppCompatActivity {
         });
 
         initiateScouting();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_global_options_menu, menu);
+        menu.setGroupVisible(R.id.global_menu_tm, false);
+        menu.setGroupVisible(R.id.global_menu_sc, false);
+        menu.setGroupVisible(R.id.global_menu_stats_general, false);
+        menu.setGroupVisible(R.id.global_menu_stats, false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_stats_general) {
+            startActivity(new Intent(this, GeneralStats.class));
+        }
+        return true;
     }
 
     private void updateCharts(Map<String, Object> data) {
@@ -86,124 +107,124 @@ public class PowerCellStats extends AppCompatActivity {
         updateInnerOverTime(data);
     }
 
-    private float getMatchHits(Map<String, Object> matchData) {
-        float hits = 0;
+    private long getMatchHits(Map<String, Object> matchData) {
+        long hits = 0;
 
         Map<String, Object> autoData = (Map)matchData.get("autonomous");
         Map<String, Object> teleopData = (Map)matchData.get("teleop");
         Map<String, Object> endgameData = (Map)matchData.get("endgame");
 
-        hits += (float)((Map)autoData.get("bottom")).get("hit");
-        hits += (float)((Map)autoData.get("outer")).get("hit");
-        hits += (float)((Map)autoData.get("inner")).get("hit");
+        hits += (long)((Map)autoData.get("bottom")).get("hit");
+        hits += (long)((Map)autoData.get("outer")).get("hit");
+        hits += (long)((Map)autoData.get("inner")).get("hit");
 
-        hits += (float)((Map)teleopData.get("bottom")).get("hit");
-        hits += (float)((Map)teleopData.get("outer")).get("hit");
-        hits += (float)((Map)teleopData.get("inner")).get("hit");
+        hits += (long)((Map)teleopData.get("bottom")).get("hit");
+        hits += (long)((Map)teleopData.get("outer")).get("hit");
+        hits += (long)((Map)teleopData.get("inner")).get("hit");
 
-        hits += (float)((Map)endgameData.get("bottom")).get("hit");
-        hits += (float)((Map)endgameData.get("outer")).get("hit");
-        hits += (float)((Map)endgameData.get("inner")).get("hit");
+        hits += (long)((Map)endgameData.get("bottom")).get("hit");
+        hits += (long)((Map)endgameData.get("outer")).get("hit");
+        hits += (long)((Map)endgameData.get("inner")).get("hit");
 
         return hits;
     }
 
-    private float getMatchMisses(Map<String, Object> matchData) {
-        float misses = 0;
+    private long getMatchMisses(Map<String, Object> matchData) {
+        long misses = 0;
 
         Map<String, Object> autoData = (Map)matchData.get("autonomous");
         Map<String, Object> teleopData = (Map)matchData.get("teleop");
         Map<String, Object> endgameData = (Map)matchData.get("endgame");
 
-        misses += (float)((Map)autoData.get("bottom")).get("miss");
-        misses += (float)((Map)autoData.get("outer")).get("miss");
-        misses += (float)((Map)autoData.get("inner")).get("miss");
+        misses += (long)((Map)autoData.get("bottom")).get("miss");
+        misses += (long)((Map)autoData.get("outer")).get("miss");
+        misses += (long)((Map)autoData.get("inner")).get("miss");
 
-        misses += (float)((Map)teleopData.get("bottom")).get("miss");
-        misses += (float)((Map)teleopData.get("outer")).get("miss");
-        misses += (float)((Map)teleopData.get("inner")).get("miss");
+        misses += (long)((Map)teleopData.get("bottom")).get("miss");
+        misses += (long)((Map)teleopData.get("outer")).get("miss");
+        misses += (long)((Map)teleopData.get("inner")).get("miss");
 
-        misses += (float)((Map)endgameData.get("bottom")).get("miss");
-        misses += (float)((Map)endgameData.get("outer")).get("miss");
-        misses += (float)((Map)endgameData.get("inner")).get("miss");
+        misses += (long)((Map)endgameData.get("bottom")).get("miss");
+        misses += (long)((Map)endgameData.get("outer")).get("miss");
+        misses += (long)((Map)endgameData.get("inner")).get("miss");
 
         return misses;
     }
 
-    private float getMatchAttempts(Map<String, Object> matchData) {
-        float attempts = 0;
+    private long getMatchAttempts(Map<String, Object> matchData) {
+        long attempts = 0;
 
-        attempts += (float)((Map)((Map)matchData.get("autonomous")).get("bottom")).get("attempts");
-        attempts += (float)((Map)((Map)matchData.get("autonomous")).get("outer")).get("attempts");
-        attempts += (float)((Map)((Map)matchData.get("autonomous")).get("inner")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("autonomous")).get("bottom")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("autonomous")).get("outer")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("autonomous")).get("inner")).get("attempts");
 
-        attempts += (float)((Map)((Map)matchData.get("teleop")).get("bottom")).get("attempts");
-        attempts += (float)((Map)((Map)matchData.get("teleop")).get("outer")).get("attempts");
-        attempts += (float)((Map)((Map)matchData.get("teleop")).get("inner")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("teleop")).get("bottom")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("teleop")).get("outer")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("teleop")).get("inner")).get("attempts");
 
-        attempts += (float)((Map)((Map)matchData.get("endgame")).get("bottom")).get("attempts");
-        attempts += (float)((Map)((Map)matchData.get("endgame")).get("outer")).get("attempts");
-        attempts += (float)((Map)((Map)matchData.get("endgame")).get("inner")).get("attempts");
-
-        return attempts;
-    }
-
-    private float getMatchBottomHits(Map<String, Object> matchData) {
-        float hits = 0;
-
-        Map<String, Object> autoData = (Map)matchData.get("autonomous");
-        Map<String, Object> teleopData = (Map)matchData.get("teleop");
-        Map<String, Object> endgameData = (Map)matchData.get("endgame");
-
-        hits += (float)((Map)autoData.get("bottom")).get("hit");
-
-        hits += (float)((Map)teleopData.get("bottom")).get("hit");
-
-        hits += (float)((Map)endgameData.get("bottom")).get("hit");
-
-        return hits;
-    }
-
-    private float getMatchBottomAttempts(Map<String, Object> matchData) {
-        float attempts = 0;
-
-        attempts += (float)((Map)((Map)matchData.get("autonomous")).get("bottom")).get("attempts");
-
-        attempts += (float)((Map)((Map)matchData.get("teleop")).get("bottom")).get("attempts");
-
-        attempts += (float)((Map)((Map)matchData.get("endgame")).get("bottom")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("endgame")).get("bottom")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("endgame")).get("outer")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("endgame")).get("inner")).get("attempts");
 
         return attempts;
     }
 
-    private float getMatchOuterHits(Map<String, Object> matchData) {
-        float hits = 0;
+    private long getMatchBottomHits(Map<String, Object> matchData) {
+        long hits = 0;
 
         Map<String, Object> autoData = (Map)matchData.get("autonomous");
         Map<String, Object> teleopData = (Map)matchData.get("teleop");
         Map<String, Object> endgameData = (Map)matchData.get("endgame");
 
-        hits += (float)((Map)autoData.get("outer")).get("hit");
+        hits += (long)((Map)autoData.get("bottom")).get("hit");
 
-        hits += (float)((Map)teleopData.get("outer")).get("hit");
+        hits += (long)((Map)teleopData.get("bottom")).get("hit");
 
-        hits += (float)((Map)endgameData.get("outer")).get("hit");
+        hits += (long)((Map)endgameData.get("bottom")).get("hit");
 
         return hits;
     }
 
-    private float getMatchInnerHits(Map<String, Object> matchData) {
-        float hits = 0;
+    private long getMatchBottomAttempts(Map<String, Object> matchData) {
+        long attempts = 0;
+
+        attempts += (long)((Map)((Map)matchData.get("autonomous")).get("bottom")).get("attempts");
+
+        attempts += (long)((Map)((Map)matchData.get("teleop")).get("bottom")).get("attempts");
+
+        attempts += (long)((Map)((Map)matchData.get("endgame")).get("bottom")).get("attempts");
+
+        return attempts;
+    }
+
+    private long getMatchOuterHits(Map<String, Object> matchData) {
+        long hits = 0;
 
         Map<String, Object> autoData = (Map)matchData.get("autonomous");
         Map<String, Object> teleopData = (Map)matchData.get("teleop");
         Map<String, Object> endgameData = (Map)matchData.get("endgame");
 
-        hits += (float)((Map)autoData.get("inner")).get("hit");
+        hits += (long)((Map)autoData.get("outer")).get("hit");
 
-        hits += (float)((Map)teleopData.get("inner")).get("hit");
+        hits += (long)((Map)teleopData.get("outer")).get("hit");
 
-        hits += (float)((Map)endgameData.get("inner")).get("hit");
+        hits += (long)((Map)endgameData.get("outer")).get("hit");
+
+        return hits;
+    }
+
+    private long getMatchInnerHits(Map<String, Object> matchData) {
+        long hits = 0;
+
+        Map<String, Object> autoData = (Map)matchData.get("autonomous");
+        Map<String, Object> teleopData = (Map)matchData.get("teleop");
+        Map<String, Object> endgameData = (Map)matchData.get("endgame");
+
+        hits += (long)((Map)autoData.get("inner")).get("hit");
+
+        hits += (long)((Map)teleopData.get("inner")).get("hit");
+
+        hits += (long)((Map)endgameData.get("inner")).get("hit");
 
         return hits;
     }
@@ -215,42 +236,44 @@ public class PowerCellStats extends AppCompatActivity {
         Map<String, Object> teleopData = (Map)matchData.get("teleop");
         Map<String, Object> endgameData = (Map)matchData.get("endgame");
 
-        score += (float)((Map)autoData.get("bottom")).get("hit") * 2;
-        score += (float)((Map)autoData.get("outer")).get("hit") * 4;
-        score += (float)((Map)autoData.get("inner")).get("hit") * 6;
+        score += (long)((Map)autoData.get("bottom")).get("hit") * 2;
+        score += (long)((Map)autoData.get("outer")).get("hit") * 4;
+        score += (long)((Map)autoData.get("inner")).get("hit") * 6;
 
-        score += (float)((Map)teleopData.get("bottom")).get("hit") * 1;
-        score += (float)((Map)teleopData.get("outer")).get("hit") * 2;
-        score += (float)((Map)teleopData.get("inner")).get("hit") * 3;
+        score += (long)((Map)teleopData.get("bottom")).get("hit") * 1;
+        score += (long)((Map)teleopData.get("outer")).get("hit") * 2;
+        score += (long)((Map)teleopData.get("inner")).get("hit") * 3;
 
-        score += (float)((Map)endgameData.get("bottom")).get("hit") * 1;
-        score += (float)((Map)endgameData.get("outer")).get("hit") * 2;
-        score += (float)((Map)endgameData.get("inner")).get("hit") * 3;
+        score += (long)((Map)endgameData.get("bottom")).get("hit") * 1;
+        score += (long)((Map)endgameData.get("outer")).get("hit") * 2;
+        score += (long)((Map)endgameData.get("inner")).get("hit") * 3;
 
         return score;
     }
 
-    private float getMatchTopAttempts(Map<String, Object> matchData) {
-        float attempts = 0;
+    private long getMatchTopAttempts(Map<String, Object> matchData) {
+        long attempts = 0;
 
-        attempts += (float)((Map)((Map)matchData.get("autonomous")).get("outer")).get("attempts");
-        attempts += (float)((Map)((Map)matchData.get("autonomous")).get("inner")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("autonomous")).get("outer")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("autonomous")).get("inner")).get("attempts");
 
-        attempts += (float)((Map)((Map)matchData.get("teleop")).get("outer")).get("attempts");
-        attempts += (float)((Map)((Map)matchData.get("teleop")).get("inner")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("teleop")).get("outer")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("teleop")).get("inner")).get("attempts");
 
-        attempts += (float)((Map)((Map)matchData.get("endgame")).get("outer")).get("attempts");
-        attempts += (float)((Map)((Map)matchData.get("endgame")).get("inner")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("endgame")).get("outer")).get("attempts");
+        attempts += (long)((Map)((Map)matchData.get("endgame")).get("inner")).get("attempts");
 
         return attempts;
     }
 
     private void updateAttemptDistribution(Map<String, Object> raw) {
-        float hits = 0, misses = 0;
+        long hits = 0, misses = 0;
 
         for(Object obj : raw.values()) {
-            hits += getMatchHits((Map<String, Object>) obj);
-            misses += getMatchMisses((Map<String, Object>) obj);
+            if (!obj.equals(true)) {
+                hits += getMatchHits((Map<String, Object>) obj);
+                misses += getMatchMisses((Map<String, Object>) obj);
+            }
         }
 
         List<PieEntry> dataEntries = new ArrayList<>();
@@ -266,20 +289,22 @@ public class PowerCellStats extends AppCompatActivity {
     }
 
     private void updateHitDistribution(Map<String, Object> raw) {
-        float bottom = 0, outer = 0, inner = 0;
+        long bottom = 0, outer = 0, inner = 0;
 
         for (Object obj : raw.values()) {
-            bottom += (float)((Map)((Map)((Map)obj).get("autonomous")).get("bottom")).get("hit");
-            bottom += (float)((Map)((Map)((Map)obj).get("teleop")).get("bottom")).get("hit");
-            bottom += (float)((Map)((Map)((Map)obj).get("endgame")).get("bottom")).get("hit");
+            if (!obj.equals(true)) {
+                bottom += (long)((Map)((Map)((Map)obj).get("autonomous")).get("bottom")).get("hit");
+                bottom += (long)((Map)((Map)((Map)obj).get("teleop")).get("bottom")).get("hit");
+                bottom += (long)((Map)((Map)((Map)obj).get("endgame")).get("bottom")).get("hit");
 
-            outer += (float)((Map)((Map)((Map)obj).get("autonomous")).get("outer")).get("hit");
-            outer += (float)((Map)((Map)((Map)obj).get("teleop")).get("outer")).get("hit");
-            outer += (float)((Map)((Map)((Map)obj).get("endgame")).get("outer")).get("hit");
+                outer += (long)((Map)((Map)((Map)obj).get("autonomous")).get("outer")).get("hit");
+                outer += (long)((Map)((Map)((Map)obj).get("teleop")).get("outer")).get("hit");
+                outer += (long)((Map)((Map)((Map)obj).get("endgame")).get("outer")).get("hit");
 
-            inner += (float)((Map)((Map)((Map)obj).get("autonomous")).get("inner")).get("hit");
-            inner += (float)((Map)((Map)((Map)obj).get("teleop")).get("inner")).get("hit");
-            inner += (float)((Map)((Map)((Map)obj).get("endgame")).get("inner")).get("hit");
+                inner += (long)((Map)((Map)((Map)obj).get("autonomous")).get("inner")).get("hit");
+                inner += (long)((Map)((Map)((Map)obj).get("teleop")).get("inner")).get("hit");
+                inner += (long)((Map)((Map)((Map)obj).get("endgame")).get("inner")).get("hit");
+            }
         }
 
         List<PieEntry> dataEntries = new ArrayList<>();
@@ -296,43 +321,73 @@ public class PowerCellStats extends AppCompatActivity {
     }
 
     private void updateAveragePerBottomHit(Map<String, Object> raw) {
-        List<Float> values = new ArrayList<>();
+        List<Long> values = new ArrayList<>();
 
         for (Object obj : raw.values()) {
-            values.add((getMatchBottomAttempts((Map<String, Object>)obj) / getMatchBottomHits((Map<String, Object>) obj)));
+            if (!obj.equals(true)) {
+                try {
+                    values.add((getMatchBottomAttempts((Map<String, Object>) obj) / getMatchBottomHits((Map<String, Object>) obj)));
+                }
+                catch (ArithmeticException e) {
+                    Log.i(TAG, "no bottom hits, thus this iteration is not counted.");
+                }
+            }
         }
 
-        float average = 0;
-        for (Float val : values) {
+        long average = 0;
+        for (long val : values) {
             average += val;
         }
 
-        average /= values.size();
+        try {
+            average /= values.size();
+        }
+        catch (ArithmeticException e) {
+            Log.i(TAG, "no bottom hits for the team at all");
+            average = -1;
+        }
 
-        averagePerBottomHit.setText(String.format("%.2f", average));
+        averagePerBottomHit.setText(String.valueOf(average));
     }
 
     private void updateAveragePerTopHit(Map<String, Object> raw) {
-        List<Float> values = new ArrayList<>();
+        List<Long> values = new ArrayList<>();
 
         for (Object obj : raw.values()) {
-            values.add((getMatchTopAttempts((Map<String, Object>)obj) / (getMatchOuterHits((Map<String, Object>)obj) + getMatchInnerHits((Map<String, Object>)obj))));
+            if (!obj.equals(true)) {
+                try {
+                    values.add((getMatchTopAttempts((Map<String, Object>) obj)
+                            / (getMatchOuterHits((Map<String, Object>) obj) + getMatchInnerHits((Map<String, Object>) obj))
+                    ));
+                }
+                catch (ArithmeticException e) {
+                    Log.i(TAG, "no top hits, thus this iteration is not counted");
+                }
+            }
         }
 
-        float average = 0;
-        for (Float val : values) {
+        long average = 0;
+        for (long val : values) {
             average += val;
         }
 
-        average /= values.size();
+        try {
+            average /= values.size();
+        }
+        catch (ArithmeticException e) {
+            Log.i(TAG, "no top hits for the team at all");
+            average = -1;
+        }
 
-        averagePerTopHit.setText(String.format("%.2f", average));
+        averagePerTopHit.setText(String.valueOf(average));
     }
 
     private void updateHitsOverTime(Map<String, Object> raw) {
         Map<String, Object> data = new HashMap<>();
         for (String str : raw.keySet()) {
+            if (!str.equals("exists")) {
             data.put(str, getMatchHits((Map<String, Object>) raw.get(str)));
+            }
         }
 
         List<BarEntry> dataEntries = new ArrayList<>();
@@ -356,7 +411,9 @@ public class PowerCellStats extends AppCompatActivity {
     private void updateScoreOverTime(Map<String, Object> raw) {
         Map<String, Object> data = new HashMap<>();
         for (String str : raw.keySet()) {
-            data.put(str, getPowercellScore((Map<String, Object>) raw.get(str)));
+            if (!str.equals("exists")) {
+                data.put(str, getPowercellScore((Map<String, Object>) raw.get(str)));
+            }
         }
 
         List<BarEntry> dataEntries = new ArrayList<>();
@@ -382,7 +439,9 @@ public class PowerCellStats extends AppCompatActivity {
     private void updateOuterOverTime(Map<String, Object> raw) {
         Map<String, Object> data = new HashMap<>();
         for (String str : raw.keySet()) {
-            data.put(str, getMatchOuterHits((Map<String, Object>) raw.get(str)));
+            if (!str.equals("exists")) {
+                data.put(str, getMatchOuterHits((Map<String, Object>) raw.get(str)));
+            }
         }
 
         List<BarEntry> dataEntries = new ArrayList<>();
@@ -406,7 +465,9 @@ public class PowerCellStats extends AppCompatActivity {
     private void updateInnerOverTime(Map<String, Object> raw) {
         Map<String, Object> data = new HashMap<>();
         for (String str : raw.keySet()) {
-            data.put(str, getMatchInnerHits((Map<String, Object>) raw.get(str)));
+            if (!str.equals("exists")) {
+                data.put(str, getMatchInnerHits((Map<String, Object>) raw.get(str)));
+            }
         }
 
         List<BarEntry> dataEntries = new ArrayList<>();
@@ -428,24 +489,21 @@ public class PowerCellStats extends AppCompatActivity {
     }
 
     private void initiateScouting() {
-        scoutDataDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.i(TAG, "data retrieval task successful.");
-                    DocumentSnapshot docSnap = task.getResult();
-                    if (docSnap.exists()) {
-                        Log.i(TAG, "scouting data exists, retrieving data.");
+        scoutDataDoc.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.i(TAG, "data retrieval task successful.");
+                DocumentSnapshot docSnap = task.getResult();
+                if (docSnap.exists()) {
+                    Log.i(TAG, "scouting data exists, retrieving data.");
 
-                        updateCharts(docSnap.getData());
-                    }
-                    else {
-                        Log.d(TAG, "no data found");
-                    }
+                    updateCharts(docSnap.getData());
                 }
                 else {
-                    Log.d(TAG, "data retrieval task failed.");
+                    Log.d(TAG, "no data found");
                 }
+            }
+            else {
+                Log.d(TAG, "data retrieval task failed.");
             }
         });
     }
