@@ -36,7 +36,7 @@ import java.util.Map;
 public class GeneralStats extends AppCompatActivity {
     private static final String TAG = "GeneralStats_sc";
 
-    public static DocumentReference scoutDataDoc;
+    private DocumentReference scoutDataDoc;
 
     private BarChart scoreOverTimeChart;
     private BarChart rankingOverTimeChart;
@@ -50,6 +50,7 @@ public class GeneralStats extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats_general_sc);
+        scoutDataDoc = StatsLauncher.scoutDataDoc;
 
         if (scoutDataDoc == null) {
             Log.i(TAG, "no team chosen, showing stats for 7112");
@@ -146,17 +147,17 @@ public class GeneralStats extends AppCompatActivity {
         Map<String, Object> teleopData = (Map)matchData.get("teleop");
         Map<String, Object> endgameData = (Map)matchData.get("endgame");
 
-        score += (float)((Map)autoData.get("bottom")).get("hit") * 2;
-        score += (float)((Map)autoData.get("outer")).get("hit") * 4;
-        score += (float)((Map)autoData.get("inner")).get("hit") * 6;
+        score += (long)((Map)autoData.get("bottom")).get("hit") * 2;
+        score += (long)((Map)autoData.get("outer")).get("hit") * 4;
+        score += (long)((Map)autoData.get("inner")).get("hit") * 6;
 
-        score += (float)((Map)teleopData.get("bottom")).get("hit") * 1;
-        score += (float)((Map)teleopData.get("outer")).get("hit") * 2;
-        score += (float)((Map)teleopData.get("inner")).get("hit") * 3;
+        score += (long)((Map)teleopData.get("bottom")).get("hit") * 1;
+        score += (long)((Map)teleopData.get("outer")).get("hit") * 2;
+        score += (long)((Map)teleopData.get("inner")).get("hit") * 3;
 
-        score += (float)((Map)endgameData.get("bottom")).get("hit") * 1;
-        score += (float)((Map)endgameData.get("outer")).get("hit") * 2;
-        score += (float)((Map)endgameData.get("inner")).get("hit") * 3;
+        score += (long)((Map)endgameData.get("bottom")).get("hit") * 1;
+        score += (long)((Map)endgameData.get("outer")).get("hit") * 2;
+        score += (long)((Map)endgameData.get("inner")).get("hit") * 3;
 
         return score;
     }
@@ -185,9 +186,11 @@ public class GeneralStats extends AppCompatActivity {
         int powercellScore = 0, wheelScore = 0, climbScore = 0;
 
         for(Object obj : raw.values()) {
-            powercellScore += getPowercellScore((Map<String, Object>)obj);
-            wheelScore += getWheelScore((Map<String, Object>)obj);
-            climbScore += getClimbScore((Map<String, Object>)obj);
+            if (!obj.equals(true)) {
+                powercellScore += getPowercellScore((Map<String, Object>)obj);
+                wheelScore += getWheelScore((Map<String, Object>)obj);
+                climbScore += getClimbScore((Map<String, Object>)obj);
+            }
         }
 
         List<PieEntry> dataEntries = new ArrayList<>();
@@ -295,24 +298,21 @@ public class GeneralStats extends AppCompatActivity {
     }
 
     private void initiateScouting() {
-        scoutDataDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.i(TAG, "data retrieval task successful.");
-                    DocumentSnapshot docSnap = task.getResult();
-                    if (docSnap.exists()) {
-                        Log.i(TAG, "scouting data exists, retrieving data.");
+        scoutDataDoc.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.i(TAG, "data retrieval task successful.");
+                DocumentSnapshot docSnap = task.getResult();
+                if (docSnap.exists()) {
+                    Log.i(TAG, "scouting data exists, retrieving data.");
 
-                        updateCharts(docSnap.getData());
-                    }
-                    else {
-                        Log.d(TAG, "no data found");
-                    }
+                    updateCharts(docSnap.getData());
                 }
                 else {
-                    Log.d(TAG, "data retrieval task failed.");
+                    Log.d(TAG, "no data found");
                 }
+            }
+            else {
+                Log.d(TAG, "data retrieval task failed.");
             }
         });
     }

@@ -35,7 +35,7 @@ import java.util.Map;
 public class PowerCellStats extends AppCompatActivity {
     private static final String TAG = "PowerCellStats_sc";
 
-    public static DocumentReference scoutDataDoc;
+    private DocumentReference scoutDataDoc;
 
     private PieChart attemptDistribution;
     private PieChart hitDistribution;
@@ -50,6 +50,7 @@ public class PowerCellStats extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats_power_cells);
+        scoutDataDoc = StatsLauncher.scoutDataDoc;
 
         if (scoutDataDoc == null) {
             Log.i(TAG, "no team chosen, showing stats for 7112");

@@ -51,7 +51,14 @@
         <activity android:name=".activities.scouts.form.SC_ResultsForm" android:screenOrientation="portrait" />
         <activity android:name=".activities.scouts.form.SC_ScoutingForm" android:screenOrientation="portrait" />
         <activity android:name=".activities.scouts.stats.GeneralStats" android:screenOrientation="portrait" />
-        <activity android:name=".activities.scouts.StatsLauncher" android:screenOrientation="portrait" />
+        <activity android:name=".activities.scouts.stats.PowerCellStats" android:screenOrientation="portrait" />
+        <activity android:name=".activities.scouts.stats.StatsLauncher" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
