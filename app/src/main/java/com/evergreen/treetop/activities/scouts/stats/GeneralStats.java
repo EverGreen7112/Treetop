@@ -1,6 +1,11 @@
 package com.evergreen.treetop.activities.scouts.stats;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.hardware.SensorManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,9 +14,11 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.evergreen.treetop.R;
+import com.evergreen.treetop.activities.scouts.form.SC_FormLauncher;
 import com.evergreen.treetop.architecture.scouts.form.FormObject;
 import com.evergreen.treetop.architecture.scouts.handlers.MatchDB;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
@@ -29,6 +36,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.squareup.seismic.ShakeDetector;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,8 +44,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GeneralStats extends AppCompatActivity {
-    private static final String TAG = "GeneralStats_sc";
+public class GeneralStats extends AppCompatActivity implements ShakeDetector.Listener {
+
+    private final String TAG = "GeneralStats_sc";
 
     private DocumentReference scoutDataDoc;
 
@@ -54,6 +63,33 @@ public class GeneralStats extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats_general_sc);
         scoutDataDoc = StatsLauncher.scoutDataDoc;
+
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.i(TAG, "broadcast received");
+                String action = intent.getAction();
+                if ("android.net.wifi.WIFI_AP_STATE_CHANGED".equals(action)) {
+                    int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0);
+
+                    if (state % 10 == WifiManager.WIFI_STATE_ENABLED || state % 10 == WifiManager.WIFI_STATE_ENABLING) {
+                        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+                        alertBuilder.setMessage("WARNING!\n" +
+                                "You have your hotspot on, which is not allowed during competitions.");
+                        alertBuilder.setNeutralButton("OK", (dialog, which) -> {});
+                        AlertDialog alert = alertBuilder.create();
+                        alert.show();
+                    }
+                }
+            }
+        };
+
+        IntentFilter filter = new IntentFilter("android.net.wifi.WIFI_AP_STATE_CHANGED");
+        this.registerReceiver(receiver, filter);
+
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        ShakeDetector sd = new ShakeDetector(this);
+        sd.start(sensorManager);
 
         if (scoutDataDoc == null) {
             Log.i(TAG, "no team chosen, showing stats for 7112");
@@ -93,6 +129,11 @@ public class GeneralStats extends AppCompatActivity {
             startActivity(new Intent(this, PowerCellStats.class));
         }
         return true;
+    }
+
+    @Override
+    public void hearShake() {
+        startActivity(new Intent(this, SC_FormLauncher.class));
     }
 
     private void updateCharts(Map<String, Object> scoutData) {

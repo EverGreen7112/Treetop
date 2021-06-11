@@ -54,4 +54,5 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'org.apache.commons:commons-text:1.6'
     implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'com.squareup:seismic:1.0.2'
 }
