@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat;
 import com.evergreen.treetop.architecture.scouts.utils.Loggable;
 import com.evergreen.treetop.ui.views.utils.Shape;
 
-@SuppressLint("ViewConstructor")
 class BaseText extends AppCompatTextView implements Loggable {
 
     public BaseText(@NonNull Context context, Shape shape) {
