@@ -184,15 +184,16 @@ public class TM_NotesActivity extends AppCompatActivity {
     private List<Pair<String, Boolean>> getData() {
         List<Pair<String, Boolean>> res = new ArrayList<>();
 
-        for (int i = 0; i < getNotesCount(); i++) {
+        for (int i = 0; i <= getNotesCount(); i++) {
             res.add(new Pair<>(getNote(i), getNoteType(i)));
         }
+
 
         return res;
     }
 
     private int getNotesCount() {
-        return getSaveFile().getInt(NOTES_NUMBER_KEY, 0);
+        return getSaveFile().getInt(NOTES_NUMBER_KEY, -1);
     }
 
     private String getNote(int number) {

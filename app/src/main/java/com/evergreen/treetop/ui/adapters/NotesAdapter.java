@@ -77,9 +77,9 @@ public class NotesAdapter extends Adapter<BaseHolder> {
     }
 
     public void add(String data, boolean isImage) {
-        m_data.add(data);
-        m_types.add(isImage);
-        notifyItemInserted(getItemCount());
+        m_data.add(0, data);
+        m_types.add(0, isImage);
+        notifyItemInserted(0);
     }
 
     public void clear() {
