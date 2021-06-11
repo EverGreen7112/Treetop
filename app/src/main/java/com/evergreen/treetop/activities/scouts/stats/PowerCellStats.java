@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.activities.scouts.form.SC_FormLauncher;
@@ -96,6 +97,12 @@ public class PowerCellStats extends AppCompatActivity implements ShakeDetector.L
             scoutDataDoc = new MatchDB(7112).getRef();
         }
 
+        SwipeRefreshLayout swipeLayout = findViewById(R.id.stats_pc_swipe_layout);
+        swipeLayout.setOnRefreshListener(() -> {
+            Log.i(TAG, "updating charts...");
+            initiateScouting();
+        });
+
         attemptDistribution = findViewById(R.id.stats_pc_attempt_distribution_chart);
         hitDistribution = findViewById(R.id.stats_pc_hit_distribution_chart);
         averagePerBottomHit = findViewById(R.id.stats_pc_average_per_bottom_value);
@@ -104,12 +111,6 @@ public class PowerCellStats extends AppCompatActivity implements ShakeDetector.L
         scoreOverTime = findViewById(R.id.stats_pc_score_over_time_chart);
         outerHitsOverTime = findViewById(R.id.stats_pc_outer_over_time_chart);
         innerHitsOverTime = findViewById(R.id.stats_pc_inner_over_time_chart);
-
-        Button updateCharts = findViewById(R.id.stats_pc_update_charts);
-        updateCharts.setOnClickListener(v -> {
-            Log.i(TAG, "updating charts...");
-            initiateScouting();
-        });
 
         initiateScouting();
     }
@@ -146,6 +147,7 @@ public class PowerCellStats extends AppCompatActivity implements ShakeDetector.L
         updateScoreOverTime(data);
         updateOuterOverTime(data);
         updateInnerOverTime(data);
+        Log.i(TAG, "finished updating chart data");
     }
 
     private long getMatchHits(Map<String, Object> matchData) {
@@ -538,6 +540,7 @@ public class PowerCellStats extends AppCompatActivity implements ShakeDetector.L
                     Log.i(TAG, "scouting data exists, retrieving data.");
 
                     updateCharts(docSnap.getData());
+                    ((SwipeRefreshLayout)findViewById(R.id.stats_pc_swipe_layout)).setRefreshing(false);
                 }
                 else {
                     Log.d(TAG, "no data found");

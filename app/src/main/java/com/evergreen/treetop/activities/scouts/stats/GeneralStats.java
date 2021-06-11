@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.activities.scouts.form.SC_FormLauncher;
@@ -96,6 +97,12 @@ public class GeneralStats extends AppCompatActivity implements ShakeDetector.Lis
             scoutDataDoc = new MatchDB(7112).getRef();
         }
 
+        SwipeRefreshLayout swipeLayout = findViewById(R.id.stats_general_swipe_layout);
+        swipeLayout.setOnRefreshListener(() -> {
+            Log.i(TAG, "updating charts...");
+            initiateScouting();
+        });
+
         scoreOverTimeChart = findViewById(R.id.sc_stats_general_score_over_time_chart);
         rankingOverTimeChart = findViewById(R.id.sc_stats_general_ranking_over_time_chart);
         scoreSourcesChart = findViewById(R.id.sc_stats_general_score_sources_chart);
@@ -103,12 +110,6 @@ public class GeneralStats extends AppCompatActivity implements ShakeDetector.Lis
         shieldEnergizedChart = findViewById(R.id.sc_stats_general_energized_chart);
         shieldOperationalChart = findViewById(R.id.sc_stats_general_operational_chart);
         resultChart = findViewById(R.id.sc_stats_general_results_chart);
-
-        Button updateCharts = findViewById(R.id.sc_stats_general_update_charts);
-        updateCharts.setOnClickListener(v -> {
-            Log.i(TAG, "updating charts...");
-            initiateScouting();
-        });
 
         initiateScouting();
     }
@@ -144,6 +145,7 @@ public class GeneralStats extends AppCompatActivity implements ShakeDetector.Lis
         updateShieldEnergized(scoutData);
         updateShieldOperational(scoutData);
         updateResultsChart(scoutData);
+        Log.i(TAG, "finished updating data");
     }
 
     private Map<String, Object> getAllWhereKey(Map<String, Object> data, String key) {
@@ -371,6 +373,7 @@ public class GeneralStats extends AppCompatActivity implements ShakeDetector.Lis
                     Log.i(TAG, "scouting data exists, retrieving data.");
 
                     updateCharts(docSnap.getData());
+                    ((SwipeRefreshLayout)findViewById(R.id.stats_general_swipe_layout)).setRefreshing(false);
                 }
                 else {
                     Log.d(TAG, "no data found");
