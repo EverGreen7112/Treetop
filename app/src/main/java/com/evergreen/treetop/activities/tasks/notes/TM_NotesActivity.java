@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
@@ -31,6 +32,7 @@ import com.evergreen.treetop.ui.views.recycler.NotesRecycler;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TM_NotesActivity extends AppCompatActivity {
 
@@ -167,9 +169,7 @@ public class TM_NotesActivity extends AppCompatActivity {
                     new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
                     STORAGE_ACCESS_REQUEST_CODE);
         } else {
-            Intent photoPicker = new Intent(Intent.ACTION_PICK);
-            photoPicker.setType("image/*");
-            m_photoPicker.launch(photoPicker);
+            m_photoPicker.launch(getPickerIntent());
         }
     }
 
@@ -243,6 +243,45 @@ public class TM_NotesActivity extends AppCompatActivity {
 
     public static SharedPreferences getSaveFile(Context context) {
         return context.getSharedPreferences("notes", Context.MODE_PRIVATE);
+    }
+
+    /**
+     * Get a photo picker intent that allows picking the app to use,
+     * but forbids google photos which for some god forsaken reason
+     * is marked as local files and so can easily cause very annoying bugs
+     *
+     * @return an intent for picking a photo from gallery, that forbids using google photos
+     */
+    private Intent getPickerIntent() {
+
+        // Base intent
+        Intent intent = new Intent()
+            .setType("image/*")
+            .setAction(Intent.ACTION_PICK)
+            .putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+
+        if (android.os.Build.VERSION.SDK_INT >= 30) {
+            return intent;
+        }
+
+        List<Intent> targets =
+                // Gets all activities that could be opened from the picker
+                getPackageManager().queryIntentActivities(intent, 0)
+                .stream()
+                // Maps each activity to its app package
+                .map(candidate -> candidate.activityInfo.packageName)
+                // Filters google photos away
+                .filter(name -> name.equals("com.google.android.apps.photos"))
+                // Creates a photo picker intent for the remiaining apps
+                .map(name -> ((Intent)intent.clone()).setPackage(name))
+                // Put all of this in a list
+                .collect(Collectors.toList());
+
+        // Create a chooser with the first item, than add the rest.
+        Intent chooser = Intent.createChooser(targets.remove(0), "Select a picture");
+        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, targets.toArray(new Parcelable[targets.size()]));
+
+        return chooser;
     }
 
 }
