@@ -195,7 +195,7 @@ public class TM_UnitEditorActivity extends AppCompatActivity {
                 m_id,
                 getName(),
                 getDescription(),
-                m_new ? UserDB.getInstance().getCurrentUserId() : m_givenUnit.getLeaderId(),
+                m_new ? UserDB.getInstance().getCurrentUserId() : m_givenUnit.getLeaderId(), // Unit Leader
                 m_parentId
         );
 
