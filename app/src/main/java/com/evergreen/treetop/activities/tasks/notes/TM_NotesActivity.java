@@ -25,7 +25,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.util.Pair;
 
 import com.evergreen.treetop.R;
-import com.evergreen.treetop.architecture.tasks.utils.AndroidUtils;
+import com.evergreen.treetop.activities.tasks.TM_DashboardActivity;
 import com.evergreen.treetop.ui.views.recycler.NotesRecycler;
 
 import java.io.File;
@@ -115,6 +115,8 @@ public class TM_NotesActivity extends AppCompatActivity {
             pickPhoto();
         } else if (itemId == R.id.tm_notes_options_meni_add_camera) {
             takePhoto();
+        } else if (itemId == R.id.tm_notes_options_meni_task_dashboard) {
+            startActivity(new Intent(this, TM_DashboardActivity.class));
         } else if (itemId == R.id.tm_notes_options_meni_clear) {
             getSaveFile().edit().clear().apply();
             m_listNotes.getAdapter().clear();

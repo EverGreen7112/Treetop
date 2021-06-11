@@ -22,7 +22,13 @@
         />
 
     <item
+        android:id="@+id/tm_notes_options_meni_task_dashboard"
+        android:title="Task Dashboard"
+        />
+
+    <item
         android:id="@+id/tm_notes_options_meni_clear"
         android:title="Clear Notes"
         />
+
 </menu>
