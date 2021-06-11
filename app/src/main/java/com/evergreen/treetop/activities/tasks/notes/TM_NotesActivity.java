@@ -153,7 +153,7 @@ public class TM_NotesActivity extends AppCompatActivity {
             Uri uri = Uri.fromFile(new File(getCapturePath()));
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 
-            // Some requires security bullshit
+            // Some required security bullshit
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
 
@@ -218,7 +218,7 @@ public class TM_NotesActivity extends AppCompatActivity {
     private String getImagePath(Uri imageUri) {
         // Honestly I am not sure wtf is going on here, but if it works, I guess it works!
         // Basically, the gallery picker returns a URI, which is an identifier/pointer of the image
-        // Than you can use a query (represented by a Curesor object )to get some specific data.
+        // Than you can use a query (represented by a Cursor object )to get some specific data.
         // It's basically an SQL query, but I am not at all sure wtf about an image is table-like.
         // We filter for "Media.DATA", whatever the hell that filters for,
         // And then the path seems to be in that column and the first row.
