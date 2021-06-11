@@ -82,6 +82,7 @@ public class TM_NotesActivity extends AppCompatActivity {
                     pickPhoto();
                 }
                 break;
+
             case CAMERA_ACCESS_REQUEST_CODE:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     takePhoto();
