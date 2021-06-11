@@ -110,16 +110,6 @@ public class TaskUtils {
     }
 
 
-    public static void discardDialouge(Activity context) {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-        alertBuilder.setMessage("Discard Changes?");
-        alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
-            context.setResult(Activity.RESULT_CANCELED);
-            context.finish();
-        });
-        alertBuilder.setNegativeButton("No", null);
-        alertBuilder.create().show();
-    }
 
 
 

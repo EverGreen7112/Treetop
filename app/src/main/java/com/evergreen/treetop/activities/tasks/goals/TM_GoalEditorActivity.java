@@ -139,7 +139,7 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        TaskUtils.discardDialouge(this);
+        UIUtils.discardDialouge(this);
     }
 
     private void submit() {

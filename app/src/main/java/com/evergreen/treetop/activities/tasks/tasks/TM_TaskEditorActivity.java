@@ -150,7 +150,7 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        TaskUtils.discardDialouge(this);
+        UIUtils.discardDialouge(this);
     }
 
     @Override

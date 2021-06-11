@@ -123,6 +123,16 @@ public class UIUtils {
         alertBuilder.create().show();
     }
 
+    public static void discardDialouge(Activity context) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setMessage("Discard Changes?");
+        alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
+            context.setResult(Activity.RESULT_CANCELED);
+            context.finish();
+        });
+        alertBuilder.setNegativeButton("No", null);
+        alertBuilder.create().show();
+    }
 
     public static void deleteGoalDialouge(Activity context, Goal goal) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
