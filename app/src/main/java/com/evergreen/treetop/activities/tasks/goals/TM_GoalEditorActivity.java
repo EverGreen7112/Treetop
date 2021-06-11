@@ -143,14 +143,14 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
     }
 
     private void submit() {
-        DBGoal result = DBGoal.of(getGoal());
+        Goal result = getGoal();
 
         new Thread(() -> {
             Looper.prepare();
             try {
-                GoalDB.getInstance().create(getGoal());
+                GoalDB.getInstance().create(result);
                 Log.i("DB_EVENT", "Submitted " + result.toString());
-                setResult(Activity.RESULT_OK, new Intent().putExtra(RESULT_GOAL_EXTRA_KEY, result));
+                setResult(Activity.RESULT_OK, new Intent().putExtra(RESULT_GOAL_EXTRA_KEY, DBGoal.of(result)));
                 runOnUiThread(this::finish);
 
             } catch (InterruptedException e) {
