@@ -93,26 +93,7 @@ public class NotesAdapter extends Adapter<BaseHolder> {
         public BaseHolder(@NonNull View itemView) {
             super(itemView);
         }
-
         public abstract void setContent(String data);
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-            MenuItem delete = menu.add(Menu.NONE, CONTEXT_DELETE_ITEM_ID, Menu.NONE, "Delete Note");
-
-
-//            delete.setOnMenuItemClickListener( item -> {
-//                    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-//
-//                    Editor editor = TM_NotesActivity.getSaveFile(m_context).edit();
-//                    editor.remove(TM_NotesActivity.NOTE_TYPE_PREFIX_KEY + info.position);
-//                    editor.remove(TM_NotesActivity.NOTE_PREFIX_KEY + info.position);
-//                    editor.putInt(TM_NotesActivity.NOTES_NUMBER_KEY + info.position, );
-//                    editor.apply();
-//                    return true;
-//            });
-        }
-
     }
 
     private class TextHolder extends BaseHolder {
