@@ -70,9 +70,6 @@ public class TM_NotesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes_tm);
-
-
-        getSaveFile().edit().clear().apply();
         m_listNotes = findViewById(R.id.tm_notes_recycler);
         m_listNotes.load(getData());
     }
