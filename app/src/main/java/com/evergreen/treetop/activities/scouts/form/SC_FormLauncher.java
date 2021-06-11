@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.evergreen.treetop.R;
-import com.evergreen.treetop.activities.scouts.StatsLauncher;
+import com.evergreen.treetop.activities.scouts.stats.StatsLauncher;
 import com.evergreen.treetop.architecture.scouts.form.FormObject;
 import com.evergreen.treetop.architecture.scouts.utils.MatchID;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;

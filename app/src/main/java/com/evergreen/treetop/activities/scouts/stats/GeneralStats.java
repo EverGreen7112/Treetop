@@ -1,7 +1,10 @@
 package com.evergreen.treetop.activities.scouts.stats;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -36,7 +39,7 @@ import java.util.Map;
 public class GeneralStats extends AppCompatActivity {
     private static final String TAG = "GeneralStats_sc";
 
-    private final DocumentReference scoutDataDoc = new MatchDB(1690).getRef();
+    private DocumentReference scoutDataDoc;
 
     private BarChart scoreOverTimeChart;
     private BarChart rankingOverTimeChart;
@@ -50,6 +53,12 @@ public class GeneralStats extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats_general_sc);
+        scoutDataDoc = StatsLauncher.scoutDataDoc;
+
+        if (scoutDataDoc == null) {
+            Log.i(TAG, "no team chosen, showing stats for 7112");
+            scoutDataDoc = new MatchDB(7112).getRef();
+        }
 
         scoreOverTimeChart = findViewById(R.id.sc_stats_general_score_over_time_chart);
         rankingOverTimeChart = findViewById(R.id.sc_stats_general_ranking_over_time_chart);
@@ -66,6 +75,24 @@ public class GeneralStats extends AppCompatActivity {
         });
 
         initiateScouting();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_global_options_menu, menu);
+        menu.setGroupVisible(R.id.global_menu_tm, false);
+        menu.setGroupVisible(R.id.global_menu_sc, false);
+        menu.setGroupVisible(R.id.global_menu_stats, false);
+        menu.setGroupVisible(R.id.global_menu_stats_pc, false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_stats_pc) {
+            startActivity(new Intent(this, PowerCellStats.class));
+        }
+        return true;
     }
 
     private void updateCharts(Map<String, Object> scoutData) {
@@ -106,7 +133,7 @@ public class GeneralStats extends AppCompatActivity {
 
         Log.v(TAG, "dataEntries:\n" + dataEntries.toString());
 
-        BarData bars = new BarData(new BarDataSet(dataEntries, "scoreOverTimeSet"));
+        BarData bars = new BarData(new BarDataSet(dataEntries, "Match Score Over Time"));
         scoreOverTimeChart.setData(bars);
         scoreOverTimeChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(sortedKeys));
         scoreOverTimeChart.getDescription().setEnabled(false);
@@ -127,7 +154,7 @@ public class GeneralStats extends AppCompatActivity {
             else Log.v(TAG, "null key is " + key);
         });
 
-        BarData bars = new BarData(new BarDataSet(dataEntries, "rankingOverTimeSet"));
+        BarData bars = new BarData(new BarDataSet(dataEntries, "Ranking Points Over Time"));
         rankingOverTimeChart.setData(bars);
         rankingOverTimeChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(sortedKeys));
         rankingOverTimeChart.getDescription().setEnabled(false);
@@ -179,11 +206,11 @@ public class GeneralStats extends AppCompatActivity {
     private void updateScoreSources(Map<String, Object> raw) {
         int powercellScore = 0, wheelScore = 0, climbScore = 0;
 
-        for(String str : raw.keySet()) {
-            if (str.equals("autonomous") || str.equals("teleop") || str.equals("endgame")) {
-                powercellScore += getPowercellScore((Map<String, Object>)raw.get(str));
-                wheelScore += getWheelScore((Map<String, Object>)raw.get(str));
-                climbScore += getClimbScore((Map<String, Object>)raw.get(str));
+        for(Object obj : raw.values()) {
+            if (!obj.equals(true)) {
+                powercellScore += getPowercellScore((Map<String, Object>)obj);
+                wheelScore += getWheelScore((Map<String, Object>)obj);
+                climbScore += getClimbScore((Map<String, Object>)obj);
             }
         }
 
@@ -246,7 +273,9 @@ public class GeneralStats extends AppCompatActivity {
         Map<String, Object> operationalData = getAllWhereKey(raw, "shield-operational");
         int operationalAmount = 0;
         for (Object obj : operationalData.values()) {
-            if ((boolean) obj) operationalAmount++;
+            if (obj != null) {
+                if ((boolean) obj) operationalAmount++;
+            }
         }
 
         List<PieEntry> dataEntries = new ArrayList<>();
@@ -265,6 +294,7 @@ public class GeneralStats extends AppCompatActivity {
         Map<String, Object> resultData = getAllWhereKey(raw, "result");
         int winCount = 0, lossCount = 0, drawCount = 0;
         for (Object obj : resultData.values()) {
+            if (obj == null) break;
             switch ((String) obj) {
                 case "win":
                     winCount++;
@@ -292,24 +322,21 @@ public class GeneralStats extends AppCompatActivity {
     }
 
     private void initiateScouting() {
-        scoutDataDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.i(TAG, "data retrieval task successful.");
-                    DocumentSnapshot docSnap = task.getResult();
-                    if (docSnap.exists()) {
-                        Log.i(TAG, "scouting data exists, retrieving data.");
+        scoutDataDoc.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.i(TAG, "data retrieval task successful.");
+                DocumentSnapshot docSnap = task.getResult();
+                if (docSnap.exists()) {
+                    Log.i(TAG, "scouting data exists, retrieving data.");
 
-                        updateCharts(docSnap.getData());
-                    }
-                    else {
-                        Log.d(TAG, "no data found");
-                    }
+                    updateCharts(docSnap.getData());
                 }
                 else {
-                    Log.d(TAG, "data retrieval task failed.");
+                    Log.d(TAG, "no data found");
                 }
+            }
+            else {
+                Log.d(TAG, "data retrieval task failed.");
             }
         });
     }

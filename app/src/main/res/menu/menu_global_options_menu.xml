@@ -4,6 +4,16 @@
         <item android:id="@+id/menu_sc_stats" android:title="Launch Stats" />
         <item android:id="@+id/menu_sc_launch_tm" android:title="Launch Task Management" />
     </group>
+    <group android:id="@+id/global_menu_stats">
+        <item android:id="@+id/menu_stats_scout" android:title="Launch Scouting Form" />
+        <item android:id="@+id/menu_stats_tm" android:title="Launch Task Management" />
+    </group>
+    <group android:id="@+id/global_menu_stats_pc">
+        <item android:id="@+id/menu_stats_general" android:title="Launch General Stats" />
+    </group>
+    <group android:id="@+id/global_menu_stats_general">
+        <item android:id="@+id/menu_stats_pc" android:title="Launch Powercell Stats" />
+    </group>
     <group android:id="@+id/global_menu_tm">
 
     </group>
