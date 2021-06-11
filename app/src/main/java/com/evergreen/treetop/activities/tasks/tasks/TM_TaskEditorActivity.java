@@ -501,6 +501,9 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
 
 
     private void initNew() {
+
+        m_menuOptions.removeItem(R.id.tm_task_options_meni_view);
+
         m_pickedAssignees = new ArrayList<>();
 
         try {
