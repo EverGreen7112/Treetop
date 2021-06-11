@@ -82,24 +82,6 @@ public class TM_TaskViewActivity extends AppCompatActivity {
      */
     public static final String COMING_FROM_EDIT_EXTRA_KEY = "come-from-edit";
 
-
-    /**
-     * Launcher for creating a subtask via {@link TM_TaskEditorActivity}.
-     */
-    ActivityResultLauncher<Intent> m_subtaskLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    // Get created task from the activity result
-                    DBTask newTask = (DBTask) result.getData().getSerializableExtra(TM_TaskEditorActivity.RESULT_TASK_EXTRA_KEY);
-                    // Update this task accordingly
-                    TaskDB.getInstance().update(m_id, TaskDBKey.SUBTASK_IDS, FieldValue.arrayUnion(newTask.getId()));
-                    // Update UI accordingly
-                    m_listSubtasks.getAdapter().add(AppTask.of(newTask));
-                }
-            }
-    );
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -189,7 +171,7 @@ public class TM_TaskViewActivity extends AppCompatActivity {
             goToParent();
 
         } else if (itemId == R.id.tm_task_options_owner_meni_add_subtask) {
-            m_subtaskLauncher.launch(
+            startActivity(
                     new Intent(this, TM_TaskEditorActivity.class)
                     .putExtra(TM_TaskEditorActivity.PARENT_GOAL_EXTRA_KEY, m_id)
             );

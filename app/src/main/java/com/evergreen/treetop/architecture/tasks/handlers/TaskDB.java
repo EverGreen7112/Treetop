@@ -41,8 +41,18 @@ public class TaskDB {
         return m_tasks.document();
     }
 
-    public Void update(String id, TaskDBKey key, Object value) throws ExecutionException, InterruptedException {
-        return Tasks.await(getTaskRef(id).update(key.getKey(), value));
+    public void create(AppTask task) throws ExecutionException, InterruptedException {
+        Tasks.await(getTaskRef(task.getId()).set(DBTask.of(task)));
+
+        if (task.isRootTask()) {
+            Tasks.await(GoalDB.getInstance().update(task.getParentId(), GoalDBKey.SUBTASK_IDS, FieldValue.arrayUnion(task.getId())));
+        } else  {
+            Tasks.await(update(task.getParentId(), TaskDBKey.SUBTASK_IDS, FieldValue.arrayUnion(task.getId())));
+        }
+    }
+
+    public void update(String id, TaskDBKey key, Object value) throws ExecutionException, InterruptedException {
+        Tasks.await(getTaskRef(id).update(key.getKey(), value));
     }
 
     public Task<Void> update(String id, TaskDBKey key, FieldValue value) {

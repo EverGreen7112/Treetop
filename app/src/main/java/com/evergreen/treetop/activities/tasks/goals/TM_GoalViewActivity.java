@@ -58,24 +58,6 @@ public class TM_GoalViewActivity extends AppCompatActivity {
 
     public static final String GOAL_ID_EXTRA_KEY = "goal-id";
 
-    ActivityResultLauncher<Intent> m_subtaskLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK) {
-
-                    assert result.getData() != null : "If result is OK then it should contain data!";
-
-                    DBTask newTask = (DBTask) result.getData().getSerializableExtra(TM_TaskEditorActivity.RESULT_TASK_EXTRA_KEY);
-
-                    GoalDB.getInstance().update(
-                            m_id,
-                            GoalDBKey.SUBTASK_IDS,
-                            FieldValue.arrayUnion(newTask.getId())
-                    );
-                }
-            }
-    );
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,7 +131,7 @@ public class TM_GoalViewActivity extends AppCompatActivity {
             setCompleted(!m_goalToDisplay.isCompleted());
 
         } else if (itemId == R.id.tm_goal_options_owner_meni_add_subtask) {
-            m_subtaskLauncher.launch(
+            startActivity(
                     new Intent(this, TM_TaskEditorActivity.class)
                     .putExtra(TM_TaskEditorActivity.PARENT_GOAL_EXTRA_KEY, m_id)
                     .putExtra(TM_TaskEditorActivity.IS_ROOT_TASK_EXTRA_KEY, true)

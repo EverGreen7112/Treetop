@@ -79,7 +79,6 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
     public static final String PARENT_GOAL_EXTRA_KEY = "task-parent";
     public static final String TASK_ID_EXTRA_KEY = "task-id";
     public static final String IS_ROOT_TASK_EXTRA_KEY = "is-root-task";
-    public static final String RESULT_TASK_EXTRA_KEY = "task-child";
 
     ActivityResultLauncher<Intent> m_unitPicker = registerForActivityResult(
             new StartActivityForResult(),
@@ -315,25 +314,24 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
 
     private void submit() {
 
-        DBTask result = DBTask.of(getTask());
-        TaskDB.getInstance().getTaskRef(m_id).set(result)
-        .addOnSuccessListener( aVoid -> {
+        AppTask result = getTask();
 
-            Log.i("DB_EVENT", "Subbmitted " + result.toString());
-            setResult(
-                    Activity.RESULT_OK,
-                    new Intent().putExtra(
-                            RESULT_TASK_EXTRA_KEY,
-                            result
-                    )
-            );
+        new Thread(() -> {
+            Looper.prepare();
 
-            finish();
-        }).addOnFailureListener(e -> {
-            Log.w("DB_ERROR", "Attempted to submit " + result.toString() + ", but failed:\n"
-                    + ExceptionUtils.getStackTrace(e));
-            Toast.makeText(this, "Failed to submit task: Database Error", Toast.LENGTH_SHORT).show();
-        }).addOnCanceledListener(() -> Log.w("DB_ERROR", "Cancelled submission of task" + result.toString()));
+            try {
+                TaskDB.getInstance().create(result);
+                finish();
+
+            } catch (InterruptedException e) {
+                Log.w("DB_ERROR", "Cancelled submission of " + result.toString() + ":\n" + ExceptionUtils.getStackTrace(e));
+
+            } catch (ExecutionException e) {
+                Log.w("DB_ERROR", "Attempted to submit " + result.toString() + ", but failed:\n"
+                        + ExceptionUtils.getStackTrace(e));
+                Toast.makeText(this, "Failed to submit task: Database Error", Toast.LENGTH_SHORT).show();
+            }
+        }).start();
 
     }
 
