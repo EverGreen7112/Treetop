@@ -21,4 +21,8 @@
         app:showAsAction="always"
         />
 
+    <item
+        android:id="@+id/tm_notes_options_meni_clear"
+        android:title="Clear Notes"
+        />
 </menu>

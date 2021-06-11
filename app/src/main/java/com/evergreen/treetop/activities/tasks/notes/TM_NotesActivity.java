@@ -117,6 +117,9 @@ public class TM_NotesActivity extends AppCompatActivity {
             pickPhoto();
         } else if (itemId == R.id.tm_notes_options_meni_add_camera) {
             takePhoto();
+        } else if (itemId == R.id.tm_notes_options_meni_clear) {
+            getSaveFile().edit().clear().apply();
+            m_listNotes.getAdapter().clear();
         }
 
         return true;

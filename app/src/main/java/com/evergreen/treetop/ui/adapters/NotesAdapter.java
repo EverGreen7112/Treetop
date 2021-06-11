@@ -82,7 +82,13 @@ public class NotesAdapter extends Adapter<BaseHolder> {
         notifyItemInserted(getItemCount());
     }
 
-     public static abstract class BaseHolder extends ViewHolder implements OnCreateContextMenuListener {
+    public void clear() {
+        m_data.clear();
+        m_types.clear();
+        notifyDataSetChanged();
+    }
+
+    public static abstract class BaseHolder extends ViewHolder {
 
         public BaseHolder(@NonNull View itemView) {
             super(itemView);
