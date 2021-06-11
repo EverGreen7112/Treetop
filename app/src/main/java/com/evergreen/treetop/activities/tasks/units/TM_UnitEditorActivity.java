@@ -77,6 +77,11 @@ public class TM_UnitEditorActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        UIUtils.discardDialouge(this);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
          getMenuInflater().inflate(R.menu.menu_units_editor_options, menu);
          return true;
