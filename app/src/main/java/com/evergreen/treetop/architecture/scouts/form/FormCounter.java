@@ -10,9 +10,9 @@ public class FormCounter extends  FormObject {
     String m_label;
 
     @SuppressLint("SetTextI18n")
-    public FormCounter(String label, String path, TextView counter, TextView decrementor) {
+    public FormCounter(String label, String path, TextView counter, TextView decrementer) {
         super(label, path);
-        m_counter = new Counter(label, counter, decrementor);
+        m_counter = new Counter(label, counter, decrementer);
     }
 
     @Override
