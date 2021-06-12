@@ -429,7 +429,7 @@ public class PowerCellStats extends AppCompatActivity implements ShakeDetector.L
         Map<String, Object> data = new HashMap<>();
         for (String str : raw.keySet()) {
             if (!str.equals("exists")) {
-            data.put(str, getMatchHits((Map<String, Object>) raw.get(str)));
+                data.put(str, getMatchHits((Map<String, Object>) raw.get(str)));
             }
         }
 

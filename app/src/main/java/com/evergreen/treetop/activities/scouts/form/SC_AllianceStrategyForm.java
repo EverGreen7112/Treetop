@@ -55,7 +55,7 @@ public class SC_AllianceStrategyForm extends AppCompatActivity {
         frag.loadOptions(StrategyOptions.ALLIANCE);
         frag.setOnClickListener(v -> {
             MatchDB.submitActiveForm();
-            startActivity(new Intent(this, GeneralStats.class));
+            startActivity(new Intent(this, SC_FormLauncher.class));
         });
     }
 }

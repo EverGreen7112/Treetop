@@ -81,6 +81,9 @@ public class SC_FormLauncher extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_global_options_menu, menu);
         menu.setGroupVisible(R.id.global_menu_tm, false);
+        menu.setGroupVisible(R.id.global_menu_stats_pc, false);
+        menu.setGroupVisible(R.id.global_menu_stats, false);
+        menu.setGroupVisible(R.id.global_menu_stats_general, false);
         return true;
     }
 

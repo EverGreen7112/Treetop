@@ -161,7 +161,17 @@ public class GeneralStats extends AppCompatActivity implements ShakeDetector.Lis
     }
 
     private void updateScoreOverTime(Map<String, Object> raw) {
-        Map<String, Object> data = getAllWhereKey(raw, "score");
+        Map<String, Object> data = new HashMap<>();
+
+        for (String str : raw.keySet()) {
+            if (!str.equals("exists")) {
+                data.put(str, (
+                        getPowercellScore((Map<String, Object>)raw.get(str)) +
+                                getWheelScore((Map<String, Object>)raw.get(str)) +
+                                getClimbScore((Map<String, Object>)raw.get(str))
+                ));
+            }
+        }
 
         List<BarEntry> dataEntries = new ArrayList<>();
         List<String> sortedKeys = new ArrayList<>(data.keySet());
@@ -271,24 +281,51 @@ public class GeneralStats extends AppCompatActivity implements ShakeDetector.Lis
     }
 
     private void updateScorePortion(Map<String, Object> raw) {
-//        Map<String, Object> individualData = getAllWhereKey(raw, "score");
-//        Map<String, Object> allianceData = getAllWhereKey(raw, "alliance-score");
-//
-//        List<BarEntry> dataEntries = new ArrayList<>();
-//        List<String> sortedKeys = new ArrayList<>(individualData.keySet());
-//        Collections.sort(sortedKeys);
-//
-//        sortedKeys.forEach(key -> {
-//            dataEntries.add(new BarEntry(sortedKeys.indexOf(key),
-//                    Integer.parseInt(individualData.get(key).toString())
-//                    / Integer.parseInt(allianceData.get(key).toString())));
-//        });
-//
-//        BarData bars = new BarData(new BarDataSet(dataEntries, "allianceScorePortionSet"));
-//        scorePortionChart.setData(bars);
-//        scorePortionChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(sortedKeys));
-//        scorePortionChart.getDescription().setEnabled(false);
-//        scorePortionChart.invalidate();
+        Map<String, Object> teamData = new HashMap<>();
+        Map<String, Object> allianceData = getAllWhereKey(raw, "alliance-score");
+
+        for (String str : raw.keySet()) {
+            if (!str.equals("exists")) {
+                teamData.put(str, (
+                        getPowercellScore((Map<String, Object>)raw.get(str)) +
+                        getWheelScore((Map<String, Object>)raw.get(str)) +
+                        getClimbScore((Map<String, Object>)raw.get(str))
+                ));
+            }
+        }
+
+        List<BarEntry> teamEntries = new ArrayList<>();
+        List<BarEntry> allianceEntries = new ArrayList<>();
+        List<String> sortedKeys = new ArrayList<>(teamData.keySet());
+        Collections.sort(sortedKeys);
+
+        sortedKeys.forEach(key -> {
+            if (teamData.get(key) != null) {
+                teamEntries.add(new BarEntry(sortedKeys.indexOf(key), Integer.parseInt(teamData.get(key).toString())));
+            }
+            else Log.v(TAG, "null key is " + key);
+        });
+
+        sortedKeys.forEach(key -> {
+            if (allianceData.get(key) != null) {
+                allianceEntries.add(new BarEntry(sortedKeys.indexOf(key), Integer.parseInt(allianceData.get(key).toString())));
+            }
+            else Log.v(TAG, "null key is " + key);
+        });
+
+        BarDataSet teamSet = new BarDataSet(teamEntries, "Team Accumulated Score");
+        BarDataSet allianceSet = new BarDataSet(allianceEntries, "Alliance Achieved Score");
+
+        BarData data = new BarData(teamSet, allianceSet);
+        data.setBarWidth(0.2f);
+
+        scorePortionChart.setData(data);
+        scorePortionChart.groupBars(0f, 0.06f, 0.025f);
+        scorePortionChart.getXAxis().setAvoidFirstLastClipping(true);
+        scorePortionChart.getXAxis().setAxisMinimum(0);
+        scorePortionChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(sortedKeys));
+        scorePortionChart.getDescription().setEnabled(false);
+        scorePortionChart.invalidate();
     }
 
     private void updateShieldEnergized(Map<String, Object> raw) {

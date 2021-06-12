@@ -59,7 +59,7 @@ public class SC_FormEndgameFragment extends Fragment {
         );
 
         new SequenceStopwatch(
-                "Defense",
+                "Defence",
                 pathPrefix + ".defense",
                 thisView.findViewById(R.id.sc_form_end_defence_stopwatch),
                 thisView.findViewById(R.id.sc_form_end_defence_label)

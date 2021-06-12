@@ -32,7 +32,7 @@
         android:background="@drawable/round_rectangle_20"
         android:gravity="center"
         android:text="Team #"
-        android:textColor="@color/black"
+        android:textColor="@color/gray"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/sc_form_auto_function_label"
         app:layout_constraintStart_toEndOf="@id/sc_form_auto_match_timer"
@@ -46,7 +46,7 @@
         android:background="@drawable/round_rectangle_20"
         android:gravity="center"
         android:text="Match #"
-        android:textColor="@color/black"
+        android:textColor="@color/gray"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/sc_form_auto_team_num"
         app:layout_constraintHorizontal_bias="0.0"
@@ -57,7 +57,7 @@
 
     <TextView
         android:id="@+id/sc_form_auto_function_label"
-        android:layout_width="110dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="32dp"
         android:gravity="center"
