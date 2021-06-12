@@ -283,7 +283,7 @@ public class TM_NotesActivity extends AppCompatActivity {
 
         // Create a chooser with the first item, than add the rest.
         Intent chooser = Intent.createChooser(targets.remove(0), "Select a picture");
-        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, targets.toArray(new Parcelable[targets.size()]));
+        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, targets.toArray(new Parcelable[0]));
 
         return chooser;
     }
