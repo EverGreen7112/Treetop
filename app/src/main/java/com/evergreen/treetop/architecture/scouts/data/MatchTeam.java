@@ -10,15 +10,15 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.function.Consumer;
 
 public class MatchTeam implements Loggable {
-    private int m_teamNumber;
-    private String m_name;
+    private final int m_teamNumber;
+    private final String m_name;
 
     public String getScouterId() {
         return m_scouterId;
     }
 
-    private String m_scouterId;
-    private boolean m_blueAlliance;
+    private final String m_scouterId;
+    private final boolean m_blueAlliance;
 
     public int getTeamNumber() {
         return m_teamNumber;

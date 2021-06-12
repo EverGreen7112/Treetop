@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 public class UnitListRecycler extends RecyclerView {
 
-    private UnitListAdapter m_adapter;
+    private final UnitListAdapter m_adapter;
 
     public UnitListRecycler(@NonNull Context context) {
         super(context);

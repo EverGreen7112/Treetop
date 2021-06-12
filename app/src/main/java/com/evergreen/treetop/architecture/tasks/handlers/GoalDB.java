@@ -25,7 +25,7 @@ public class GoalDB {
         return m_instance;
     }
 
-    private CollectionReference m_goals = FirebaseFirestore.getInstance().collection("goals");
+    private final CollectionReference m_goals = FirebaseFirestore.getInstance().collection("goals");
 
     public CollectionReference getRef() {
         return m_goals;

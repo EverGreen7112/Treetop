@@ -7,9 +7,9 @@ import com.evergreen.treetop.architecture.scouts.utils.Loggable;
 import java.util.Date;
 
 public class TimedAction implements Loggable {
-    private int m_startTime;
-    private int m_endTime;
-    private String m_label;
+    private final int m_startTime;
+    private final int m_endTime;
+    private final String m_label;
 
     public TimedAction(String label, int start, int end) {
         m_startTime = start;
