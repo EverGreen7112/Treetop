@@ -63,6 +63,7 @@ public class PowerCellStats extends AppCompatActivity implements ShakeDetector.L
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats_power_cells);
+        this.setTitle("Treetop");
         scoutDataDoc = StatsLauncher.scoutDataDoc;
 
         BroadcastReceiver receiver = new BroadcastReceiver() {

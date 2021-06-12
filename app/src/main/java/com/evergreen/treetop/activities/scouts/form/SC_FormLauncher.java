@@ -32,6 +32,7 @@ public class SC_FormLauncher extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_launcher_sc);
+        this.setTitle("Treetop");
 
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override

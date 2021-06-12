@@ -53,6 +53,7 @@ public class StatsLauncher extends AppCompatActivity implements ShakeDetector.Li
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats_launcher);
+        this.setTitle("Treetop");
 
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override

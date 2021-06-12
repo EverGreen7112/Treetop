@@ -63,6 +63,7 @@ public class GeneralStats extends AppCompatActivity implements ShakeDetector.Lis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats_general_sc);
+        this.setTitle("Treetop");
         scoutDataDoc = StatsLauncher.scoutDataDoc;
 
         BroadcastReceiver receiver = new BroadcastReceiver() {
