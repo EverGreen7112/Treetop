@@ -92,7 +92,7 @@ public class SC_ScoutingForm extends AppCompatActivity {
         ScoutingMatch.getCurrent().start();
     }
 
-    public class ViewPagerAdapter extends FragmentStateAdapter {
+    public static class ViewPagerAdapter extends FragmentStateAdapter {
         public ViewPagerAdapter(FragmentActivity fragmentActivity) {
             super(fragmentActivity);
         }
