@@ -15,7 +15,9 @@ import androidx.core.content.ContextCompat;
 import com.evergreen.treetop.architecture.scouts.utils.Loggable;
 import com.evergreen.treetop.ui.views.utils.Shape;
 
-class BaseText extends AppCompatTextView implements Loggable {
+
+// Abstract since it should not be created directly but rather be used as a template; It does not have proper view constructors, in any manner.
+abstract class BaseText extends AppCompatTextView implements Loggable {
 
     public BaseText(@NonNull Context context, Shape shape) {
         super(context);
