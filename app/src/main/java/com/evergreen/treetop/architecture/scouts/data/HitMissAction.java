@@ -5,9 +5,9 @@ import android.util.Log;
 import com.evergreen.treetop.architecture.scouts.utils.Loggable;
 
 public class HitMissAction implements Loggable {
-    private int m_hit;
-    private int m_miss;
-    private String m_label;
+    private final int m_hit;
+    private final int m_miss;
+    private final String m_label;
 
     public HitMissAction(String label, int hit, int miss) {
         m_label = label;

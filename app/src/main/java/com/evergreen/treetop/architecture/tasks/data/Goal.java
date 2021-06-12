@@ -24,10 +24,10 @@ import java.util.concurrent.ExecutionException;
 public class Goal {
     private int m_priority;
     private boolean m_completed;
-    private String m_id;
+    private final String m_id;
     private String m_title;
     private String m_description;
-    private Set<String> m_subtaskIds;
+    private final Set<String> m_subtaskIds;
     private String m_unitId;
 
     public final static String COMPLETE_ICON = "✓"; // ✔

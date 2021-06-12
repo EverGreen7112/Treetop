@@ -13,7 +13,7 @@ import java.util.Locale;
 
 public class SequenceStopwatch extends FormObject {
 
-    private ArrayList<TimedAction> m_sequence = new ArrayList<>();
+    private final ArrayList<TimedAction> m_sequence = new ArrayList<>();
     private int m_lastStart;
     private int m_counter = 0;
 

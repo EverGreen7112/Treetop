@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TaskListRecycler extends RecyclerView {
 
-    private TaskListAdapter m_adapter;
+    private final TaskListAdapter m_adapter;
 
     public TaskListRecycler(@NonNull Context context) {
         super(context);

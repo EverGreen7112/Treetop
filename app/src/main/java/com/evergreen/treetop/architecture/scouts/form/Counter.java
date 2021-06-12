@@ -8,7 +8,7 @@ import com.evergreen.treetop.architecture.scouts.utils.Loggable;
 public class Counter implements Loggable {
 
     private  int m_counter = 0;
-    private String m_label;
+    private final String m_label;
 
     @SuppressLint("SetTextI18n")
     public Counter(String label, TextView counter, TextView decrementor) {

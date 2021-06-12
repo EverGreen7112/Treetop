@@ -17,7 +17,7 @@ import com.evergreen.treetop.architecture.scouts.form.SequenceStopwatch;
 
 public class SC_FormTeleopFragment extends Fragment {
 
-    GameStage GAME_STAGE = GameStage.TELEOP;
+    final GameStage GAME_STAGE = GameStage.TELEOP;
 
     @Nullable
     @Override

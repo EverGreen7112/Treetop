@@ -35,7 +35,7 @@ public class UnitDB {
         return m_instance;
     }
 
-    private CollectionReference m_units = FirebaseFirestore.getInstance().collection("units");
+    private final CollectionReference m_units = FirebaseFirestore.getInstance().collection("units");
 
     public CollectionReference getRef() {
         return m_units;

@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 public class FormCounter extends  FormObject {
 
-    Counter m_counter;
+    final Counter m_counter;
     String m_label;
 
     @SuppressLint("SetTextI18n")

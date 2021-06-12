@@ -15,7 +15,7 @@ public class ContinuousStopwatch extends FormObject {
     private int m_counter = 0;
     private int m_start;
     private int m_end;
-    private TextView m_view;
+    private final TextView m_view;
 
     @SuppressLint("ClickableViewAccessibility")
     public ContinuousStopwatch(String label, String path, TextView view, TextView labelView) {

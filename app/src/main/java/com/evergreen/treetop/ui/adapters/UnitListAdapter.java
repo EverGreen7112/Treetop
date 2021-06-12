@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutionException;
 
 public class UnitListAdapter extends Adapter<ViewHolder> {
 
-    private Context m_context;
+    private final Context m_context;
     private Unit m_parent;
     private List<Unit> m_data;
 

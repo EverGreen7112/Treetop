@@ -32,7 +32,7 @@ public class TM_DashboardActivity extends AppCompatActivity {
     private GoalBoardListRecycler m_listGoals;
 
     private static TM_DashboardActivity runningInstance = null;
-    private ActivityResultLauncher<Intent> m_unitListLauncher = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> m_unitListLauncher = registerForActivityResult(
             new StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == RESULT_OK) {

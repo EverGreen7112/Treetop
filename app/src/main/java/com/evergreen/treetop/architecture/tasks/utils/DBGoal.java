@@ -117,7 +117,7 @@ public class DBGoal implements Serializable {
         UNIT_ID("unitId"),
         SUBTASK_IDS("subtaskIds");
 
-        private String m_key;
+        private final String m_key;
 
         GoalDBKey(String key) {
             m_key = key;

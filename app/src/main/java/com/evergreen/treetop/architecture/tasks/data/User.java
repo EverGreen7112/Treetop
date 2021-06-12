@@ -12,10 +12,10 @@ import java.util.concurrent.ExecutionException;
 
 public class User {
 
-    String m_id;
+    final String m_id;
     String m_name;
-    List<String> m_unitIds;
-    List<String> m_leadingIds;
+    final List<String> m_unitIds;
+    final List<String> m_leadingIds;
 
 
     public User(String id, String name) {

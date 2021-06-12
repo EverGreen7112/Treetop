@@ -22,7 +22,7 @@ public class AppTask extends Goal {
     private final String m_assignerId;
     private final String m_goalId;
     private final String m_rootTaskId;
-    private Set<String> m_assigneesIds;
+    private final Set<String> m_assigneesIds;
 
 
     public AppTask(int priority, String id, String title, String description, String unitId, String parentId,

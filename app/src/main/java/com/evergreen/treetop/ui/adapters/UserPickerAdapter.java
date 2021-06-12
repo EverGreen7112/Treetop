@@ -78,8 +78,8 @@ public class UserPickerAdapter extends Adapter<UserPickerAdapter.UserPickerHolde
 
     public class UserPickerHolder extends ViewHolder {
 
-        private TextView m_textTitle;
-        private ImageView m_imgIcon;
+        private final TextView m_textTitle;
+        private final ImageView m_imgIcon;
 
         private boolean m_selected;
 

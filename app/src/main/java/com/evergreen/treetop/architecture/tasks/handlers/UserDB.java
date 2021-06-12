@@ -52,7 +52,7 @@ public class UserDB {
         }
     }
 
-    private CollectionReference m_users = FirebaseFirestore.getInstance().collection("users");
+    private final CollectionReference m_users = FirebaseFirestore.getInstance().collection("users");
 
     public CollectionReference getRef() {
         return m_users;

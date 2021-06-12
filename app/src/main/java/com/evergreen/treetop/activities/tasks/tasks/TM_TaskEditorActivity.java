@@ -80,7 +80,7 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
     public static final String TASK_ID_EXTRA_KEY = "task-id";
     public static final String IS_ROOT_TASK_EXTRA_KEY = "is-root-task";
 
-    ActivityResultLauncher<Intent> m_unitPicker = registerForActivityResult(
+    final ActivityResultLauncher<Intent> m_unitPicker = registerForActivityResult(
             new StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == RESULT_OK) {
@@ -90,10 +90,12 @@ public class TM_TaskEditorActivity extends AppCompatActivity {
             }
     );
 
-    ActivityResultLauncher<Intent> m_userPicker = registerForActivityResult(
+    final ActivityResultLauncher<Intent> m_userPicker = registerForActivityResult(
             new StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == RESULT_OK) {
+
+                    @SuppressWarnings("unchecked")
                     ArrayList<DBUser> res =
                             (ArrayList<DBUser>) result.getData().getSerializableExtra(TM_UserPickerActivity.RESULT_SELECTED_EXTRA_KEY);
 

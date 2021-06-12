@@ -53,7 +53,7 @@ public class TM_GoalEditorActivity extends AppCompatActivity {
     public static final String GOAL_ID_EXTRA_KEY = "goal-id";
     public static final String RESULT_GOAL_EXTRA_KEY = "result-goal";
 
-    ActivityResultLauncher<Intent> m_unitPicker = registerForActivityResult(
+    final ActivityResultLauncher<Intent> m_unitPicker = registerForActivityResult(
             new StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == RESULT_OK) {

@@ -75,7 +75,7 @@ public class DBUser implements Serializable {
         LEADING_IDS("leadingIds");
 
 
-        String m_key;
+        final String m_key;
 
         UserDBKey(String key) {
             m_key = key;

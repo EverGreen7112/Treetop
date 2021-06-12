@@ -17,7 +17,7 @@ import com.evergreen.treetop.architecture.scouts.form.SequenceStopwatch;
 
 public class SC_FormEndgameFragment extends Fragment {
 
-    GameStage GAME_STAGE = GameStage.ENDGAME;
+    final GameStage GAME_STAGE = GameStage.ENDGAME;
 
     @Nullable
     @Override

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class StrategyOptions {
 
-    private List<StrategyOption> m_options;
+    private final List<StrategyOption> m_options;
 
     public List<StrategyOption> getOptions() {
         return m_options;
@@ -20,10 +20,10 @@ public class StrategyOptions {
         return m_type;
     }
 
-    private String m_type;
+    private final String m_type;
 
-    public static StrategyOptions TEAM;
-    public static StrategyOptions ALLIANCE;
+    public static final StrategyOptions TEAM;
+    public static final StrategyOptions ALLIANCE;
 
     static {
         Map<String, String> options = new HashMap<>();
@@ -48,8 +48,8 @@ public class StrategyOptions {
     }
 
     public static class StrategyOption {
-        private String m_key;
-        private String m_description;
+        private final String m_key;
+        private final String m_description;
 
         public String getKey() {
             return m_key;

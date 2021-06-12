@@ -18,7 +18,7 @@ import com.evergreen.treetop.architecture.scouts.form.FormSwitch;
 
 public class SC_FormAutoFragment extends Fragment {
 
-    GameStage GAME_STAGE = GameStage.AUTO;
+    final GameStage GAME_STAGE = GameStage.AUTO;
 
     private FormSwitch m_linePass;
 

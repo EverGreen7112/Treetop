@@ -9,7 +9,7 @@ import com.evergreen.treetop.ui.views.spinner.BaseSpinner;
 import java.util.Map;
 
 public class DropDown extends FormObject {
-    BaseSpinner m_spinner;
+    final BaseSpinner m_spinner;
 
     public DropDown(String label, String path, BaseSpinner spinner, TextView labelView,
                     TextView descriptionBox, Map<String, String> options) {

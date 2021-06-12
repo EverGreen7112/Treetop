@@ -10,10 +10,10 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.Stack;
 
 public class MatchDB {
-    private static Stack<FormObject> m_activeObjects = new Stack<>();
+    private static final Stack<FormObject> m_activeObjects = new Stack<>();
 
     /**The currently scouted team. If the scouting form is closed, should be set to -1.  */
-    private int m_team;
+    private final int m_team;
 
     public MatchDB(int team) {
         m_team = team;

@@ -27,7 +27,7 @@ public class TaskDB {
         return m_instance;
     }
 
-    private CollectionReference m_tasks = FirebaseFirestore.getInstance().collection("tasks");
+    private final CollectionReference m_tasks = FirebaseFirestore.getInstance().collection("tasks");
 
     public CollectionReference getRef() {
         return m_tasks;

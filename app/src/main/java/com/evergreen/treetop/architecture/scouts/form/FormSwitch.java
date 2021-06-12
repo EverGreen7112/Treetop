@@ -7,7 +7,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class FormSwitch extends FormObject {
 
-    private SwitchMaterial m_switch;
+    private final SwitchMaterial m_switch;
 
     public FormSwitch(String label, String path, SwitchMaterial switchView) {
         super(label, path);

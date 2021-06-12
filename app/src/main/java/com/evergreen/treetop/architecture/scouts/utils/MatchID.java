@@ -9,8 +9,8 @@ public class MatchID {
         PLAYOFF;
     }
 
-    private MatchType m_type;
-    private int m_number;
+    private final MatchType m_type;
+    private final int m_number;
 
     public MatchID(MatchType type, int number) {
         m_type = type;

@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class FormRadio extends FormObject {
 
-    RadioGroup m_radio;
-    Map<Integer, Object> m_idToValue;
+    final RadioGroup m_radio;
+    final Map<Integer, Object> m_idToValue;
 
     @SuppressLint("SetTextI18n")
     public FormRadio(String label, String path, RadioGroup radio, Map<Integer, Object> idToValue) {
