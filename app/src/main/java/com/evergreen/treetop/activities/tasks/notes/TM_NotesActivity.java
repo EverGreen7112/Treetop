@@ -231,7 +231,10 @@ public class TM_NotesActivity extends AppCompatActivity {
 
         cursor.moveToFirst();
         int columnIndex = cursor.getColumnIndex(Media.DATA);
-        return cursor.getString(columnIndex);
+        String res = cursor.getString(columnIndex);
+        cursor.close();
+
+        return res;
     }
 
     private String getCapturePath() {
