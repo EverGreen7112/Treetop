@@ -89,13 +89,13 @@ public class SC_FormLauncher extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_sc_stats:
-                startActivity(new Intent(this, StatsLauncher.class));
-                break;
-            default:
-                super.onOptionsItemSelected(item);
+
+        if (item.getItemId() == R.id.menu_sc_stats) {
+            startActivity(new Intent(this, StatsLauncher.class));
+        } else {
+            super.onOptionsItemSelected(item);
         }
+
         return true;
     }
 }

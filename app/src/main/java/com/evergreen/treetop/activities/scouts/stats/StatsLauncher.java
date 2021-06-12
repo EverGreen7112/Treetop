@@ -104,14 +104,14 @@ public class StatsLauncher extends AppCompatActivity implements ShakeDetector.Li
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_stats_scout:
-                startActivity(new Intent(this, SC_FormLauncher.class));
-                break;
-            case R.id.menu_stats_tm:
-                startActivity(new Intent(this, TM_SignUpActivity.class));
-                break;
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.menu_stats_scout) {
+            startActivity(new Intent(this, SC_FormLauncher.class));
+        } else if (itemId == R.id.menu_stats_tm) {
+            startActivity(new Intent(this, TM_SignUpActivity.class));
         }
+
         return true;
     }
 
