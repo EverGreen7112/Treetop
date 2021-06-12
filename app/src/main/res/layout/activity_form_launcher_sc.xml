@@ -16,7 +16,8 @@
         android:gravity="center"
         android:inputType="number"
         app:layout_constraintStart_toEndOf="@+id/sc_form_launcher_text_match_number_label"
-        app:layout_constraintTop_toBottomOf="@+id/sc_form_launcher_text_match_type_label" />
+        app:layout_constraintTop_toBottomOf="@+id/sc_form_launcher_text_match_type_label"
+        android:importantForAutofill="no" />
 
     <TextView
         android:id="@+id/sc_form_launcher_text_match_number_label"
@@ -64,7 +65,8 @@
         android:inputType="number"
         android:background="@drawable/oval_rectangle"
         app:layout_constraintStart_toEndOf="@+id/sc_form_launcher_text_team_number_label"
-        app:layout_constraintTop_toTopOf="@+id/sc_form_launcher_text_team_number_label" />
+        app:layout_constraintTop_toTopOf="@+id/sc_form_launcher_text_team_number_label"
+        android:importantForAutofill="no" />
 
     <com.evergreen.treetop.ui.views.spinner.OvalSpinner
         android:id="@+id/sc_form_launcher_spinner_match_type"

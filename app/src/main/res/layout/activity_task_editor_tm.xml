@@ -27,7 +27,8 @@
                 android:hint="Title"
                 android:inputType="text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:importantForAutofill="no" />
 
             <com.evergreen.treetop.ui.views.spinner.EllipseSpinner
                 android:id="@+id/tm_task_editor_spin_priority"
@@ -69,7 +70,8 @@
                 android:hint="Description"
                 android:inputType="textMultiLine"
                 app:layout_constraintStart_toStartOf="@+id/tm_task_editor_edit_title"
-                app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_edit_title" />
+                app:layout_constraintTop_toBottomOf="@+id/tm_task_editor_edit_title"
+                android:importantForAutofill="no" />
 
             <com.evergreen.treetop.ui.views.text.OvalTextView
                 android:id="@+id/tm_task_editor_text_start_deadline"

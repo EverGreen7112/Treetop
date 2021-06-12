@@ -25,7 +25,8 @@
                 android:hint="Title"
                 android:inputType="text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:importantForAutofill="no" />
 
 
             <com.evergreen.treetop.ui.views.spinner.EllipseSpinner
@@ -69,7 +70,8 @@
                 android:hint="Description"
                 android:inputType="textMultiLine"
                 app:layout_constraintStart_toStartOf="@+id/tm_goal_editor_edit_title"
-                app:layout_constraintTop_toBottomOf="@+id/tm_goal_editor_edit_title" />
+                app:layout_constraintTop_toBottomOf="@+id/tm_goal_editor_edit_title"
+                android:importantForAutofill="no" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
