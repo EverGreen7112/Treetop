@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.evergreen.treetop.R;
 import com.evergreen.treetop.activities.scouts.stats.StatsLauncher;
+import com.evergreen.treetop.activities.tasks.users.TM_SignUpActivity;
 import com.evergreen.treetop.architecture.scouts.form.FormObject;
 import com.evergreen.treetop.architecture.scouts.utils.MatchID;
 import com.evergreen.treetop.architecture.scouts.utils.ScoutingMatch;
@@ -89,11 +90,12 @@ public class SC_FormLauncher extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        if (item.getItemId() == R.id.menu_sc_stats) {
-            startActivity(new Intent(this, StatsLauncher.class));
-        } else {
-            super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.menu_sc_stats:
+                startActivity(new Intent(this, StatsLauncher.class));
+                break;
+            case R.id.menu_sc_launch_tm:
+                startActivity(new Intent(this, TM_SignUpActivity.class));
         }
 
         return true;
