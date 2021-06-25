@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.evergreen.treetop.R;
@@ -27,7 +28,6 @@ public class SC_FormStrategyFragment extends Fragment {
 
         if (options == StrategyOptions.ALLIANCE) {
             m_submitButton.setText("Submit");
-            UIUtils.setBackgroundColor(getContext(), m_submitButton, R.color.design_default_color_primary);
             m_submitButton.setOnClickListener(v -> dropdown.submit());
         } else {
             m_submitButton.setOnClickListener(v -> startActivity(new Intent(getContext(), SC_AllianceStrategyForm.class)));
@@ -43,7 +43,7 @@ public class SC_FormStrategyFragment extends Fragment {
     OvalSpinner m_spinner;
     TextView m_descriptionBox;
     TextView m_spinnerLabel;
-    TextView m_submitButton;
+    Button m_submitButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

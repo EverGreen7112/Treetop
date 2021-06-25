@@ -49,14 +49,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sc_form_strategy_spinner_picker" />
 
-        <com.evergreen.treetop.ui.views.text.OvalTextView
+        <Button
             android:id="@+id/sc_form_strategy_button_submit"
             android:layout_width="150dp"
-            android:layout_height="32dp"
+            android:layout_height="42dp"
             android:layout_marginTop="48dp"
             android:layout_marginEnd="16dp"
+            android:insetTop="3dp"
+            android:insetBottom="3dp"
             android:text="Next >"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            app:cornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sc_form_strategy_text_option_desc" />
 

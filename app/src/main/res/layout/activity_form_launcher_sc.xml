@@ -81,16 +81,17 @@
         app:layout_constraintStart_toEndOf="@+id/sc_form_launcher_text_match_type_label"
         app:layout_constraintTop_toTopOf="@+id/sc_form_launcher_text_match_type_label" />
 
-
-
-    <com.evergreen.treetop.ui.views.text.OvalTextView
+    <Button
         android:id="@+id/sc_form_launcher_text_submit_button"
         android:layout_width="150dp"
-        android:layout_height="32dp"
+        android:layout_height="42dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:text="Next >"
-        android:textSize="20sp"
+        android:textSize="18sp"
+        android:insetTop="3dp"
+        android:insetBottom="3dp"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
